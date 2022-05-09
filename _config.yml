@@ -1,11 +1,13 @@
 
 #google_analytics: UA-NNNNNNNN-N
-
-header_pages:
-  - index.md
-  - about.md
-
-footer: 'follow us on <a href="https://twitter.com/ratilovich">twitter</a>'
+title: RedTeam Ratilovich
+email: rat@redteam.ng
+description: >- # this means to ignore newlines until "baseurl:"
+  Pragmatic Software Specialist
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: "ratilovich"
+github_username:  "handyteddy"
 
 #style: light # dark (default) or light
 #listen_for_clients_preferred_style: true # true or false (default)
@@ -15,20 +17,14 @@ style: hacker
 plugins:
   - jekyll-seo-tag
 
-
-
-
-
-
 header_pages:
   - index.md
-  - peter.md
   - about.md
   - contact.md
+  - resume.md
 
-style: hacker
+footer: 'follow me on <a href="https://twitter.com/ratilovich">twitter</a> <a target="_blank" href="https://linkedin.com/in/fcmenezes">LinkedIn</a>'
 
-footer: 'follow us on <a href="https://twitter.com/">twitter</a>'
 
 # Build settings
-#markdown: kramdown
+markdown: kramdown
