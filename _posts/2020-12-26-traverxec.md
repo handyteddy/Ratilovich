@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "HackTheBox :: Traverxec"
-categories: writeups
+categories: hackthebox
 ---
 
 # HackTheBox :: Traverxec
