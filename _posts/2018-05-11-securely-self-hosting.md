@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Securely Self-Hosting a Website"
-date:   2020-12-21
+date:   2018-05-11
 categories: guide pfsense hosting security
 ---
 ## Securely Self-Hosting a Website

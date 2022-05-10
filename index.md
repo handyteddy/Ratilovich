@@ -2,14 +2,12 @@
 title: /
 layout: home
 permalink: /
----
-
-#RedTeamNG  
+--- 
 
 ```
        __             ___
       // )    ___--""    "-.
- \ |,"( /`--""              `.    CyberR4T 	
+ \ |,"( /`--""              `.    CyberR4T	
   \/ o                        \
   (   _.-.              ,'"    ;  
    |\"   /`. \  ,      /       |
@@ -20,4 +18,5 @@ permalink: /
 ```
 
 
-Ask for forgiveness, Not permission.
+**Ask for forgiveness, Not permission!**
+Documenting my offensive security hobby 

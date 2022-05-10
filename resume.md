@@ -1,60 +1,63 @@
 ---
 layout: page
-title: ">qualifications"
-permalink: /q
+title: "/resume"
+permalink: /resume/
 ---
 
+Background Info
+===============
+{% highlight yaml %}
+Forward-thinking offensive security enthusiast 
+knowledgeable at enumerating and exploiting digital
+protections. erudite on social engineering, lockpicking,
+physical security with repertoire of countermeasures.
+
+
+-Currently Learning: ['Malware Development']
+-Owns: ['RedTeam.ng'. 'Genesys Security']
+
+-Certification: ['CEH(ANSI,Practical,Master) ','OSCP']
+  - InProgress: ['CRTP', 'OSEP']
+{% endhighlight %}
 Qualifications
 ==============
 
 {% highlight yaml %}
-- Sysadmin and DevOps experience in:
-  - Administration of Server OS:
-    - Linux
-    - Windows
-  - Networking:
-    - Working knowledge of TCP\IP stack
-    - Routing
-    - Switching
-    - Firewalls
-  - Developing and scripting: [ 'bash', 'go', 'python' ]
-  - Infrastructure as Code and Configuration Management:
-    - packer
-    - terraform
-    - ansible
-  - CI\CD: gitlab
-  - Clouds: [ 'GCP (basics)', 'Yandex' ]
-  - Logging and monitopring: [ 'ELK', 'Graylog', 'Prometheus' ]
+- Penetration Test and Assessment experience in:
+  - Networks (StandAlone, Active Directory)
+  - Web Applications
+  - Mobile (Android)
+  - API
+- Networking:
+  - Working knowledge of TCP\IP stack
+  - Routing
+  - Switching
+  - Firewalls
+
+- RedTeaming and Exploit Development experience in:   
+    - Bypassing AV protections with custom payload
+    - Bypassing EDR with custom payloads
+    - Kiosk and Container Breakout
+    - OSINT and client side execution
+    - Phishing and SocialEngineering
+ - Developing and scripting: [ 'C#']
+
+- BlueTeam: [boring stuff]
   - Security:
     - Security scanners
     - IDS\IPS\HIDS
     - AV
     - Anti-APT
-    - VPN
-    - PKI
     - Security audit
-    - Basic pentests
-  - Virtualisation:
-    - VMWare
-    - KVM
-    - Vbox
-    - Vagrant
-  - Contaners and orchestration:
-    - Docker
-    - Docker-swarm -
-    - Docker-compose
-    - Kubernetes
-  - Proxy: [ 'Nginx', 'HAProxy' ]
-  - System\network trouble shooting
+    - System\network trouble shooting
+ - Logging and monitoring: [ 'ELK(basics)']
+
 - Other skills:
   - Strong communication skills
   - Ability to learn new technologies
-  - Ability to explain technical issues clearly
-  - Russian:
-    - fluent
   - English:
-    - Technical:
-      - strong
-    - Spoken:
-      - pre-intermediate
+    - fluent
+   - Yoruba:
+    - fluent  
+  
 {% endhighlight %}

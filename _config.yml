@@ -1,29 +1,28 @@
 
-#google_analytics: UA-NNNNNNNN-N
-title: RedTeam Ratilovich
+title: 'RedTeam Rat'
 email: rat@redteam.ng
 description: >- # this means to ignore newlines until "baseurl:"
-  Pragmatic Software Specialist
+  Penetration Tester And Redteamer
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: "ratilovich"
-github_username:  "handyteddy"
-
-#style: light # dark (default) or light
+#google_analytics: UA-NNNNNNNN-N
 #listen_for_clients_preferred_style: true # true or false (default)
+
 style: hacker
 
 
 plugins:
   - jekyll-seo-tag
+  - jekyll-feed
 
 header_pages:
   - index.md
   - about.md
-  - contact.md
+  - snippet.md
   - resume.md
 
-footer: 'follow me on <a href="https://twitter.com/ratilovich">twitter</a> <a target="_blank" href="https://linkedin.com/in/fcmenezes">LinkedIn</a>'
+footer: 'follow me on <a href="https://twitter.com/ratilovich">twitter</a> '
 
 
 # Build settings
