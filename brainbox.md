@@ -1,7 +1,7 @@
 ---
-title: "/snippets"
 layout: page
-permalink: /snippets/
+title: "/brainbox"
+permalink: /brainbox/
 ---
 
 ## Metasploit

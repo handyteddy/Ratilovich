@@ -18,8 +18,7 @@ plugins:
 
 header_pages:
   - index.md
-  - about.md
-  - snippet.md
+  - brainbox.md
   - resume.md
 
 footer: 'follow me on <a href="https://twitter.com/ratilovich">twitter</a> '

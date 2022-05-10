@@ -12,7 +12,7 @@ knowledgeable at enumerating and exploiting digital
 protections. erudite on social engineering, lockpicking,
 physical security with repertoire of countermeasures.
 
-
+-Currently Working: ['Malware Development']
 -Currently Learning: ['Malware Development']
 -Owns: ['RedTeam.ng'. 'Genesys Security']
 
