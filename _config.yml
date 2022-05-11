@@ -14,7 +14,7 @@ style: hacker
 
 plugins:
   - jekyll-seo-tag
-  - jekyll-feed
+#- jekyll-feed
 
 header_pages:
   - index.md
