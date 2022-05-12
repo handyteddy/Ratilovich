@@ -8,12 +8,23 @@ layout: default
 {%- if site.posts.size > 0 -%}
 <p>HackTheBox:</p>
   <ul>
-    {%- for post in site.posts -%}
+    {%- for post in site.categories.hackthebox -%}
     <li>
       {%- assign date_format = "%Y-%m-%d" -%}
       [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
     </li>
     {%- endfor -%}
   </ul>
+
+<br>
+<p>Misc:</p>
+<ul>
+  {% for post in site.categories.misc %}
+       <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+  {% endfor %}
+</ul>
 {%- endif -%}
 
