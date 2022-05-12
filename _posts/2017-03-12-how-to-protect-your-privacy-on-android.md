@@ -2,7 +2,7 @@
 layout: post
 title:  "How To Protect Your Privacy On Android"
 date:   2017-03-12 
-categories: android privacy
+categories: misc 
 ---
 ## How To Protect Your Privacy On Android
 I was recently [shown an interesting blog post by the DuckDuckGo team](https://spreadprivacy.com/iphone-privacy-tips/#.5vdr8rnbg) showing how an iPhone user could go about protecting their privacy making various changes to the phone. In an effort to help Android users become more aware of how they can protect their privacy as well, I thought I would compare privacy options for iOS and Android, as well as show some other ways Android users can protect their privacy. The first 11 steps will directly contrast the steps shown in the DuckDuckGo article.
