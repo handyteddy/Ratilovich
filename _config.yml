@@ -21,7 +21,7 @@ header_pages:
   - brainbox.md
   - resume.md
 
-footer: 'follow me on <a href="https://twitter.com/ratilovich">twitter</a> '
+footer: '<a href="https://twitter.com/ratilovich">Twitter</a> '
 
 
 # Build settings
