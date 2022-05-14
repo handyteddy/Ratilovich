@@ -6,9 +6,9 @@ layout: default
 {% assign contentwonl = content | strip_newlines %} {% unless contentwonl == ""  %} <br /> {% endunless %} <!-- add line break if there is any content -->
 
 {%- if site.posts.size > 0 -%}
-<p>HackTheBox:</p>
+<p>Exploit-Dev:</p>
   <ul>
-    {%- for post in site.categories.hackthebox -%}
+    {%- for post in site.categories.xdev -%}
     <li>
       {%- assign date_format = "%Y-%m-%d" -%}
       [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
@@ -17,14 +17,36 @@ layout: default
   </ul>
 
 <br>
-<p>Misc:</p>
+<p>CTFs:</p>
+  <ul>
+    {%- for post in site.categories.ctf -%}
+    <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
+
+<br>
+<p>HackTheBox:</p>
 <ul>
-  {% for post in site.categories.ctf %}
+  {% for post in site.categories.hackthebox %}
        <li>
       {%- assign date_format = "%Y-%m-%d" -%}
       [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
     </li>
   {% endfor %}
 </ul>
+
+<br>
+<p>TryHackMe:</p>
+  <ul>
+    {%- for post in site.categories.ctf -%}
+    <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
 {%- endif -%}
 
