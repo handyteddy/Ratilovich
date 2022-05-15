@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "HackTheBox :: Vault"
+title:  "HackTheBox - Vault"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
-Vault is easily one of my favourite boxes on hackthebox. It taught me a lot about tunneling and moving through a network any way possible. This is one of the boxes i got truely stuck into for days and could not stop thinking about what the next move was.
+Vault is easily one of my favourite boxes on htb. It taught me a lot about tunneling and moving through a network any way possible. This is one of the boxes i got truely stuck into for days and could not stop thinking about what the next move was.
 
 # Initial Nmap scan
 ```

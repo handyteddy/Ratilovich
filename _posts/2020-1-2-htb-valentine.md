@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "HackTheBox :: Valentine"
+title:  "HackTheBox - Valentine"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
-This was actually my first ever rooted box on hackthebox!
+This was actually my first ever rooted box on htb!
 
 # Nmap scan
 ```

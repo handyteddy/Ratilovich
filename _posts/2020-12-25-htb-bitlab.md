@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "HackTheBox :: Bitlab"
-categories: writeups
+title: "HackTheBox - Bitlab"
+categories: htb
 ---
 
-# HackTheBox :: Bitlab
+# HackTheBox -- Bitlab
 
 ## Initial Enumeration
 Let's start with our usual nmap scan.

@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "HackTheBox :: Poison"
+title:  "HackTheBox - Poison"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
-This was actually the first box i touched after getting on the hackthebox platform. I couldnt work out how to root it at the time but after a few weeks i came back to figure it out.
+This was actually the first box i touched after getting on the htb platform. I couldnt work out how to root it at the time but after a few weeks i came back to figure it out.
 
 #Nmap scan
 ```

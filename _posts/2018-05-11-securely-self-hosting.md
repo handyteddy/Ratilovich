@@ -25,7 +25,7 @@ I will always use Nginx over Apache given the choice, in part because of how muc
 {% highlight nginx %}
 server {
     listen      80 default_server;
-    listen      [::]:80 default_server;
+    listen      [--]:80 default_server;
     server_name "";
     return      444;
 }

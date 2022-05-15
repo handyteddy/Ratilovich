@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "HackTheBox :: Traverxec"
-categories: hackthebox
+title: "HackTheBox - Traverxec"
+categories: htb
 ---
 
-# HackTheBox :: Traverxec
+# HackTheBox -- Traverxec
 
 ## Initial Enumeration
 Let's start by running a *somewhat* extensive nmap scan.

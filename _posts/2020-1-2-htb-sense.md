@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Sense"
+title:  "HackTheBox - Sense"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 Sense was another box that you can smash out in 10 minutes you might have spare. Not much to be learnt from this one as it was very straight forward.
 

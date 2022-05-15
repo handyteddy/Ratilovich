@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "HackTheBox :: Postman"
-categories: writeups
+title: "HackTheBox - Postman"
+categories: htb
 ---
 
-# HackTheBox :: Postman
+# HackTheBox -- Postman
 
 ## Initial Enumeration
 

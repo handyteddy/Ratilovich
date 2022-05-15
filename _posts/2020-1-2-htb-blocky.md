@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "HackTheBox :: Blocky"
+title:  "HackTheBox -  Blocky"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 Blocky was another standard box with a few potential rabbit holes to fall down. There was also a 2nd potential method of gaining information through phpmyadmin which i didnt investigate.
 # Nmap scan
-```
+```console
 PORT     STATE  SERVICE VERSION
 21/tcp   open   ftp     ProFTPD 1.3.5a
 22/tcp   open   ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.2 (Ubuntu Linux; protocol 2.0)
@@ -65,7 +65,7 @@ Logging in to ssh with user 'notch' and that password gives us our foothold and 
 
 # Privilege escalation
 A sudo check reveals instantly what our method of gaining root privs will be.
-```
+```console
 notch@Blocky:~$ sudo -l
 [sudo] password for notch: <ssh_pw>
 Matching Defaults entries for notch on Blocky:

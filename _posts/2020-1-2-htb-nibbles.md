@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "HackTheBox :: Nibbles"
+title:  "HackTheBox - Nibbles"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
-Another breezy box by hackthebox that we can fly through with metasploit.
+Another breezy box by htb that we can fly through with metasploit.
 
 # Nmap scan
 ```

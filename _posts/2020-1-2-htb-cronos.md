@@ -1,12 +1,12 @@
 ---
 layout: post
-title:  "HackTheBox :: Cronos"
+title:  "HackTheBox -  Cronos"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 
 # Nmap scan
-```
+```bash
 PORT   STATE SERVICE VERSION
 22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.1 (Ubuntu Linux; protocol 2.0)
 | ssh-hostkey: 
@@ -33,7 +33,7 @@ We can now grab user.txt
 
 # Gaining root
 As the box name suggests this proceedure may involve a cronjob. Doing a check for jobs returns the following;
-```
+```bash
 $ cat /etc/crontab
 # /etc/crontab: system-wide crontab
 # Unlike any other crontab you don't have to run the `crontab'
@@ -53,7 +53,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 ```
 
 From this it appears that root is executing the file 'artisan' on a regular cron. If we replace the file in this location with one under the same name it should execute as root. Placing a shell here executes when the cron triggers and gives us a shell as root.
-```
+```console
 listening on [any] 9150 ...
 connect to [10.10.14.6] from (UNKNOWN) [10.10.10.13] 44730
 Linux cronos 4.4.0-72-generic #93-Ubuntu SMP Fri Mar 31 14:07:41 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux

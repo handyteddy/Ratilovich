@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Tenten"
+title:  "HackTheBox - Tenten"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 
 # Nmap scan

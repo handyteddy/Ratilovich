@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "HackTheBox :: Solidstate"
+title:  "HackTheBox - Solidstate"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
-Solid state was the first box i did on hackthebox that had the vector of email harvesting, learnt a lot about what not to keep in emails .
+Solid state was the first box i did on htb that had the vector of email harvesting, learnt a lot about what not to keep in emails .
 
 # Nmap scan
 ```

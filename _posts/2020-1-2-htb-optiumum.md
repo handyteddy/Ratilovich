@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Optimum"
+title:  "HackTheBox - Optimum"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 # Description
 Optimum was a fairly basic machine that could be easily rooted with the use of public exploits and not much else. 

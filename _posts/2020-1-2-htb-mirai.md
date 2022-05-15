@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Mirai"
+title:  "HackTheBox - Mirai"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 Cool box based off a cool concept that swept the earth.
 

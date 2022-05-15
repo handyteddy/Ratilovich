@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Lame"
+title:  "HackTheBox - Lame"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 :zzz: nothing real special about this box.
 

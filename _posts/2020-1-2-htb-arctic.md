@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Arctic"
+title:  "HackTheBox - Arctic"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 
 Arctic was an easy one that i wont forget due to how certain exploits are used.

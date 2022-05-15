@@ -30,7 +30,7 @@ layout: default
 <br>
 <p>HackTheBox:</p>
 <ul>
-  {% for post in site.categories.hackthebox %}
+  {% for post in site.categories.htb %}
        <li>
       {%- assign date_format = "%Y-%m-%d" -%}
       [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>

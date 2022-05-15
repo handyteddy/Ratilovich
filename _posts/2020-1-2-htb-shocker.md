@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "HackTheBox :: Shocker"
+title:  "HackTheBox - Shocker"
 date:   2020-1-2 00:10:00 +0000
-categories: hackthebox
+categories: htb
 ---
 # Description
 Shellshock was another basic machine that kind of gave away the vectors for each step with ease.
