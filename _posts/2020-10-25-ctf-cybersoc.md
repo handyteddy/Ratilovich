@@ -2,6 +2,7 @@
 layout: post
 title: CyberSOC 2020 CTF
 categories: ctf
+permalink: /:categories/cybersocctf/
 ---
 
 ## CyberSOC CTF Challenge 

@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Bashed"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/bashed/
 ---
 Bashed was a very easy box, perfect for anyone getting started with htb.
 

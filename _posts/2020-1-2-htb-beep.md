@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Beep"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/beep/
 ---
 Beep was a very easy box with not much to learn. Would have liked to see more complex methods included as the initial vector was different and could have led to more interesting things.
 

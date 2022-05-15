@@ -2,6 +2,7 @@
 layout: post
 title: "HackTheBox - Traverxec"
 categories: htb
+permalink: /:categories/traverxec/
 ---
 
 # HackTheBox -- Traverxec

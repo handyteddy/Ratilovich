@@ -2,6 +2,7 @@
 layout: post
 title: "HackTheBox - Postman"
 categories: htb
+permalink: /:categories/postman/
 ---
 
 # HackTheBox -- Postman

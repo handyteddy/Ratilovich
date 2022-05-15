@@ -2,6 +2,7 @@
 layout: post
 title: ABC RedTeam CTF
 categories: ctf
+permalink: /:categories/abcredteam/
 ---
 
 ## **ABC CyberHackathon RedTeam CTF**
@@ -18,7 +19,8 @@ other post by my team mate [Muzec](https://muzec0318.github.io/posts/abcctf.html
 
 The scenario we are presented with by the organizers is that of an Fat Fingered individual that unconsciously opens every email and attachment he gets in he’s corporate email : [obiora\_nurudeen@ctf.ng](http://mailto:obiora_nurudeen@ctf.ng)
 
-<img src="/assets/images/abcctf/scenario.png" height="100%" width="100%">
+![image-title-here](/assets/images/abcctf/scenario.png){:class="img-responsive"}
+<!--<img src="/assets/images/abcctf/scenario.png" height="100%" width="100%">-->
 
 Armed with just he’s name Nurudeen Obiora, the email above and the knowledge of the targets low awareness in basic email security,  
 we thought of emulating a strategy we recently used at the DEFCON 29 RedTeam CTF by sending the target an email with the reverse shell payload attached.
@@ -36,6 +38,7 @@ Attempting to send it to the target using swaks
 swaks : SWiss Army Knife Smtp
 
 we are immediately flagged as malicious by Gmails Egress Malware Scanner
+
 
 <img src="/assets/images/abcctf/egress-gmail.gif" height="100%" width="100%">
 

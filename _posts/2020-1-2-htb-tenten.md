@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Tenten"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/tenten/
 ---
 
 # Nmap scan

@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Nibbles"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/nibbles/
 ---
 Another breezy box by htb that we can fly through with metasploit.
 

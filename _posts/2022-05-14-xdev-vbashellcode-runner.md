@@ -2,6 +2,7 @@
 layout: post
 title: Custom VBA-ShellCode Runner
 categories: xdev
+permalink: /:categories/vbarunner/
 ---  
 
 All exploits are written my myself and are fir educational purposes only, i would not be liable for any misuse!

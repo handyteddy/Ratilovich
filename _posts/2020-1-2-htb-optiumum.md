@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Optimum"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/optiumum/
 ---
 # Description
 Optimum was a fairly basic machine that could be easily rooted with the use of public exploits and not much else. 

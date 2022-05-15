@@ -2,6 +2,7 @@
 layout: post
 title: TryHackMe - GamingServer
 categories: thm
+permalink: /:categories/gamingserver/
 ---
 
 The hack starts with simple port scan 

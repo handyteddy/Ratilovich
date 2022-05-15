@@ -2,6 +2,7 @@
 layout: post
 title: "HackTheBox - Bitlab"
 categories: htb
+permalink: /:categories/bitlab/
 ---
 
 # HackTheBox -- Bitlab

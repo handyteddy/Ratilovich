@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox -  Blocky"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/blocky/
 ---
 Blocky was another standard box with a few potential rabbit holes to fall down. There was also a 2nd potential method of gaining information through phpmyadmin which i didnt investigate.
 # Nmap scan

@@ -3,6 +3,7 @@ layout: post
 title:  "HackTheBox - Poison"
 date:   2020-1-2 00:10:00 +0000
 categories: htb
+permalink: /:categories/poison/
 ---
 This was actually the first box i touched after getting on the htb platform. I couldnt work out how to root it at the time but after a few weeks i came back to figure it out.
 

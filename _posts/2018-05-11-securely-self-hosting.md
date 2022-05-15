@@ -3,6 +3,7 @@ layout: post
 title:  "Securely Self-Hosting a Website"
 date:   2018-05-11
 categories: misc
+permalink: /:categories/securewebsite/
 ---
 ## Securely Self-Hosting a Website
 I'm using [Github Pages](https://pages.github.com/) to host this site for a few reasons, but namely that:
