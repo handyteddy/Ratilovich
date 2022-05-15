@@ -5,7 +5,7 @@ categories: xdev
 permalink: /:categories/vbarunner/
 ---  
 
-All exploits are written my myself and are fir educational purposes only, i would not be liable for any misuse!
+All exploits are written my myself and are for educational purposes only, i would not be liable for any misuse!
 
 ###CUSTOM VBA SHELLCODE ENCRYPTER [HELPER] 
 Generate a  vbapplication shellcode with the rat_helper.exe below
