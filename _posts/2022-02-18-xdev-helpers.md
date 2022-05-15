@@ -1,6 +1,6 @@
 ---
 layout: post
-title: C# -> JScript + HTML Smug RatAttack
+title: Custom Encryptor & Helpers | Variations
 categories: xdev
 permalink: /:categories/helpers/
 ---  
