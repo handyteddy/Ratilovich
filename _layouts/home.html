@@ -16,6 +16,19 @@ layout: default
     {%- endfor -%}
   </ul>
 
+
+<br>
+<p>ProLabs:</p>
+  <ul>
+    {%- for post in site.categories.lab -%}
+    <li>
+      {%- assign date_format = "%Y-%m-%d" -%}
+      [ {{ post.date | date: date_format }} ] <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+    </li>
+    {%- endfor -%}
+  </ul>
+
+
 <br>
 <p>CTFs:</p>
   <ul>
@@ -50,7 +63,7 @@ layout: default
   </ul>
 
   <br>
-<p>misc:</p>
+<p>Misc:</p>
   <ul>
     {%- for post in site.categories.misc -%}
     <li>
