@@ -33,25 +33,20 @@ nmap   -T4 -Pn --min-rate 1000 --open -r   54.234.92.201
 FTP is immediately ignored :( a 5000 pointer shoudnt have anything to do port 21 _justkidding_
 <br>
 ###Enumeration on port 80 
-A quick enumeration on port 80 shows the default IIS webpage and fuzz of directories yield no result, looking at vhost/subdomain using FFUF
+A quick enumeration on port 80 shows the default IIS webpage and fuzz of directories yield no result, 
+<img src="/assets/images/cysecctf/iis.png" height="100%" width="100%">looking at vhost/subdomain using FFUF
 we find   `secret ` a to be a valid vhost 
 
-<br>
 <img src="/assets/images/cysecctf/vhostscan.png" height="100%" width="100%">
-
-
-<br>
-Adding the newly  found vhost and the hosts file and fuzzing for subdirectories, we can find `backups` to be a valid 
-
+Adding the newly  found vhost and the hosts file and fuzzing for subdirectories, we can find **`backups`** to be a valid 
+```console
 sudo echo "54.234.92.201 secret.cysec.local " >> /etc/hosts; \
 feroxbuster -u http://secret.cysec.local/
-
-<br>
+```
 <img src="/assets/images/cysecctf/fericoxid.png" height="100%" width="100%">
 
 
 Accessing the backups folder we can find a wordlist of usernames and passwords 
-<br>
 <img src="/assets/images/cysecctf/backups.png" height="100%" width="100%">
 
 ```bash
@@ -60,27 +55,23 @@ wget -q http://secret.cysec.local/backups/users.txt
 ```
 
 Saving the wordlist and revoking our mental note about the existence of two other protocols : Lightweight Directory Access Protocol (LDAP) and the Server Message Block(SMB)
-<br>
 <img src="/assets/images/cysecctf/wget.png" height="100%" width="100%">
 
 
 we proceed by  password spraying  both SMB and LDAP looking for valid credentials
 
-####Enumeration on port 445
+### Enumeration on port 445
 using CrackMapExec which is usefull in spraying passwords in a Active Directory network, we immediately get a hand of a valid
 user credential `jsmith:password@123`
-
-<br>
 <img src="/assets/images/cysecctf/cme.gif" height="100%" width="100%">
- 
-####Exploiting SMB - 445
-leveraging the credentials to list the available SMB share 
 <br>
+### Exploiting SMB - 445
+leveraging the credentials to list the available SMB shares 
 <img src="/assets/images/cysecctf/smb1.png" height="100%" width="100%">
 
 
-we can see sa domain user directory to which we can authenticate to using the credentials we have 
-<br>
+we can see see domain **$USERS** directory to which we can authenticate to using the credentials we have 
+
 <img src="/assets/images/cysecctf/smbclient.png" height="100%" width="100%">
 
 Highlights for picture above
@@ -89,10 +80,8 @@ Highlights for picture above
 3. Downloading the script to our local machine.
 
 
-The `read_appraisal form` contains the hlevi domain user creds as we can see below
-<br>
+The `read_appraisal_form.ps1` contains the hlevi domain user creds as we can see below
 <img src="/assets/images/cysecctf/appraisal.png" height="100%" width="100%">
-
 
 <br>
 we proceed the exploitation process by leveraging the newly found creds to write and execute  to SMB share using evilwin-rm
@@ -117,29 +106,20 @@ this use account is priviledged to read and write to the adminstrative share whi
 
 All in all this was a simple, straight forward machine from stables of  `@rudefish`, 
 pretty sure he would be dissapointed i solved this machine in user 12 minutes :) 🤣🤣
-
-
-
 <br>
 
-
-###Post Exploitaion
-we proceed to the post exploition stage by disable the AV protection on the PC since we have administrative priviledges
-we use mimikatz to dump the hashes of other user on the machine to find lateral domain privilege escalation vectors
-
-<br>
+### Post Exploitaion
+we proceed to the post exploition stage by first disabling the AV protection as well as Windows Defender Real Time Monitoring on the PC since we have administrative priviledges,
+we use mimikatz to dump the hashes of other user on the machine to find lateral domain privilege escalation vectors.
 <img src="/assets/images/cysecctf/disable.png" height="100%" width="100%">
 
-
-
-using PowerUp we can find numerous services that can be exploited to gain `SYSTEM` priviledges 
 <br>
+
+also using PowerUp we can find numerous services that can be exploited to gain `SYSTEM` priviledges 
 <img src="/assets/images/cysecctf/powerup.png" height="100%" width="100%">
-
-
-
-adding our user to the administrator localgroup by abusing the service
 <br>
+
+we can as swell add our user to the administrator localgroup by abusing the vulnerable service
 <img src="/assets/images/cysecctf/powerupex.png" height="100%" width="100%">
 
 > **END OF PWN2OWN**
