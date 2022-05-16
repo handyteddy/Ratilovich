@@ -9,16 +9,20 @@ Background Info
 {% highlight yaml %}
 Forward-thinking offensive security enthusiast 
 knowledgeable at enumerating and exploiting digital
-protections. erudite on social engineering, lockpicking,
+protections, erudite on social engineering, lockpicking,
 physical security with repertoire of countermeasures.
 
--Currently Working: ['Malware Development']
--Currently Learning: ['Malware Development']
--Owns: ['RedTeam.ng'. 'Genesys Security']
+- Currently Working: ['Millitary Inteligence']
+- Currently Learning: ['Malware Development']
+- Owns: ['RedTeam.ng', 'Genesys Security']
 
--Certification: ['CEH(ANSI,Practical,Master) ','OSCP']
+- Certifications: ['CEH v10{ANSI,Practical,Master}','CyberOps', 'OSCP']
   - InProgress: ['CRTP', 'OSEP']
+- Pro Labs: ['Holo Lab','Throwback']
+  - InProgress: ['Cybernetics']
+  
 {% endhighlight %}
+<br>
 Qualifications
 ==============
 
@@ -33,6 +37,10 @@ Qualifications
   - Routing
   - Switching
   - Firewalls
+- Intel Gathering:
+  - OpenSource Inteligence
+  - DarkWeb Inteligence
+  - GeoSpatial Inteligence
 
 - RedTeaming and Exploit Development experience in:   
     - Bypassing AV protections with custom payload
@@ -52,12 +60,20 @@ Qualifications
     - System\network trouble shooting
  - Logging and monitoring: [ 'ELK(basics)']
 
+- Accomplishments:
+  - 2021  First Place & Winner at American Business Council Ethical Hacking Contest
+  - 2021  First Place & Winner of the Baze University Hackathon
+  - 2021  Finalist at the Nigerian CyberTalent Capture The Flag
+  - 2020  3rd runner up HackXploit 2020 CTF 
+
+
 - Other skills:
   - Strong communication skills
   - Ability to learn new technologies
+  - Willingness to travel
   - English:
     - fluent
-   - Yoruba:
+  - Yoruba:
     - fluent  
   
 {% endhighlight %}
