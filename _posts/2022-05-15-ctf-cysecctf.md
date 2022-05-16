@@ -7,40 +7,32 @@ permalink: /:categories/cysecctf/
 
 ## **CYSEC CyberHackathon CTF**
 
-#### [CY3ER-R4T](https://cyberrat.medium.com/)
 ## INTRODUCTION
 
 
-<img src="/assets/images/abcctf/servicepath.png" height="100%" width="100%">
-
-> **END OF PART ONE**
->#### The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried
-
-
-
-https://ctf.cysec.ng/challenges#Keep%20It%20Simple,%20Stupid-23
-
+<img src="/assets/images/cysecctf/intro.png" height="100%" width="100%">
 
 
 Praticing Competitive hacking helps build you quick anaylytical thinking and solidifies your methodology, Pwn2Own is a simple and intuitive machine from my buddy @rudeFish
 
-_cysec.local_ being the domain name is a quick pointer of the machine being a domain joined windows object
+_cysec.local_ being the domain name is a quick pointer of the machine being a domain joined windows object,
 
 We kick off by adding the FQDN to the our PC's host file and  running a quick TCP scan 
 
 
 ```bash
 sudo echo "cysec.local 54.234.92.201" >> /etc/hosts; \
-nmap   -T4 -Pn --min-rate 1000 --open -r   54.234.92.201 -oN Initial.Tcp -e wlan0  --top-ports 10000
+nmap   -T4 -Pn --min-rate 1000 --open -r   54.234.92.201 
+-oN Initial.Tcp -e wlan0  --top-ports 10000
 ```
 <br>
 <img src="/assets/images/cysecctf/nmapscan.png" height="100%" width="100%">
 
 <br>
-####Enumeration on port 21
+###Enumeration on port 21
 FTP is immediately ignored :( a 5000 pointer shoudnt have anything to do port 21 _justkidding_
 <br>
-####Enumeration on port 80 
+###Enumeration on port 80 
 A quick enumeration on port 80 shows the default IIS webpage and fuzz of directories yield no result, looking at vhost/subdomain using FFUF
 we find   `secret ` a to be a valid vhost 
 
@@ -149,3 +141,9 @@ using PowerUp we can find numerous services that can be exploited to gain `SYSTE
 adding our user to the administrator localgroup by abusing the service
 <br>
 <img src="/assets/images/cysecctf/powerupex.png" height="100%" width="100%">
+
+> **END OF PWN2OWN**
+
+
+
+> **START OF FORENSICS**
