@@ -130,4 +130,20 @@ More windows persistence and clearing tracks should follow but thats definitely 
 
 
 
-> **START OF FORENSICS**
+> **START OF REV**
+
+
+<img src="/assets/images/cysecctf/intro.png" height="100%" width="100%">
+
+
+We start of by loading the binary to GDB, setting our disassebly flavor to intel, we can as well use AT&T 
+if we are much more conversant with the syntax
+<img src="/assets/images/cysecctf/nofunctions.png" height="100%" width="100%">
+<br>
+we proceed by loading the functions of the binary with `load functions` which yields no funtion including `main` which is a wierd and usually a sign the binary has been packed with a packer.
+
+as we dont know what kind of packer is in use, maybe a well known one or a custom packer we can string the binary for ascii content and grep 
+for packer information
+<img src="/assets/images/cysecctf/upxpacker.png" height="100%" width="100%">
+<br>
+we can find the packer used in this binary to be a well know packer `UPX`
