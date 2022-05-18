@@ -13,9 +13,9 @@ permalink: /:categories/cysecctf/
 <img src="/assets/images/cysecctf/intro.png" height="100%" width="100%">
 
 
-Praticing Competitive hacking helps build you quick anaylytical thinking and solidifies your methodology, Pwn2Own is a simple and intuitive machine from my buddy @rudeFish
+Praticing competitive hacking helps build your quick analytical thinking and solidifies your methodology, Pwn2Own is a simple and intuitive machine from my buddy @rudeFish
 
-_cysec.local_ being the domain name is a quick pointer of the machine being a domain joined windows object,
+_cysec.local_ being the domain name is a quick pointer of the machine being a domain joined AD object,
 
 We kick off by adding the FQDN to the our PC's host file and  running a quick TCP scan 
 
@@ -30,16 +30,18 @@ nmap   -T4 -Pn --min-rate 1000 --open -r   54.234.92.201
 
 <br>
 ###Enumeration on port 21
-FTP is immediately ignored :( a 5000 pointer shoudnt have anything to do port 21 _justkidding_
+FTP is immediately ignored :( a 5000 pointer shoudnt have anything to do port 21 🙄_justkidding_ 🙄
 <br>
 ###Enumeration on port 80 
 A quick enumeration on port 80 shows the default IIS webpage and fuzz of directories yield no result, 
-<img src="/assets/images/cysecctf/iis.png" height="100%" width="100%">looking at vhost/subdomain using FFUF
+<img src="/assets/images/cysecctf/iis.png" height="100%" width="100%">
+
+looking at vhost/subdomain using FFUF
 we find   `secret ` a to be a valid vhost 
 
 <img src="/assets/images/cysecctf/vhostscan.png" height="100%" width="100%">
-Adding the newly  found vhost and the hosts file and fuzzing for subdirectories, we can find **`backups`** to be a valid 
-```console
+Adding the newly found vhost and the hosts file and fuzzing for subdirectories, we can find **`backups`** to be  valid 
+```bash
 sudo echo "54.234.92.201 secret.cysec.local " >> /etc/hosts; \
 feroxbuster -u http://secret.cysec.local/
 ```
@@ -48,13 +50,14 @@ feroxbuster -u http://secret.cysec.local/
 
 Accessing the backups folder we can find a wordlist of usernames and passwords 
 <img src="/assets/images/cysecctf/backups.png" height="100%" width="100%">
-
+<br>
 ```bash
 wget -q http://secret.cysec.local/backups/passwords.txt ;\
 wget -q http://secret.cysec.local/backups/users.txt
 ```
-
+<br>
 Saving the wordlist and revoking our mental note about the existence of two other protocols : Lightweight Directory Access Protocol (LDAP) and the Server Message Block(SMB)
+<br>
 <img src="/assets/images/cysecctf/wget.png" height="100%" width="100%">
 
 
@@ -70,7 +73,7 @@ leveraging the credentials to list the available SMB shares
 <img src="/assets/images/cysecctf/smb1.png" height="100%" width="100%">
 
 
-we can see see domain **$USERS** directory to which we can authenticate to using the credentials we have 
+we can see see domain **$USERS** directory to which we can authenticate to, using the credentials we have 
 
 <img src="/assets/images/cysecctf/smbclient.png" height="100%" width="100%">
 
@@ -99,7 +102,7 @@ we can replicate the same SMB exploitation as earlier with the newly gathered  c
 <img src="/assets/images/cysecctf/winrm1.png" height="100%" width="100%">
 
 <br>
-this use account is priviledged to read and write to the adminstrative share which give us access to the CTF flag!
+this new user account is priviledged to read and write to the adminstrative share which give us access to the CTF flag!
 <br>
 <img src="/assets/images/cysecctf/flag.png" height="100%" width="100%">
 
@@ -119,9 +122,10 @@ also using PowerUp we can find numerous services that can be exploited to gain `
 <img src="/assets/images/cysecctf/powerup.png" height="100%" width="100%">
 <br>
 
-we can as swell add our user to the administrator localgroup by abusing the vulnerable service
+we can aswell add our user to the administrator localgroup by abusing the vulnerable service
 <img src="/assets/images/cysecctf/powerupex.png" height="100%" width="100%">
-
+<br>
+More windows persistence and clearing tracks should follow but thats definitely be yound the scope of this CTF. 
 > **END OF PWN2OWN**
 
 
