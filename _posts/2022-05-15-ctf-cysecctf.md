@@ -104,7 +104,7 @@ we can replicate the same SMB exploitation as earlier with the newly gathered  c
 <br>
 this new user account is priviledged to read and write to the adminstrative share which give us access to the CTF flag!
 <br>
-<img src="/assets/images/cysecctf/flag.png" height="100%" width="100%">
+<img src="/assets/images/cysecctf/b2rflag.png" height="100%" width="100%">
 
 
 All in all this was a simple, straight forward machine from stables of  `@rudefish`, 
