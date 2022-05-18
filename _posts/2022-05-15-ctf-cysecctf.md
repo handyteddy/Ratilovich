@@ -133,7 +133,7 @@ More windows persistence and clearing tracks should follow but thats definitely 
 > **START OF REV**
 
 
-<img src="/assets/images/cysecctf/revbanner.png" height="100%" width="100%">
+<img src="/assets/images/cysecctf/revbanner.jpg" height="100%" width="100%">
 
 
 We start of by loading the binary to GDB, setting our disassebly flavor to intel, we can as well use AT&T 
