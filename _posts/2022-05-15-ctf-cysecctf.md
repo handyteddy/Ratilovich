@@ -140,10 +140,21 @@ We start of by loading the binary to GDB, setting our disassebly flavor to intel
 if we are much more conversant with the syntax
 <img src="/assets/images/cysecctf/nofunctions.png" height="100%" width="100%">
 <br>
-we proceed by loading the functions of the binary with `load functions` which yields no funtion including `main` which is a wierd and usually a sign the binary has been packed with a packer.
+we proceed by loading the functions of the binary with `load functions` which yields no funtion (as we acan see in the image above) including `main` which is a wierd and usually a sign the binary has been packed with a packer.
 
 as we dont know what kind of packer is in use, maybe a well known one or a custom packer we can string the binary for ascii content and grep 
 for packer information
 <img src="/assets/images/cysecctf/upxpacker.png" height="100%" width="100%">
 <br>
-we can find the packer used in this binary to be a well know packer `UPX`
+we can find the packer used in this binary to be a well know packer `UPX`, UPX is an open source executable packer supporting a number of file formats from different operating systems
+UPX unpcking syntax is straight forward with the `upx -d binaryname` we can unpack the binary as seen below
+<img src="/assets/images/cysecctf/upxpacker.png" height="100%" width="100%">
+<br>
+
+after unpacking we can can then run the program on GDB or radare2, set a break point before the strcmp function and then check the registers holding the flags
+but in this case we had just 3 hours to speed through 40,000 points, so working working with minimal time
+
+i proceeded to string  the unpacked binary and grep for the `"CYSEC"` which gives us the flag
+<img src="/assets/images/cysecctf/flag.png" height="100%" width="100%">
+<br>
+
