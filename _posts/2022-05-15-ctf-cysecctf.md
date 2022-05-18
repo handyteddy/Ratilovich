@@ -1,6 +1,6 @@
 ---
 layout: post
-title: CYSEC 2020 CTF
+title: CYSEC 2022 CTF
 categories: ctf
 permalink: /:categories/cysecctf/
 ---
@@ -158,3 +158,17 @@ i proceeded to string  the unpacked binary and grep for the `"CYSEC"` which give
 <img src="/assets/images/cysecctf/flag.png" height="100%" width="100%">
 <br>
 
+> **END OF REV**
+
+<br>
+
+<br>
+
+> **START OF FORENSICS**
+
+Section would be update !!
+
+
+Congratulations on participation and completion of the challenges and remember
+
+>#### The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried ~rat
