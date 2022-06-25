@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HackTheBox -  Jerry</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <p>A very simple box with a big hint.</p>
+
+<h1 id="nmap-scan">Nmap scan</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>8080/tcp open  http    Apache Tomcat/Coyote JSP engine 1.1
+|_http-favicon: Apache Tomcat
+|_http-server-header: Apache-Coyote/1.1
+|_http-title: Apache Tomcat/7.0.88
+</code></pre></div></div>
+
+<h1 id="exploitation">Exploitation</h1>
+<p>As the scan shows we have a tomcat box. Tomcat by design is an easy shell once you can login. Luckily someone made some scripts that allow that process to get easier, running a default tomcat login wordlist against the /manager login form gives us access under ‘tomcat:secr3t’. We can then upload a .WAR file with metasploits /tomcat_mgr_upload for an easy meterpreter session.
+There was no privesc for this box, both root and user flags were available to read at this point. Would have liked to see some method of elevation :/</p>
+
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>
