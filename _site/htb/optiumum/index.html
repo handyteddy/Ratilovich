@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>HackTheBox - Optimum</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h1 id="description">Description</h1>
+<p>Optimum was a fairly basic machine that could be easily rooted with the use of public exploits and not much else.</p>
+<h1 id="nmap-scan">Nmap scan</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT STATE SERVICE VERSION
+80/tcp open http HttpFileServer http 2.3
+|_http-server-header: HFS 2.3
+|_http-title: HFS /
+</code></pre></div></div>
+
+<h1 id="initial-shell">Initial shell</h1>
+<p>Simply searchsploit ‘HFS 2.3’ or search within the metasploit framework to find the vulnerability for ‘Rejetto_hfs_exec’. Set the parameters that would fit the host and execute for a user shell.</p>
+<h1 id="privilege-escalation">Privilege escalation</h1>
+<p>Since we have a meterpreter shell, we can leverage the classic ‘windows-exploit-suggester’ module. We run it and it returns some results. ‘Microsoft Windows 8.1 (x64) ‘RGNOBJ’ Integer Overflow (MS16-098)’ is one of them. 
+We can download an executable from the offensive security github page and simply transfer and execute the binary on the host to gain SYSTEM permissions.</p>
+
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>
