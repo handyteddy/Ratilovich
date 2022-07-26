@@ -49,31 +49,31 @@
 
 <p>We Start of with a quick comprehensive nmap scan</p>
 
-<p><img src="/assets/images/glitch//1*PK_zoKU8AzOAXZCV9aivYg.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch//1PK_zoKU8AzOAXZCV9aivYg.png" height="100%" width="100%" /></p>
 
 <p>While scan was running the -vv ‘very verbose’ tag on nmap gives us the port found as the scan probe’s are still running</p>
 
 <p>We immediately curl port 80 to figure out a simple javascript query to what’s an obvious api</p>
 
-<p><img src="/assets/images/glitch//1*itR9xVnhghNK-jyry2Yo1g.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch/1itR9xVnhghNK-jyry2Yo1g.png" height="100%" width="100%" /></p>
 
 <p>We proceed by sending a post request to the (‘/api/access’) page and enumerating what other method’s accepted by the api , in which we find the token :)</p>
 
-<p><img src="/assets/images/glitch/1*PEd_S-ZkNMDwZe9U7Q8Oug.png" height="100%" width="100%" /><em>method enumeration</em></p>
+<p><img src="/assets/images/glitch/1PEd_S-ZkNMDwZe9U7Q8Oug.png" height="100%" width="100%" /><em>method enumeration</em></p>
 
 <p>Proceeding by fuzzing the api using “Fuzz Faster U Fool” FFUF we find an “items” endpoint</p>
 
-<p><img src="/assets/images/glitch/1*MDfUaQxRa4MX8aHChfvj0g.png" height="100%" width="100%" /><em>Fuzz Faster U Fool</em></p>
+<p><img src="/assets/images/glitch/1MDfUaQxRa4MX8aHChfvj0g.png" height="100%" width="100%" /><em>Fuzz Faster U Fool</em></p>
 
 <p>this item endpoint also accepts a post request which means we can send data to the endpoint only if we have a parameter , this leads us to API parameter fuzzing using ffuf which for some reason did’nt work</p>
 
 <p>Decided to try the old glorious wfuzz and Wholaaa!</p>
 
-<p><img src="/assets/images/glitch/1*c3jdiydrCGCkDkTFlytZ3g.png" height="100%" width="100%" /><em>cmd found as valid parameter</em></p>
+<p><img src="/assets/images/glitch/1c3jdiydrCGCkDkTFlytZ3g.png" height="100%" width="100%" /><em>cmd found as valid parameter</em></p>
 
 <p>we immediately send a post request to this endpoint using the cmd parameter only to get an error which included the “eval” method,</p>
 
-<p><img src="/assets/images/glitch/1*BGZGmncRnwLJy4D9ghpxQg.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch/1BGZGmncRnwLJy4D9ghpxQg.png" height="100%" width="100%" /></p>
 
 <p>Im nothing close to a JavaScript developer but in other language’s like php the eval() method is usually abused to achieve Remote Code Execution</p>
 
@@ -81,11 +81,11 @@
 
 <p>Following this exploit we gain a shell on the machine to retrieve user.txt</p>
 
-<p><img src="/assets/images/glitch/1*1tI6vZ2fa38rSMTNS0OcaQ.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch/11tI6vZ2fa38rSMTNS0OcaQ.png" height="100%" width="100%" /></p>
 
-<p><img src="/assets/images/glitch/1*lnbQvokQpCIJ6VMv_-VA-Q.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch/1lnbQvokQpCIJ6VMv_-VA-Q.png" height="100%" width="100%" /></p>
 
-<p><img src="/assets/images/glitch/1*-SBA3B2pK78W47kSMXxM0A.png" height="100%" width="100%" /></p>
+<p><img src="/assets/images/glitch/1-SBA3B2pK78W47kSMXxM0A.png" height="100%" width="100%" /></p>
 
 
     </main><footer>
