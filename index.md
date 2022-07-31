@@ -4,7 +4,7 @@ layout: home
 permalink: /
 --- 
 
-```
+<pre id="homerat">
        __             ___
       // )    ___--""    "-.
  \ |,"( /`--""              `.    CyberR4T	
@@ -15,8 +15,7 @@ permalink: /
      _-'.'    | |--..,,,\_    \________------""""""""""""
     '''"   _-'.'       ___"-   )
           '''"        '''---~""
-```
+</pre>
 
-
-**Ask for forgiveness, Not permission!**
-Documenting my offensive security hobby 
+<span id="homerat">**Ask for forgiveness, Not permission!**</span>
+<span id="homerat2">Documenting my offensive security hobby </span>
