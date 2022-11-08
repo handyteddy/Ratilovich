@@ -14,7 +14,7 @@ physical security with repertoire of countermeasures.
 
 - Currently Working: ['Millitary Inteligence']
 - Currently Learning: ['Malware Development']
-- Owns: ['RedTeam.ng', 'Genesys Security']
+- Owns: ['RedTeam.ng', 'Stella Operations']
 
 - Certifications: ['OSCP', 'CRTP', 'CyberOps', 'CEH v10{ANSI,Practical,Master}']
   - InProgress: ['OSEP', 'eCPTX']
