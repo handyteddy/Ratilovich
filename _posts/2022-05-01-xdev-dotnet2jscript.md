@@ -8,8 +8,14 @@ permalink: /:categories/dotnet2jscript/
 All exploits are written my myself and are for educational purposes only, i would not be liable for any misuse!
 
 ###Shellcode runner to Jscript 
-this works well with HTML smuggling attack, would add more information and update when i get the time 
-
+this works well with HTML smuggling attack!
+<br>
+We start by creating a C# shellcode runner with or without encryption then convert it to Jscript, then leverage client side execution to get a reverse shell 
+ Steps 
+ 1. we create a C# shellcode runner
+ 2. we convert it to Jscript using DotNet2Jscript
+ 3. we gain client side execution using Macro OR  HTML Smuggling 
+ 4. Can research running jscrip on client side
 
 ```csharp
 
@@ -100,5 +106,9 @@ public class TestClass
 }
 ```
 <br>
-
+command to convert the dll to Jscript
+```powershell
+.\DotNetToJscript.exe Rat.dll --lang=Jscript --ver=4 -o demo.js 
+```
 <br>
+We can proceed to obsfucated the JScript with opensource javascript obfuscator
