@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Powershell + AMSI Bypass + Macro
+title: Runner With Process Hollowing
 categories: xdev
 permalink: /:categories/phollowrunner/
 ---  
