@@ -16,7 +16,7 @@ physical security with repertoire of countermeasures.
 - Currently Learning: ['Malware Development']
 - Owns: ['RedTeam.ng', 'Stella Operations']
 
-- Certifications: ['OSCP', 'CRTP', 'CyberOps', 'CEH v10{ANSI,Practical,Master}']
+- Certifications: ['OSCP', 'CRTP', 'CyberOps', 'CEH v10{Master}']
   - InProgress: ['OSEP', 'eCPTX']
 - Pro Labs: ['Cybernetics','Rastalab','Throwback','Holo Live','Wreath']
   - InProgress: ['APTLabs']
