@@ -38,38 +38,38 @@ Upon following the link we are greeted with a "not so obvious" phish page reques
  <img src="/assets/images/bankchatbot/mainpage.png" height="100%" width="100%">
 
 Traditonally the compromise of the above information wouldn't be a problem as the malicious subject cannot get the bank to authorise transactions by merely supplying just the card details.
-Since credit and debit card issuers have additional layers of authentication for approval of transations, **Visa** has **Verified By Visa**, **Mastercard** has **SecureCode By Mastercard**, a lot of local nigerian banks have The **OTP (One Time Password)**, which is a private code or unique password that gives you added protection against unauthorized  use of your card when making payments or shopping online. 
+Credit and debit card issuers now have additional layers of authentication for approval of transations - **Visa** has **Verified By Visa**, **Mastercard** has **SecureCode By Mastercard**. Nigerian banks also have The **OTP (One Time Password)**, which is a private code or unique password that gives you added protection against unauthorized use of your card when making payments or shopping online. 
  <br>
-To get around this layer of authentication, the actors have *“man in the middled”* the campaign by also requesting you for an OTP on the instant, then using your OTP they can validate transactions 
+To get around this layer of authentication, the actors have *man-in-the-middled* the campaign by also requesting for the users OTP, and then using that OTP to validate transactions.
  <br>
  <img src="/assets/images/bankchatbot/otppage.png" height="100%" width="100%">
 
- If you wonder how they can achieve this in real time ... **Read further**
+If you wonder how they can achieve this in real time... **Read Further**.
  
- after submission of a One Time Password we are greeted with a success page [[more like  good luck your account has been emptied LOL]]
+After submission of a One Time Password we are greeted with a success page [[more like  good luck your account has been emptied LOL]]
 
- <img src="/assets/images/bankchatbot/completed.png" height="100%" width="100%">
+<img src="/assets/images/bankchatbot/completed.png" height="100%" width="100%">
 <br>
 
 ## Part 2 - Some Technical Analysis
 
-Now to the fun part, as the jobless hacker that i am 😊, i initiated the weapon of mass destruction: My brain, attacked the web application and got into the server. 
-It was quite dissapointing to realize it is a shared hosting but nevertheless the privilege gave me access to the campaign materials and data which would enable us see how the campaign operates
+Now to the fun part. As the jobless hacker that i am 😊, I initiated the weapon of mass destruction: My brain, attacked the web application and got into the server. 
+It was quite dissapointing to realize the web application makes use of shared hosting but nevertheless the privilege gave me access to the campaign materials and data which enable us see how the campaign operates.
 <br>
-For the sake TL;DR, i would be skipping certain pages and only focusing on the ones with key functions
+For the sake brevity, I will be skipping certain pages and only focusing on the ones with key functions.
  <br>
-Firsty we get to see how successful this campaign has been with some card details and it's coresponding OTP 
+First, we get to see how successful this campaign has been with some card details and their corresponding OTPs
 <img src="/assets/images/bankchatbot/logs.png" height="70%" width="70%">
  <br>
 
-The index page calls login.php and generates a randon md5 string for use a session identifier
+The index page calls **login.php** and generates a random md5 string for use as a session identifier.
  <img src="/assets/images/bankchatbot/indexsource.png" height="100%" width="100%">
  <br>
-In login.php, we are only concerned with the form action which helps us determines where the posted data is being sent to, in this case as you can see below that **Mail1.php** handles the supplied data
+In login.php, we are only concerned with the form action which helps us determine where the posted data is being sent to. In this case as we will see below, **Mail1.php** handles the supplied data.
 <img src="/assets/images/bankchatbot/loginsource.png" height="100%" width="100%">
  <br>
-Looking at **Mail1.php** to my surpise the doesnt work like a traditional phishing kit that sends harvested data to any email address using the phpmailer function, this kit leverages Telegrams ChatBot API to instantanously notify the attacker of a submission
- <img src="/assets/images/bankchatbot/mail1source.png" height="75%" width="75%">
+Traditional phishing kits send harvested data to an email address using the phpmailer function. However looking at **Mail1.php** this kits leverages Telegram's ChatBots API to instantenously notify the attacker of a new submission - which includes debit card data and OTP information.
+<img src="/assets/images/bankchatbot/mail1source.png" height="75%" width="75%">
  
 1. Telegrams API endpoint
 2. Parameter supplies to the endpoint
@@ -129,6 +129,6 @@ But as always the best line of defence against phishing is awareness and trainin
 
 > **Opinions here are my own and not the views of my employer**
 <br>
-> **Open to any work that'll almost make the CISO loose thier job** 😀  ~~in other words VA/PT/RT~~
+> **Open to any work that'll make the CISO ~~loose thier job~~ happy 😀  ~~in other words VA/PT/RT~~
 <br>
 > **Resume at : [Online Resume](https://www.redteam.ng/resume)**
