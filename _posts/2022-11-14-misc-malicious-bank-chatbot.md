@@ -131,4 +131,4 @@ But as always the best line of defence against phishing is awareness and trainin
 <br>
 > **Open to any work that'll make the CISO ~~loose thier job~~ happy 😀  ~~in other words VA/PT/RT~~
 <br>
-> **Resume at : [Online Resume](https://www.redteam.ng/resume)**
+> **Resume at : [Online Resume](https://www.redteam.ng/resume) **
