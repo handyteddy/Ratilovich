@@ -21,11 +21,11 @@ drill in on a somewhat advance campaign masquerading as a well renowned bank in 
 
 As an average bank account owner with some banking difficulties, going on to messenger with the intentions of seeking customer service, you come across two or maybe more ChatBots depending who or what is being impersonated 
 <br>
-<img src="/assets/images/bankchatbot/1.jpg" height="75%" width="60%">
+<img src="/assets/images/bankchatbot/1.jpg" height="80%" width="70%">
 <br>
 Interacting with the first proved abortive as the agents are busy but a second identical ChatBot offers to resolve your issues by asking you to “Follow A Link” in order to rectify your request 
 
- <img src="/assets/images/bankchatbot/1s.png" height="70%" width="70%">
+ <img src="/assets/images/bankchatbot/1s.png" height="50%" width="70%">
 <br>
 Upon folowing  the links we are greeted with a “Not so obvious” phish page requsting for 
 • Account Number
@@ -51,14 +51,14 @@ To get around this layer of authentication, the actors have *“man in the middl
 <br>
 
 ## Part 2 - Some Technical Analysis
-<br>
+
 Now to the fun part, as the jobless hacker that i am 😊, i initiated the weapon of mass destruction: My brain, attacked the web application and got into the server. 
 It was quite dissapointing to realize it is a shared hosting but nevertheless the privilege gave me access to the campaign materials and data which would enable us see how the campaign operates
 <br>
 For the sake TL;DR, i'll be skipping alot of pages and only focusing on the some key functions
  <br>
 Firsty we get to see how successful this campaign has been with some card details and it's coresponding OTP 
-<img src="/assets/images/bankchatbot/logs.png" height="100%" width="100%">
+<img src="/assets/images/bankchatbot/logs.png" height="70%" width="70%">
  <br>
 
 The index page calls login.php and generates a randon md5 string for use a session identifier
@@ -92,7 +92,7 @@ Prof.php is the success page that stays up for a 3.5 seconds before redirecting 
  <br>
  
 Some other features of this kit are as below
-<img src="/assets/images/bankchatbot/antidetect1.png" height="100%" width="100%">
+<img src="/assets/images/bankchatbot/antidetect.png" height="100%" width="100%">
 
  1. The **blacklist** reads several IP's of a bot.txt text file  and block access for those address
  2. The **Bot-Crawler** continully harvest address of known bots and append the to the bot.txt file
