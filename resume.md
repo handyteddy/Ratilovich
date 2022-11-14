@@ -7,9 +7,9 @@ permalink: /resume/
 Background Info
 ===============
 {% highlight yaml %}
-Forward-thinking offensive security enthusiast 
+Forward-thinking offensive security professional 
 knowledgeable at enumerating and exploiting digital
-protections, erudite on social engineering, lockpicking,
+protections, erudite on vulnerability assessment, penetration testing,red teaming, malware development, social engineering, lockpicking,
 physical security with repertoire of countermeasures.
 
 - Currently Working: ['Millitary Inteligence']
@@ -65,6 +65,7 @@ Qualifications
   - 2021  First Place & Winner of the Baze University Hackathon
   - 2021  Finalist at the Nigerian CyberTalent Capture The Flag
   - 2020  3rd runner up HackXploit 2020 CTF 
+  - 2021  6th/290 DEFCON 29 Red Team CTF
   
 
 
