@@ -107,14 +107,14 @@ And the interesting stuff never ends
 1. Checks the validity of the card you supplied by looking up the BIN in a bin database
 2. Checks the Operating System the supplier uses and determine if its blockworthy or not [FU.php lol]
 <br>
-
+<br>
 I was also able to get the telegram bots token and chat ID which could be used to social engineer the actor and maybe figure those behind 
 
 <img src="/assets/images/bankchatbot/tokensource.png" height="100%" width="100%">
  <br>
  
 but like cybersecurity folks like to say “You need permission, bla bla bla, yada yada yada”. 🤦  🤦  
-<br>
+
  
 Now you might wonder how the attacker makes money from all this, they may use your card in real time and link to services like Quickteller, OPay, Jumia, Aliexpress etc, verify with your supplied OTP, then use such accounts for bill payments, purchases and/or withdrawals.
  
