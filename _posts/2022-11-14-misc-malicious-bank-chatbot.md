@@ -8,8 +8,7 @@ permalink: /:categories/maliciouschatbot/
 
 # Rise in Malicious ChatBots - a UBA case study
 ## Part 1 - Introduction
-<br>
-*Note: *
+
 <br>
 Since the inception of web automation in the 2010s and the increasing need for customer retention through exceptional customer service, many companies have leveraged business features of social media networks to promptly address customer grievances and difficulties.
 
