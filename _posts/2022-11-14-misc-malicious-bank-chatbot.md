@@ -128,6 +128,6 @@ But as always the best line of defence against phishing is awareness and trainin
 
 > Opinions here are my own and not the views of my employer
 <br>
-> Open to any work that'll almost make the CISO loose thier job 😀  ~[ in other words VAPT]~
+> Open to any work that'll almost make the CISO loose thier job 😀  ~in other words VAPT~
 <br>
-> Resume at : [Resume](https://www.redteam.ng/resume)
+> Resume at : [Online Resume](https://www.redteam.ng/resume)
