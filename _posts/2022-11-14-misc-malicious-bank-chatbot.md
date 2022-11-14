@@ -64,28 +64,29 @@ First, we get to see how successful this campaign has been with some card detail
 The index page calls **login.php** and generates a random md5 string for use as a session identifier.
  <img src="/assets/images/bankchatbot/indexsource.png" height="100%" width="100%">
  <br>
-In login.php, we are only concerned with the form action which helps us determine where the posted data is being sent to. In this case as we will see below, **Mail1.php** handles the supplied data.
+In **login.php**, we are only concerned with the form action which helps us determine where the posted data is being sent to. In this case as we will see below, **Mail1.php** handles the supplied data.
 <img src="/assets/images/bankchatbot/loginsource.png" height="100%" width="100%">
  <br>
 Traditional phishing kits send harvested data to an email address using the phpmailer function. However looking at **Mail1.php** this kits leverages Telegram's ChatBots API to instantenously notify the attacker of a new submission - which includes debit card data and OTP information.
 <img src="/assets/images/bankchatbot/mail1source.png" height="75%" width="75%">
  
-1. Telegrams API endpoint
-2. Parameter supplies to the endpoint
-3. Harvested data sent along with the post request
-4. The OTP page in which the victim would be redirected to for harvesting the authenication codes
- <br>
- 
-Looking at the OTP/email verification page, we can see the form action to be mail2.php
+1. Telegram's API endpoint
+2. Parameters supplied to the endpoint
+3. Harvested data sent along with the POST request
+4. The page to which the victim would be redirected to for harvesting the OTP
+<br>
+<br>
+
+Looking at the OTP/email verification page, we can see the form action to be **Mail2.php**
 <img src="/assets/images/bankchatbot/otpsource.png" height="100%" width="100%">
  <br>
-Mail2.php is identical to mail1.php. as its send the supplied OTP to the attacker's telegram group in real time
+**Mail2.php** is similar to **Mail1.php** as it sends the supplied OTP to the attacker's Telegram group in real time.
   <img src="/assets/images/bankchatbot/mail2source.png" height="75%" width="75%">
 
 1. Ability to send data to Telegram or Discord
-2. After OTP submisson you get redirected to a prof.php page
+2. After OTP submisson you get redirected to a **prof.php** page.
 <br>
-Prof.php is the success page that stays up for a 3.5 seconds before redirecting to the legitmate url for the UBA
+Prof.php is the success page that stays up for 3.5 seconds before redirecting the victim to the legitmate url for BA
  
  <img src="/assets/images/bankchatbot/profsource.png" height="100%" width="100%">
  <br>
@@ -93,34 +94,34 @@ Prof.php is the success page that stays up for a 3.5 seconds before redirecting 
 Some other features of this kit are as below
 <img src="/assets/images/bankchatbot/antidetect.png" height="100%" width="100%">
 
- 1. The **blacklist** reads several IP's of a bot.txt text file  and block access for those address
- 2. The **Bot-Crawler** continully harvest address of known bots and append the to the bot.txt file
- 3. **Bot-Spox** is quite interesting as its harvest new bots as well
- 4. **Dila_DZ** Perform a HTTP REFERER check on the visitor to see if they are coming from the Phishtank website
+ 1. The **blacklist** reads several IP's of a bot.txt text file and blocksaccess for those addresses
+ 2. The **Bot-Crawler** continually harvests addresses of known bots and appends them to the bot.txt file
+ 3. **Bot-Spox** is quite interesting as it harvests new bots as well
+ 4. **Dila_DZ** performs a HTTP REFERER check on the visitor to see if they are coming from the Phishtank website
  5. **IP-Blacklist** blocks access for hardcoded IP ranges
  
 <br>
-And the interesting stuff never ends
+And the interesting stuff never ends...
  
 <img src="/assets/images/bankchatbot/antidetect2.png" height="100%" width="100%">
 
-1. Checks the validity of the card you supplied by looking up the BIN in a bin database
-2. Checks the Operating System the supplier uses and determine if its blockworthy or not [FU.php lol]
+1. **BIN_API** checks the validity of the card you supplied by looking up the BIN in a bin database
+2. **F^ck-You** checks the Operating System the victim uses and determines if it's blockworthy or not [FU.php lol]
 <br>
 <br>
-I was also able to get the telegram bots token and chat ID which could be used to social engineer the actor and maybe figure those behind 
+I was also able to get the Telegram bot's token and chatID which could be used to social engineer the actor and maybe figure those behind the campaign
 
 <img src="/assets/images/bankchatbot/tokensource.png" height="100%" width="100%">
  <br>
  
-but like cybersecurity folks like to say “You need permission, bla bla bla, yada yada yada”. 🤦  🤦  
+I could go ahead with this but like cybersecurity folks like to say “You need permission, bla bla bla, yada yada”. 🤦  🤦  
 
  
-Now you might wonder how the attacker makes money from all this, they may use your card in real time and link to services like Quickteller, OPay, Jumia, Aliexpress etc, verify with your supplied OTP, then use such accounts for bill payments, purchases and/or withdrawals.
+Now you might wonder how the attacker makes money from all this; they may use your card in real time and link to services like Quickteller, OPay, Jumia, Aliexpress etc, verify with your supplied OTP, then use such accounts for bill payments, purchases and/or withdrawals.
  
 ## Part 3 - Countermeasure
  <br>
-Technically this success of this campaign and similars ones is in no way the fault of the company being impersonated in this case **UBA**, as it is a bank well known for its strong cybersecurity posture nevertheless a lot of research need to be done in the field of authentication and payment processing by the cybersecurity community, OTP are facing out as there are TOTP, HOTP and authentications like FaceID, payment authetications like PayConfirm and so on.
+Technically, the success of this campaign and similar ones is in no way the fault of the company being impersonated. however as the cyber threat landscape evolves, a lot of research needs to be done in the field of authentication and payment processing; OTPs are facing out as there is TOTP, HOTP, FaceID. Payment authetications like PayConfirm and so on.
 
 But as always the best line of defence against phishing is awareness and training hence the need for more articles like this one.
 
