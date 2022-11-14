@@ -21,11 +21,11 @@ drill in on a somewhat advance campaign masquerading as a well renowned bank in 
 
 As an average bank account owner with some banking difficulties, going on to messenger with the intentions of seeking customer service, you come across two or maybe more ChatBots depending who or what is being impersonated 
 <br>
-<img src="/assets/images/bankchatbot/1.jpg" height="100%" width="100%">
+<img src="/assets/images/bankchatbot/1.jpg" height="75%" width="60%">
 <br>
 Interacting with the first proved abortive as the agents are busy but a second identical ChatBot offers to resolve your issues by asking you to “Follow A Link” in order to rectify your request 
 
- <img src="/assets/images/bankchatbot/1s.png" height="100%" width="100%">
+ <img src="/assets/images/bankchatbot/1s.png" height="70%" width="70%">
 <br>
 Upon folowing  the links we are greeted with a “Not so obvious” phish page requsting for 
 • Account Number
