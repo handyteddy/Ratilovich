@@ -9,35 +9,36 @@ permalink: /:categories/maliciouschatbot/
 # Rise in Malicious ChatBots - a UBA case study
 ## Part 1 - Introduction
 <br>
-Since the inception of web automation in the 2010's and the increasing need for customer retention through exceptional customer service, many companies have leveraged business features of social media networks to promptly address customer greiviances and difficulties.
-
-But with the adoption of new technologies comes the avenue for exploitation by threat actors, 
+*Note: *
 <br>
-One very good business feature of social media networks from the META family of companies: Messenger, Instagram and 
-WhatsApp to others in instant messaging category like Telegram and Discord have in recent years rolled out business features which includes ChatBots: which is a piece of automated messaging software that uses artificial intelligence to converse with customers
-<br>
-Threats actors have indeed weaponise this features for use in phishing campaigns and sometimes Command and Control. In this article would
-drill in on a somewhat advance campaign masquerading as a well renowned bank in africa, UBA and harvesting debit card information and well as its corresponding 2FA. 
+Since the inception of web automation in the 2010s and the increasing need for customer retention through exceptional customer service, many companies have leveraged business features of social media networks to promptly address customer grievances and difficulties.
 
-As an average bank account owner with some banking difficulties, going on to messenger with the intentions of seeking customer service, you come across two or maybe more ChatBots depending who or what is being impersonated 
+But with the adoption of new technologies comes the avenue for exploitation by threat actors. 
+<br>
+One very good business feature made available by instant messaging platforms like WhatsApp, Messenger, Telegram and Discord is ChatBots: which is a piece of automated messaging software that uses artificial intelligence to converse with customers
+Threat actors have indeed weaponized this feature for use in phishing campaigns and sometimes for Command and Control purposes. 
+<br>
+In this article we will drill in on a somewhat advanced campaign where threat actoors are masquerading as a renowned bank in Africa, UBA and harvesting debit card information as well as its corresponding 2FA 
+
+As an average bank account owner with some banking difficulties, going on to Messenger with the intention of seeking customer service, you may come across two or more ChatBots depending who or what is being impersonated.
 <br>
 <img src="/assets/images/bankchatbot/1.jpg" height="80%" width="70%">
 <br>
-Interacting with the first proved abortive as the agents are busy but a second identical ChatBot offers to resolve your issues by asking you to “Follow A Link” in order to rectify your request 
+Interacting with the first Chatbot proved abortive as the agents are busy but a second identical Chatbot offers to resolve your issues by asking you to “Follow A Link” in order to attend to your request.
 
  <img src="/assets/images/bankchatbot/1s.png" height="50%" width="70%">
 <br>
-Upon following the link we are greeted with a “Not so obvious” phish page requesting for 
+Upon following the link we are greeted with a "not so obvious" phish page requesting for:
 • Account Number
 • Card Number
 • Expiration Date
-• CCV
+• CVV
 • PIN
 <br>
  <img src="/assets/images/bankchatbot/mainpage.png" height="100%" width="100%">
 
-Traditonally the compromise of the above information would'nt be a problem as the malicious subject cannot get the bank to authorise transactions by merely suppliying just the card details.
-Since Credit, Debit card issuers have additional layers of authentication for approval of transations, **Visa** has **Verified By Visa**, **Mastercard** has **SecureCode By Mastercard**, a lot of local nigerian banks have The **OTP (One Time Password)**, which is a private code or unique password that gives you added protection against unauthorized  use of your card when making payments or shopping online. 
+Traditonally the compromise of the above information wouldn't be a problem as the malicious subject cannot get the bank to authorise transactions by merely supplying just the card details.
+Since credit and debit card issuers have additional layers of authentication for approval of transations, **Visa** has **Verified By Visa**, **Mastercard** has **SecureCode By Mastercard**, a lot of local nigerian banks have The **OTP (One Time Password)**, which is a private code or unique password that gives you added protection against unauthorized  use of your card when making payments or shopping online. 
  <br>
 To get around this layer of authentication, the actors have *“man in the middled”* the campaign by also requesting you for an OTP on the instant, then using your OTP they can validate transactions 
  <br>
