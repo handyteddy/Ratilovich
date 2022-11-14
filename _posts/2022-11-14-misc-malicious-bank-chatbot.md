@@ -109,6 +109,7 @@ And the interesting stuff never ends
 2. Checks the Operating System the supplier uses and determine if its blockworthy or not [FU.php lol]
 <br>
 I was also able to get the telegram bots token and chat ID which could be used to social engineer the actor and maybe figure those behind 
+
 <img src="/assets/images/bankchatbot/tokensource.png" height="100%" width="100%">
  <br>
  
