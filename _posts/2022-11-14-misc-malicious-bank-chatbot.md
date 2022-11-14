@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Rise in Malicious Chat[Phish]Bot - UBA Casestudy"
+title:  "Rise in Malicious ChatBots - Bank Casestudy"
 date:   2022-11-14 
 categories: misc 
 permalink: /:categories/maliciouschatbot/
