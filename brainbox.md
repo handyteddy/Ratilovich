@@ -5,66 +5,106 @@ permalink: /brainbox/
 ---
 
 
+<details open><summary> <b>API</b> </summary><blockquote>
+  <details><summary>REST</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>SOAP</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
+
+<br/>
 
 
-## <details><summary>API </summary>
-    <details><summary>REST</summary>
-        content 1.1
-    </details>
-    <details><summary>SOAP</summary>
-        content 1.2
-    </details>
-</details>
+<details open><summary> <b>WEB</b> </summary><blockquote>
+    <br/>
+Start with automated tools to search for low hanging fruits 
+   Burpsuite Scanner
+   OWASP Zap 
+   Accunetix
+   Nikto 
+   
+   
+  <details><summary>SQLi</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>CSRF</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>SSRF</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>IDOR</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>XSS</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>BAC</summary><blockquote>
+        Broken Access Control
+    :smile:
+  </blockquote></details>
+    <details open><summary>XXE</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>SDE</summary><blockquote>
+        secure data exposure
+    :smile:
+  </blockquote></details>
+    <details open><summary>CSRF</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>CSRF</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>CSRF</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
+<br/>
 
+<details open><summary> <b>MOBILE</b> </summary><blockquote>
+  <details><summary>Android</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>iOS</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
-<details><summary>WEB</summary>
-    <details><summary>head 2.1</summary>
-        content 1.1
-    </details>
-    <details><summary>head 2.2</summary>
-        content 1.2
-    </details>
-</details>
+<br/>
 
+<details open><summary> <b>NIX</b> </summary><blockquote>
+  <details><summary>Exploitation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>Privilege Escalation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>Post Exploitation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
-<details><summary>MOBILE</summary>
-    <details><summary>Android</summary>
-        content 1.1
-    </details>
-    <details><summary>iOS</summary>
-        content 1.2
-    </details>
-</details>
+<br/>
 
+<details open><summary> <b>WINDOWS</b> </summary><blockquote>
+  <details><summary>Exploitation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>Privilege Escalation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details open><summary>Post Exploitation</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
-<details><summary>NIX</summary>
-    <details><summary>Exploitation</summary>
-        content 1.1
-    </details>
-    <details><summary>Privilege Escalation</summary>
-        content 1.2
-    </details>
-  <details><summary>Post Exploitation</summary>
-        content 1.2
-    </details>
-</details>
+<br/>
 
-
-<details><summary>WINDOWS</summary>
-    <details><summary>Exploitation</summary>
-        content 1.1
-    </details>
-    <details><summary>Privilege Escalation</summary>
-        content 1.2
-    </details>
-  <details><summary>Post Exploitation</summary>
-        content 1.2
-    </details>
-</details>
-
-
-<details><summary>ACTIVE-DIRECTORY</summary>
+<details><summary> <b>ACTIVE-DIRECTORY</b> </summary>
     <details><summary>Initial Access</summary>
         content 1.1
     </details>
@@ -74,15 +114,44 @@ permalink: /brainbox/
   <details><summary>Post Exploitation</summary>
         content 1.2
     </details>
-  <details><summary>Lateral Movement</summary>
+    <details><summary>Lateral Movement</summary>
         content 1.2
     </details>
-  <details><summary>Clearing Tracks</summary>
+    <details><summary>Clearing Tracks</summary>
         content 1.2
     </details>
 </details>
 
+<br/>
 
+<details open><summary> <b>CLOUD</b> </summary><blockquote>
+  <details><summary>AZURE</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>AWS</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
+
+<br/>
+
+<details> 
+  <summary> <b>Shells</b> </summary>
+</details>
+
+
+<br/>
+
+
+
+<details open><summary> <b>SHELLS</b> </summary><blockquote>
+  <details><summary>Reverse Shells</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details open><summary>Web Shells</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
 ## Metasploit
 #### ./ Handlers
