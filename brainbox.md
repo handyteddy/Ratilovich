@@ -9,7 +9,7 @@ permalink: /brainbox/
   <details><summary>REST</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>SOAP</summary><blockquote>
+  <details><summary>SOAP</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
@@ -17,7 +17,7 @@ permalink: /brainbox/
 <br/>
 
 
-<details open><summary> <b>WEB</b> </summary><blockquote>
+<details><summary> <b>WEB</b> </summary><blockquote>
     <br/>
 Start with automated tools to search for low hanging fruits 
    Burpsuite Scanner
@@ -29,75 +29,75 @@ Start with automated tools to search for low hanging fruits
   <details><summary>SQLi</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>CSRF</summary><blockquote>
+  <details><summary>CSRF</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>SSRF</summary><blockquote>
+    <details><summary>SSRF</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>IDOR</summary><blockquote>
+    <details><summary>IDOR</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>XSS</summary><blockquote>
+    <details><summary>XSS</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>BAC</summary><blockquote>
+    <details><summary>BAC</summary><blockquote>
         Broken Access Control
     :smile:
   </blockquote></details>
-    <details open><summary>XXE</summary><blockquote>
+    <details><summary>XXE</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>SDE</summary><blockquote>
+    <details><summary>SDE</summary><blockquote>
         secure data exposure
     :smile:
   </blockquote></details>
-    <details open><summary>CSRF</summary><blockquote>
+    <details><summary>CSRF</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>CSRF</summary><blockquote>
+    <details><summary>CSRF</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>CSRF</summary><blockquote>
+    <details><summary>CSRF</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
 
 <br/>
 
-<details open><summary> <b>MOBILE</b> </summary><blockquote>
+<details><summary> <b>MOBILE</b> </summary><blockquote>
   <details><summary>Android</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>iOS</summary><blockquote>
+  <details><summary>iOS</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
 
 <br/>
 
-<details open><summary> <b>NIX</b> </summary><blockquote>
+<details><summary> <b>NIX</b> </summary><blockquote>
   <details><summary>Exploitation</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>Privilege Escalation</summary><blockquote>
+  <details><summary>Privilege Escalation</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>Post Exploitation</summary><blockquote>
+    <details><summary>Post Exploitation</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
 
 <br/>
 
-<details open><summary> <b>WINDOWS</b> </summary><blockquote>
+<details><summary> <b>WINDOWS</b> </summary><blockquote>
   <details><summary>Exploitation</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>Privilege Escalation</summary><blockquote>
+  <details><summary>Privilege Escalation</summary><blockquote>
     :smile:
   </blockquote></details>
-    <details open><summary>Post Exploitation</summary><blockquote>
+    <details><summary>Post Exploitation</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
@@ -124,11 +124,11 @@ Start with automated tools to search for low hanging fruits
 
 <br/>
 
-<details open><summary> <b>CLOUD</b> </summary><blockquote>
+<details><summary> <b>CLOUD</b> </summary><blockquote>
   <details><summary>AZURE</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>AWS</summary><blockquote>
+  <details><summary>AWS</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
@@ -144,11 +144,11 @@ Start with automated tools to search for low hanging fruits
 
 
 
-<details open><summary> <b>SHELLS</b> </summary><blockquote>
+<details><summary> <b>SHELLS</b> </summary><blockquote>
   <details><summary>Reverse Shells</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details open><summary>Web Shells</summary><blockquote>
+  <details><summary>Web Shells</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
