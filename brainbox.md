@@ -4,6 +4,86 @@ title: "/brainbox"
 permalink: /brainbox/
 ---
 
+
+
+
+## <details><summary>API </summary>
+    <details><summary>REST</summary>
+        content 1.1
+    </details>
+    <details><summary>SOAP</summary>
+        content 1.2
+    </details>
+</details>
+
+
+
+<details><summary>WEB</summary>
+    <details><summary>head 2.1</summary>
+        content 1.1
+    </details>
+    <details><summary>head 2.2</summary>
+        content 1.2
+    </details>
+</details>
+
+
+<details><summary>MOBILE</summary>
+    <details><summary>Android</summary>
+        content 1.1
+    </details>
+    <details><summary>iOS</summary>
+        content 1.2
+    </details>
+</details>
+
+
+<details><summary>NIX</summary>
+    <details><summary>Exploitation</summary>
+        content 1.1
+    </details>
+    <details><summary>Privilege Escalation</summary>
+        content 1.2
+    </details>
+  <details><summary>Post Exploitation</summary>
+        content 1.2
+    </details>
+</details>
+
+
+<details><summary>WINDOWS</summary>
+    <details><summary>Exploitation</summary>
+        content 1.1
+    </details>
+    <details><summary>Privilege Escalation</summary>
+        content 1.2
+    </details>
+  <details><summary>Post Exploitation</summary>
+        content 1.2
+    </details>
+</details>
+
+
+<details><summary>ACTIVE-DIRECTORY</summary>
+    <details><summary>Initial Access</summary>
+        content 1.1
+    </details>
+    <details><summary>Local Privilege Escalation</summary>
+        content 1.2
+    </details>
+  <details><summary>Post Exploitation</summary>
+        content 1.2
+    </details>
+  <details><summary>Lateral Movement</summary>
+        content 1.2
+    </details>
+  <details><summary>Clearing Tracks</summary>
+        content 1.2
+    </details>
+</details>
+
+
+
 ## Metasploit
 #### ./ Handlers
 
