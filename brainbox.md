@@ -515,3 +515,6 @@ You can also perform the very same checks by using smbclient:
 <br/>
 <img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
 </details>
+If skew is -30 minutes 
+The command would be 
+faketime -f -30m
