@@ -7,7 +7,7 @@ permalink: /:categories/uacbypass/
 
 All exploits are written my myself and are for educational purposes only, i would not be liable for any misuse!
 
-###CUSTOM POWERSHELL SHELLCODE RUNNER + AMSI BYPASS
+###UAC BYPASS SCRIPT
 
 ```powershell
 function alt { 
