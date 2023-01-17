@@ -69,34 +69,36 @@ Start with automated tools to search for low hanging fruits
 <details><summary> <b>MOBILE</b> </summary><blockquote>
   <details><summary>Android</summary><blockquote>
     ### Checklist
+    <br>
 * unzip -d and apktool -d both (different outputs at time)
-    
+    <br>
 * check for /assets and /res/raw (api keys, encryption keys)
+<br>
     
 * sensitive files and external storage (world readable  & writeable)
-    
+    <br>
 * executables & log files on external storage
-    
+    <br>
 * look at manifest (WRITE_EXTERNAL_STORAGE)., grep for "getExternal"
-    
+    <br>
 * check for installed package "vnd.android.package-archive" (they want to install something)
-    
+    <br>
 * hidden directories (.folder)
-    
+    <br>
 * api keys saved as bytearray to obfuscate
-    
+    <br>
 * identify crypto & understand it
-    
+    <br>
 * webSettings.setJavaScriptEnabled(True); means we might be able to XSS
-    
+    <br>
 * interesting options: "setAllowContent", "setAllowFileAccess", "setAllowFileAccessFromFileURILS", "setAllowUniversalAccessFromFileURLs", "setJavaScriptEnabled", "setPluginState", "setSavePassword"
-    
+    <br>
 * overwriting ssl errors :facepalm:
-    
+    <br>
 * xss might allow to call Runtime.getRuntime().exec() (CVE-2012-6636) <= Api17
-                                                                           
+      <br>                                                                     
 * use Mitm Proxy (mitm.it has the cert)
-                                                                           
+      <br>                                                                     
     :smile:
   </blockquote></details>
   <details><summary>iOS</summary><blockquote>
