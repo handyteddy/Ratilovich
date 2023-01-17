@@ -161,7 +161,6 @@ Start with automated tools to search for low hanging fruits
 
       # Get information about specific computer
       Get-NetComputer -Identity <computer_name>
-
     ```
 
   </blockquote></details>
