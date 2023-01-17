@@ -13,7 +13,7 @@ permalink: /brainbox/
 ### DOMAIN ENUMERATION
  # Patch AMSI or disable AV
 <span style="color: Green;"># Patch AMSI or disable AV</span>
-<span class="demo-highlight">This text is highlighted in yellow.</span>
+<span class="demo-highlight"># Patch AMSI or disable AV</span>
 
 
 ```powershell
