@@ -38,9 +38,9 @@ Getting hands dirty with PowerView
  <span class="demo-highlight"># Domain & Controller Enumeration</span>
 
 ```powershell
-      Get-NetDomain 
+Get-NetDomain 
             
-      Get-NetDomainController     
+Get-NetDomainController     
 ```
 <br>
  <span class="demo-highlight"># User Enumeration</span>
@@ -185,6 +185,12 @@ using */altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm* in Rubeus you c
 | HOST & HTTP |WinRM |  WMIEXEC|
 
 <br>
+| Item         | Price     | # In stock |
+|--------------|-----------|------------|
+| Juicy Apples | 1.99      | *7*        |
+| Bananas      | **1.89**  | 5234       |
+<br>
+
 ## RTF && SCF Weaponization
 
 <br>
