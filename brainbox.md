@@ -19,6 +19,11 @@ AdPeas.ps1
 
 You can aswell use BloodHound to visualize data
 
+> checklist
+check password policy
+gather usernam -
+Pray and Spray with CME 
+
 ```powershell
 #For SharpHound.exe
 ./SharpHound.exe --CollectionMethod All
@@ -191,6 +196,19 @@ using */altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm* in Rubeus you c
 | Bananas      | **1.89**  | 5234       |
 <br>
 
+|                |ASCII                          |HTML                         |
+|----------------|-------------------------------|-----------------------------|
+|Single backticks|`'Isn't this fun?'`            |'Isn't this fun?'            |
+|Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
+|Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
+<br>
+```mermaid
+graph LR
+A[Square Rect] -- Link text --> B((Circle))
+A --> C(Round Rect)
+B --> D{Rhombus}
+C --> D
+```
 ## RTF && SCF Weaponization
 
 <br>
