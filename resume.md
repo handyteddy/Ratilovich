@@ -61,6 +61,7 @@ Qualifications
  - Logging and monitoring: [ 'ELK(basics)']
 
 - Accomplishments:
+  - 2023  First Offensive Security Experienced Pentration Tester [OSEP] out of Nigeria  
   - 2021  First Place & Winner at American Business Council Ethical Hacking Contest
   - 2021  First Place & Winner of the Baze University Hackathon
   - 2021  Finalist at the Nigerian CyberTalent Capture The Flag
