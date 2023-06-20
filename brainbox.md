@@ -185,16 +185,10 @@ using */altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm* in Rubeus you c
 | LDAP         |LDAP Ops, DCSync |Mimikatz > lsadump::dcsync /rat.local:$DC-IP /all /csv |
 | RPCSS        |  1.99 |        739 |
 | KRBTGT       |Golden Ticket |do anything lol,|
-
 | HOST & RPCSS |WMI |  WMIEXEC|
 | HOST & HTTP |WinRM |  WMIEXEC|
 
-<br>
-| Item         | Price     | # In stock |
-|--------------|-----------|------------|
-| Juicy Apples | 1.99      | *7*        |
-| Bananas      | **1.89**  | 5234       |
-<br>
+
 
 |                |ASCII                          |HTML                         |
 |----------------|-------------------------------|-----------------------------|
@@ -202,13 +196,8 @@ using */altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm* in Rubeus you c
 |Quotes          |`"Isn't this fun?"`            |"Isn't this fun?"            |
 |Dashes          |`-- is en-dash, --- is em-dash`|-- is en-dash, --- is em-dash|
 <br>
-```mermaid
-graph LR
-A[Square Rect] -- Link text --> B((Circle))
-A --> C(Round Rect)
-B --> D{Rhombus}
-C --> D
-```
+
+
 ## RTF && SCF Weaponization
 
 <br>
