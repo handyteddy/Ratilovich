@@ -13,12 +13,12 @@ protections, erudite on vulnerability assessment, penetration testing,red teamin
 physical security with repertoire of countermeasures.
 
 - Currently Working: ['Millitary Inteligence']
-- Currently Learning: ['Malware Development']
+- Currently Learning: ['Exploit Delpment']
 - Owns: ['RedTeam.ng', 'Stella Operations']
 
-- Certifications: ['OSEP', 'OSCP', 'CRTP', 'CyberOps', 'CEH v10{Master}']
-  - InProgress: ['eCPTX', 'OSWE']
-- Pro Labs: ['Cybernetics','Rastalab','Throwback','Holo Live','Wreath']
+- Certifications: ['OSEP', 'OSCP', 'CRTO', 'CRTP', 'eCPTXv2', 'CEH v10{Master}']
+  - InProgress: ['OSED', 'OSWE']
+- Pro Labs: ['Cybernetics','Rastalab','Genesis','Throwback','Holo Live','Wreath']
   - InProgress: ['APTLabs']
   
 {% endhighlight %}
@@ -28,10 +28,11 @@ Qualifications
 
 {% highlight yaml %}
 - Penetration Test and Assessment experience in:
-  - Networks (StandAlone, Active Directory)
+  - Infrastructure (StandAlone, Active Directory)
   - Web Applications
-  - Mobile (Android)
+  - Mobile Applications (Android, iOS)
   - API
+  - Cloud (Azure, AWS)
 - Networking:
   - Working knowledge of TCP\IP stack
   - Routing
