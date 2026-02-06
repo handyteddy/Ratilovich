@@ -12,8 +12,8 @@ knowledgeable at enumerating and exploiting digital
 protections, erudite on vulnerability assessment, penetration testing,red teaming, malware development, social engineering, lockpicking,
 physical security with repertoire of countermeasures.
 
-- Currently Working: ['Millitary Inteligence']
-- Currently Learning: ['Exploit Delpment']
+- Currently Working: ['Security engineering']
+- Currently Learning: ['Exploit Development']
 - Owns: ['RedTeam.ng', 'Stella Operations']
 
 - Certifications: ['OSEP', 'OSCP', 'CRTO', 'CRTP', 'eCPTXv2', 'CEH v10{Master}']
