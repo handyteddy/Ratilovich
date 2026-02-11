@@ -3,6 +3,211 @@ layout: page
 title: "/brainbox"
 permalink: /brainbox/
 ---
+---
+layout: page
+title: "Brainbox"
+permalink: /brainbox/
+---
+
+# Brainbox – VAPT Checklist & Enumeration Flows
+
+This page is my running VAPT brain dump: fast, repeatable flows for different target types.
+
+---
+
+## Web applications
+
+### 1. Recon & mapping
+
+- **Passive recon:**  
+  - Enumerate subdomains (crt.sh, certspotter, amass, subfinder)  
+  - Check historical URLs (wayback, gau, katana)  
+- **Tech stack fingerprinting:**  
+  - Wappalyzer, headers, responses, JS files  
+- **Content discovery:**  
+  - `ffuf`, `dirsearch`, `feroxbuster` on common wordlists  
+  - Look for `/admin`, `/api`, `/backup`, `/old`, `/test`
+
+### 2. Authentication & session
+
+- **Login surface:**  
+  - Check for weak lockout, verbose errors, default creds  
+- **Session handling:**  
+  - Cookie flags (HttpOnly, Secure, SameSite)  
+  - Session fixation, predictable tokens, JWT alg confusion / kid abuse  
+- **Access control:**  
+  - IDORs (numeric IDs, UUIDs, slugs)  
+  - Horizontal/vertical privilege escalation via Burp “Compare” flows
+
+### 3. Input & business logic
+
+- **Classics:**  
+  - XSS (reflected, stored, DOM)  
+  - SQLi (error‑based, blind, time‑based)  
+  - SSTI, command injection, XXE  
+- **Logic flaws:**  
+  - Bypass flows (coupon reuse, race conditions on balance/points, TOCTOU)  
+  - Parameter tampering (price, role, flags)
+
+### 4. APIs
+
+- **Discovery:**  
+  - Swagger/OpenAPI, `/v1/`, `/api/`, mobile app traffic  
+- **Checks:**  
+  - Auth on every endpoint  
+  - Mass assignment, over‑permissive objects  
+  - Insecure direct object references in JSON
+
+---
+
+## Mobile applications
+
+### 1. Static analysis
+
+- **APK/IPA extraction:**  
+  - Decompile (jadx, apktool, mobSF)  
+- **Code review targets:**  
+  - Hardcoded secrets, API keys, URLs  
+  - Insecure storage (SharedPreferences, SQLite, plist, NSUserDefaults)  
+  - Exported activities/intents, deep links, custom schemes  
+  - Root/jailbreak checks and bypass logic
+
+### 2. Dynamic analysis
+
+- **Proxying traffic:**  
+  - Burp with cert pinning bypass (Frida, objection, patching)  
+- **Runtime hooks:**  
+  - Frida scripts for auth, crypto, and logic  
+- **Mobile‑specific issues:**  
+  - Insecure local storage  
+  - Weak TLS config, cert pinning mistakes  
+  - Intent hijacking, insecure broadcast receivers
+
+---
+
+## Active Directory
+
+### Without creds
+
+#### 1. Network & host discovery
+
+- **Scope:**  
+  - `nmap` for DCs, file servers, RDP, WinRM  
+  - Identify domain via SMB, LDAP banners, Kerberos (`nmap --script=krb5-enum-users`)
+
+#### 2. AD enumeration (unauth)
+
+- **LDAP/Kerberos:**  
+  - AS‑REP roasting (no‑preauth users)  
+  - User enumeration via Kerberos responses  
+- **SMB/NetBIOS:**  
+  - Null sessions (if allowed)  
+  - Share enumeration for world‑readable data  
+- **Web & misc:**  
+  - Password spraying against OWA/VPN/SSO with safe lockout strategy
+
+#### 3. Initial access paths
+
+- **Targets:**  
+  - Weak external services (VPN, RDP, web apps)  
+  - Misconfigured SMB shares with scripts/creds  
+  - Phishing / payload delivery (if in scope)
+
+---
+
+### With creds
+
+#### 1. Authenticated AD enumeration
+
+- **User & group mapping:**  
+  - `ldapsearch`, `BloodHound`, `SharpHound`  
+  - Enumerate groups, GPOs, ACLs, sessions  
+- **Host reachability:**  
+  - `crackmapexec`, `smbclient`, `rpcclient`  
+  - Check local admin access, open shares
+
+#### 2. Privilege escalation paths
+
+- **Common paths:**  
+  - Kerberoasting (SPN accounts)  
+  - AS‑REP roasting (if still present)  
+  - ACL abuse (GenericAll, WriteDACL, WriteOwner)  
+  - GPO abuse, vulnerable service paths  
+- **Lateral movement:**  
+  - Pass‑the‑hash, Pass‑the‑ticket (if allowed)  
+  - PSRemoting, WMI, SMB exec
+
+#### 3. Domain dominance
+
+- **Objectives:**  
+  - DC compromise, DCSync, KRBTGT abuse (if in scope)  
+  - Golden/Silver tickets (lab/red team only, not standard VAPT unless agreed)
+
+---
+
+## ICS / OT environments
+
+*(High‑caution, safety‑first, usually read‑only enumeration)*
+
+### 1. Scoping & safety
+
+- **Rules of engagement:**  
+  - Confirm **no active scanning** on production unless explicitly allowed  
+  - Prefer passive monitoring, span ports, logs  
+- **Identify zones:**  
+  - Corporate IT vs OT vs safety systems
+
+### 2. Passive discovery
+
+- **Protocols & assets:**  
+  - Identify Modbus, DNP3, OPC, PROFINET, etc. via passive tools  
+  - Map PLCs, HMIs, engineering workstations
+
+### 3. Configuration & access
+
+- **Checks:**  
+  - Default creds on HMIs/engineering stations (if allowed)  
+  - Remote access paths (TeamViewer, VPN, RDP)  
+  - Backup/restore procedures and segregation
+
+---
+
+## Thick client applications
+
+### 1. Recon & static analysis
+
+- **Binary inspection:**  
+  - Strings, dependencies, config files  
+  - Look for hardcoded creds, endpoints, license keys  
+- **Tech stack:**  
+  - .NET (dnSpy), Java (JD‑GUI), Electron, etc.
+
+### 2. Traffic & backend
+
+- **Network:**  
+  - Intercept traffic (Burp, mitmproxy)  
+  - Check for TLS, cert validation, custom protocols  
+- **Backend logic:**  
+  - Replay/modify requests, test auth and authorization
+
+### 3. Local attack surface
+
+- **Storage:**  
+  - Local DBs, config files, logs  
+  - Insecure permissions, world‑readable secrets  
+- **Process & IPC:**  
+  - Named pipes, local APIs, COM objects  
+  - DLL hijacking, weak update mechanisms
+
+---
+
+## Notes
+
+This page is a living document. I update it as I refine my flows, tools, and priorities.
+
+
+
+
 
 # INFASTRUCTURE
 
