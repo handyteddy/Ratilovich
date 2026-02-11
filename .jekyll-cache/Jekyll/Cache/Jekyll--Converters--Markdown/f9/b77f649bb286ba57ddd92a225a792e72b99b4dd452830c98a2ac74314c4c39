@@ -1,0 +1,76 @@
+I"s<h1 id="background-info">Background Info</h1>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="s">Forward-thinking offensive security professional</span> 
+<span class="s">knowledgeable at enumerating and exploiting digital</span>
+<span class="s">protections, erudite on vulnerability assessment, penetration testing,red teaming, malware development, social engineering, lockpicking, physical security with repertoire of countermeasures.</span>
+
+<span class="pi">-</span> <span class="na">Currently Working</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Consulting'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">Millitary</span><span class="nv"> </span><span class="s">Inteligence'</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">Currently Learning</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Malware</span><span class="nv"> </span><span class="s">Development'</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">Owns</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">RedTeam.ng'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">Stella</span><span class="nv"> </span><span class="s">Operations'</span><span class="pi">]</span>
+
+<span class="pi">-</span> <span class="na">Certifications</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">eCPTXv2'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">OSEP'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">OSCP'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">CRTP'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">CyberOps'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">CEH</span><span class="nv"> </span><span class="s">v10{Master}'</span><span class="pi">]</span>
+  <span class="pi">-</span> <span class="na">InProgress</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">OSED'</span><span class="pi">,</span> <span class="s1">'</span><span class="s">OSWE'</span><span class="pi">]</span>
+<span class="pi">-</span> <span class="na">Pro Labs</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Cybernetics'</span><span class="pi">,</span><span class="s1">'</span><span class="s">Rastalab'</span><span class="pi">,</span><span class="s1">'</span><span class="s">Throwback'</span><span class="pi">,</span><span class="s1">'</span><span class="s">Holo</span><span class="nv"> </span><span class="s">Live'</span><span class="pi">,</span><span class="s1">'</span><span class="s">Wreath'</span><span class="pi">]</span>
+  <span class="pi">-</span> <span class="na">InProgress</span><span class="pi">:</span> <span class="pi">[</span><span class="s1">'</span><span class="s">Genesis'</span><span class="pi">]</span>
+  </code></pre></figure>
+
+<p><br />
+Qualifications
+==============</p>
+
+<figure class="highlight"><pre><code class="language-yaml" data-lang="yaml"><span class="pi">-</span> <span class="na">Penetration Test and Assessment experience in</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">Networks (StandAlone, Active Directory)</span>
+  <span class="pi">-</span> <span class="s">Web Applications</span>
+  <span class="pi">-</span> <span class="s">Mobile (Android)</span>
+  <span class="pi">-</span> <span class="s">API</span>
+<span class="pi">-</span> <span class="na">Networking</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">Working knowledge of TCP\IP stack</span>
+  <span class="pi">-</span> <span class="s">Routing</span>
+  <span class="pi">-</span> <span class="s">Switching</span>
+  <span class="pi">-</span> <span class="s">Firewalls</span>
+<span class="pi">-</span> <span class="na">Intel Gathering</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">OpenSource Inteligence</span>
+  <span class="pi">-</span> <span class="s">DarkWeb Inteligence</span>
+  <span class="pi">-</span> <span class="s">GeoSpatial Inteligence</span>
+
+<span class="pi">-</span> <span class="na">RedTeaming and Exploit Development experience in</span><span class="pi">:</span>   
+    <span class="pi">-</span> <span class="s">Bypassing AV protections with custom payload</span>
+    <span class="pi">-</span> <span class="s">Bypassing EDR with custom payloads</span>
+    <span class="pi">-</span> <span class="s">Kiosk and Container Breakout</span>
+    <span class="pi">-</span> <span class="s">OSINT and client side execution</span>
+    <span class="pi">-</span> <span class="s">Phishing and SocialEngineering</span>
+ <span class="pi">-</span> <span class="na">Developing and scripting</span><span class="pi">:</span> <span class="pi">[</span> <span class="s1">'</span><span class="s">C#'</span><span class="pi">]</span>
+
+<span class="pi">-</span> <span class="na">BlueTeam</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">boring stuff</span><span class="pi">]</span>
+  <span class="pi">-</span> <span class="na">Security</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Security scanners</span>
+    <span class="pi">-</span> <span class="s">IDS\IPS\HIDS</span>
+    <span class="pi">-</span> <span class="s">AV</span>
+    <span class="pi">-</span> <span class="s">Anti-APT</span>
+    <span class="pi">-</span> <span class="s">Security audit</span>
+    <span class="pi">-</span> <span class="s">System\network trouble shooting</span>
+ <span class="pi">-</span> <span class="na">Logging and monitoring</span><span class="pi">:</span> <span class="pi">[</span> <span class="s1">'</span><span class="s">ELK(basics)'</span><span class="pi">]</span>
+
+<span class="pi">-</span> <span class="na">Accomplishments</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">2023  First Offensive Security Experienced Pentration Tester [OSEP] out of Nigeria</span>  
+  <span class="pi">-</span> <span class="s">2021  First Place &amp; Winner at American Business Council Ethical Hacking Contest</span>
+  <span class="pi">-</span> <span class="s">2021  First Place &amp; Winner of the Baze University Hackathon</span>
+  <span class="pi">-</span> <span class="s">2021  Finalist at the Nigerian CyberTalent Capture The Flag</span>
+  <span class="pi">-</span> <span class="s">2020  3rd runner up HackXploit 2020 CTF</span> 
+  <span class="pi">-</span> <span class="s">2021  6th/290 DEFCON 29 Red Team CTF</span>
+  
+
+
+<span class="pi">-</span> <span class="na">Other skills</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">Strong communication skills</span>
+  <span class="pi">-</span> <span class="s">Ability to learn new technologies</span>
+  <span class="pi">-</span> <span class="s">Willingness to travel</span>
+  <span class="pi">-</span> <span class="na">English</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">fluent</span>
+  <span class="pi">-</span> <span class="na">Yoruba</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">fluent</span>  
+  <span class="pi">-</span> <span class="na">Russian</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Conversational</span>
+  </code></pre></figure>
+
+:ET

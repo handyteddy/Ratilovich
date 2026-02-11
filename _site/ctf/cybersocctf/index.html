@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CyberSOC 2020 CTF</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h2 id="cybersoc-ctf-challenge">CyberSOC CTF Challenge</h2>
+
+<p>TheThe CyberSOC challenge is a quite interesting test of <strong>patience, perseverance, and the stock ability to think</strong> ,
+The challenge claims a link is hidden in the provided image, a link to which the challenge will be started.</p>
+
+<p><img src="/assets/images/cybersocctf/hidden.jpg" height="100%" width="100%" /></p>
+
+<p>My initial thought was <strong>“Security by Obscurity”</strong> which led me to believe certain information was hidden in the image either in metadata or hidden in bits of unused data of the image file. </p>
+
+<p>So therefore i tried extracting metadata using <strong>Exiftool</strong>, and Checking for hidden data using Steg-analysis tools like <strong>Steghide</strong> and <strong>Stegoveritas</strong> …All to no Avail </p>
+
+<p>Paying a little attention the image, we notice a <code class="language-plaintext highlighter-rouge">Join🛡️.ws</code> , The Shield emoji is similar to Cybersoc logo, so i initially started by substituting the “Shield emoji” for “Cybersoc”
+Below is the list of domains i tried 
+<code class="language-plaintext highlighter-rouge">joincybersoc.ws</code> <code class="language-plaintext highlighter-rouge">joincs.ws</code> <code class="language-plaintext highlighter-rouge">joincybersocafrica.ws</code> <code class="language-plaintext highlighter-rouge">join.cybersoc.ws</code>
+amongst several others domain iterations,</p>
+
+<p>after several minutes i paid attention to the .ws landing page and noticed the <code class="language-plaintext highlighter-rouge">Register Your .WS Domain 🙂.ws</code> as in the image below</p>
+
+<p><img src="/assets/images/cybersocctf/wslanding.png" height="100%" width="100%" /></p>
+
+<p>I immediately did a quick research and found informations related to emoji Domains
+which converts an emoji to punnycode and subtitute the converted character for a domain name</p>
+
+<p><img src="/assets/images/cybersocctf/punnycode.png" height="100%" width="100%" /></p>
+
+<h4 id="heading-to-xn--join-3683cws">Heading to xn- join-3683c.ws</h4>
+<p>We are greeted to begin  with the CTF challenge</p>
+
+<h2 id="challenge-1">Challenge 1</h2>
+<p>The question asks, <strong>What you see ?</strong>, which implies we aren’t seeing what we ought to see
+Getting curious i dragged the mouse around and figured what the flag was</p>
+
+<p><img src="/assets/images/cybersocctf/whatyousee.png" height="100%" width="100%" /></p>
+
+<h2 id="challenge-2">Challenge 2</h2>
+
+<p>Zero is more than nothing : and we are provided with binary numbers
+ 
+<code class="language-plaintext highlighter-rouge">01111001 01101111 01110101 01110100 01101000 01101001 01101110 01101011 01111001 01101111 01110101 01110011 01101101 01100001 01110010 01110100</code></p>
+
+<p>A quick Search of Binary decoder give’s several options which inturn leads to an anwser</p>
+
+<p><img src="/assets/images/cybersocctf/crypti.png" height="100%" width="100%" /></p>
+
+<h2 id="challenge-3">Challenge 3</h2>
+<p>if a <strong>flag is more than just cloth and ink</strong>, What else could it be ?</p>
+
+<p><img src="/assets/images/cybersocctf/flags.png" height="100%" width="100%" /></p>
+
+<p>Asked to crack a code and all we were given are flags, So most definitely we need text characters from the flags.</p>
+
+<p>Seeing flags i immediately knew we were dealing with a <strong>alpha-2 codes</strong></p>
+<blockquote>
+  <p>which are two-letter country codes defined as part of the ISO 3166 standard published by the International Organization for Standardization (ISO), to represent countries, dependent territories, and special areas of geographical interest.</p>
+</blockquote>
+
+<p>An example of alpha 2 code below</p>
+
+<p><img src="/assets/images/cybersocctf/alpha2code.png" height="100%" width="100%" /></p>
+
+<p>So substituting our flags for the alpah2code equivalent should give us our flag,
+but one solution leads to another problem 
+How can we identify the nationality of the flags?, All i did was crop out each individual flag and did <strong>google reverse image search</strong> to figure out the Country the flag belonged to</p>
+
+<h2 id="challenge-4">Challenge 4</h2>
+<p>Download and run “run.exe”</p>
+
+<p>Well curiosity kills, most people would definitely click a link that says <strong>Don’t click me</strong> which led me to be quite wary of what an executable with the name “run” does ,</p>
+
+<p>Needed to be sure of the app’s content and what it intends to do, so simple reverse engineering with the <code class="language-plaintext highlighter-rouge">strings run.exe</code> reveal a hidden flag.
+Easy right ?</p>
+
+<h2 id="challenge-5">Challenge 5</h2>
+<p>Geolocation </p>
+
+<p>Provided with a picture and the sole aim of figuring where the photograph was taken, i had little experience from working as an amnesty international decoder </p>
+
+<blockquote>
+  <p>Amnesty Decoders is a global network of digital volunteers, all using 
+ their computers or phone to help Amnesty’s researchers sort through pictures, documents and information and track and expose human rights violations</p>
+</blockquote>
+
+<p><img src="/assets/images/cybersocctf/geolocation.jpg" height="100%" width="100%" /></p>
+
+<p>After messing around with reverse image searches with no results , Paying more attention i noticed a quite popular Landmark to the far left 
+<em>The Ikoyi Link Bridge , Two Power line’s , and what seems to be like a dock for boats</em></p>
+
+<p>So ignoring the regular directional map and utilizing the rich satellite imagery we come up with a obvious flag</p>
+
+<p><img src="/assets/images/cybersocctf/satelite.png" height="100%" width="100%" /></p>
+
+<h2 id="challenge-6">Challenge 6</h2>
+<p>Satellite Point Of View was a straight forward test of sight - <em>lol</em></p>
+
+<p>The challenge was about Picking out glarings structural buildings that had similarities to characters in the English alphabet </p>
+
+<p>Each “Datum Point” has a single character of it’s own and the addition of all datum point is the flag</p>
+
+<p><img src="/assets/images/cybersocctf/datum.png" height="100%" width="100%" /></p>
+
+<h2 id="challenge-7">Challenge 7</h2>
+<p>when the “geolocation” image was captured?</p>
+
+<p>Metadata summarizes basic information about data, and stores that information in unused bits in the file </p>
+
+<blockquote>
+  <p>ExifTool is a free and open-source software program for reading,  writing, and manipulating image, audio, video, and PDF metadata</p>
+</blockquote>
+
+<p>Running exiftools on the picture reveals</p>
+
+<p><img src="/assets/images/cybersocctf/exiftools.png" height="100%" width="100%" /></p>
+
+<p>Clearly we can see When the picture was taken</p>
+
+<h2 id="challenge-8">Challenge 8</h2>
+<p>which device was used to capture the image?
+A quick search of SM-F700F reveals the flag</p>
+
+<p><img src="/assets/images/cybersocctf/device.png" height="100%" width="100%" /></p>
+
+<p>Congratulations on completion of the challenge and remember</p>
+
+<blockquote>
+  <h4 id="the-difference-between-a-noob-and-a-hacker-is-that-a-hacker-has-failed-more-than-a-noob-has-ever-tried">The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried</h4>
+</blockquote>
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

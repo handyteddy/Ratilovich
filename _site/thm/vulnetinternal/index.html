@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; img-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; media-src 'self'; object-src 'self'; child-src 'self'; form-action 'none'; base-uri 'self'" />
+<meta http-equiv="X-XSS-Protection"  content="1;mode=block" always>
+<meta http-equiv="Referrer-Policy" content="no-referrer, strict-origin-when-cross-origin"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>TryHackMe - VulnNetInternal</title>
+ 
+
+  <link rel="stylesheet" type="text/css" href="/assets/main-hacker.css"></head>
+<body>
+    <div class="container"><header>
+  <div class="menu">
+    <ul>
+      <li class="menu-first-child">
+        <span>
+          [cyberRat@RedTeam]~$
+          <span class="blink">
+            █
+          </span>
+        </span>
+      </li>
+      <li>
+        <a href="/">Home</a>
+      </li>
+
+    
+      <li>
+        <a href="/brainbox/">/BrainBox</a>
+      </li> 
+      <li>
+        <a href="/resume/">/Resume</a>
+      </li>
+
+    </ul>
+  </div>
+</header>
+
+<main>
+      <h1 id="vulnnet-internal-tryhackeme">VulnNet: Internal TryHackeMe</h1>
+
+<p>Hello Guys. We would be attacking the VulnNet:Internal, Yet another amazing box from <a href="https://tryhackme.com/p/TheCyb3rW0lf">TheCyb3rW0lf,</a> This machine test and sharpen’s your services enumeration skills</p>
+
+<p>We start of my running a quick scan on all ports using threader300 and simultaneously running nmap service scan to cover the top ports
+<br />
+<img src="/assets/images/vulnetinternal/1W8rhVtXIPg22Dl3XHzbEIw.png" height="100%" width="100%" /></p>
+
+<p>We immediately realize we need to enumerate several none http/https ports,
+<br />
+<strong>SMB Enumeration : 138 | 445</strong></p>
+
+<p>We we quickly list available share’s on the SMB server using the -L flag to list available shares and -N flag for a No Password login then immediately interacted with the “Vulnet Business Share” to get the Services Flag</p>
+
+<p><img src="/assets/images/vulnetinternal/11zSDALQTe1SsR9ijkdpBLw.png" height="100%" width="100%" />
+<br />
+<strong>RPC Enumeration : 111 ,</strong></p>
+
+<p>We start by listing the share’s available to be mounted from the server using showmount, then we mount the share on out local machine in the /tmp/mnt directory</p>
+
+<p><img src="/assets/images/vulnetinternal/1I5XyQHKecRKnmLIH4v_a2Q.png" height="100%" width="100%" /></p>
+
+<p>Enumerating the share, we quickly dive down to the Redis directory to find notable information in the redis.conf file</p>
+
+<p><img src="/assets/images/vulnetinternal/1_9KJsriDvRGO4oRFHy_Ifg.png" height="100%" width="100%" /><em>MasterPassword in redis.conf</em>
+<br />
+<strong>REDIS Enumeration : 6379</strong></p>
+
+<p>REDIS the Remote Dictionary Server is an in-memory database we could enumerate Redis with either Netcat, MSF auxiliary scanner or Redis-cli</p>
+
+<p>using Redis-cli which the best in my opinion we connect to the Redis server using the credentials we found in the mount earlier then query it for the list and content of database it holds</p>
+
+<p><img src="/assets/images/vulnetinternal/1zXg8DMiIxWHFyTwA7di1ug.png" height="100%" width="100%" /></p>
+
+<p>we found a notable rsync connection strings and The <em>INTERNAL FLAG</em> !,note it down and head back to the drawing board 
+*Note Redis access could be used to gain Remote Code Execution using Crontab or placing SSH keys in any users $Home directory, none which worked in this instance
+<br />
+<strong>RSYNC Enumeration : 873</strong></p>
+
+<p>rsync is a utility for efficiently transferring and synchronizing files between computers, drives and networks</p>
+
+<p>Checking for the available directory to be synchronized, we created a folder on our Local Working Directory then used rsyc to sync the remote folder to it</p>
+
+<p><img src="/assets/images/vulnetinternal/1SEqxHETleWAtAWC4NarHJQ.png" height="100%" width="100%" /></p>
+
+<p>Navigating through the files, we find our <em>USER FLAG and the .SSH directory</em>
+<br />
+<strong>GETTING A SHELL</strong></p>
+
+<p>RSYNC has local and remote copy function’s, same way we were able to download the remote directory we could also put files in the remote directory</p>
+
+<p>we immediately</p>
+
+<ul>
+  <li>
+    <p>generate an SSH keypair ,</p>
+  </li>
+  <li>
+    <p>place the public key in an authorized_keys files</p>
+  </li>
+  <li>
+    <p>copy to the the authorized_keys to the remote .ssh folder after giving it correct chmod 600 permissions</p>
+  </li>
+</ul>
+
+<p>After which we are able to SSH into the machine as “sys-internal”</p>
+
+<p><img src="/assets/images/vulnetinternal/1C6-HbPhWF5rKF3y7GjPr4w.png" height="100%" width="100%" />
+<br />
+<strong>GETTING ROOT</strong></p>
+
+<p>Enumerating for ports only accessible on the local network we find port 8111 to be running a web application “TEAMCITY”</p>
+
+<p><img src="/assets/images/vulnetinternal/1cupzNaXhlXJGe3_eYpgQFw.png" height="100%" width="100%" /></p>
+
+<p>We forward this port to our machine using SSH port forward with the private key we created earlier</p>
+
+<p><img src="/assets/images/vulnetinternal/1guzgkEZAD_n0n959FrFhJg.png" height="100%" width="100%" /></p>
+
+<p><img src="/assets/images/vulnetinternal/1XloBtB7JZyn5hBnJiFuTaQ.png" height="100%" width="100%" /></p>
+
+<p>Trying all credentials we found so far all to know avail we head back to the machine to search for more credentials and/maybe authentication token to login as a super user</p>
+
+<p>Grepping for token, we find an authentication token that works in the password field without a username that in turn permits us to login into the “Teamcity” superuser dashboard</p>
+
+<p><img src="/assets/images/vulnetinternal/1rkcby_NSSGskE6YjHwmlpA.png" height="100%" width="100%" />
+<br />
+<strong>GETTING ROOT Contd</strong></p>
+
+<p><img src="/assets/images/vulnetinternal/11iGV8uxlwhXNMz5KYSaMLQ.png" height="100%" width="100%" /></p>
+
+<p>Since TeamCity is running as root, whatever connection we can get it to spawn will be with root permissions, we immediately started to poke for console pages/terminal or anything that be used to run system commands</p>
+
+<p>After a while we figured you can create a project then build configuration, skipping the question for “New VCS Root”,</p>
+
+<p><img src="/assets/images/vulnetinternal/1uw6ntR_wrrZfrRy_LpwD3g.png" height="100%" width="100%" /><em>Create a project</em></p>
+
+<p><img src="/assets/images/vulnetinternal/1OmimM9VbgHmibBs7Mw6qQQ.png" height="100%" width="100%" /><em>Build Configuration</em></p>
+
+<p>After creating a build configuration 
+choose “Build Steps” on the left menu to add a build step,</p>
+
+<p><img src="/assets/images/vulnetinternal/1_nd5pRUxnZG1qf-xxUdsTw.png" height="100%" width="100%" /></p>
+
+<p>Choose the runner type “Python”. Choose command as custom script</p>
+
+<p>then place a python3 reverse shell in the custom script section without the ‘python -c’ then run build in the upper left , definitely after setting up a listener</p>
+
+<p>&lt;img src=”/assets/images/vulnetinternal/1DyCYYloaZ2LtpG7R-tSamA.gif)</p>
+
+<p>Root, Chill And Remember</p>
+
+<h3 id="the-difference-between-a-noob-and-a-hacker-is-that-a-hacker-has-failed-more-than-a-noob-has-ever-tried-">The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried :)</h3>
+
+
+
+    </main><footer>
+  <a href="https://twitter.com/ratilovich">Twitter</a> 
+</footer>
+</div>
+  </body>
+</html>

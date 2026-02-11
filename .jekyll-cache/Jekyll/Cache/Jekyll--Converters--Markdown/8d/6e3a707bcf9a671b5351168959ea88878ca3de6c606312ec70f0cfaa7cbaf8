@@ -1,0 +1,63 @@
+I"K<p>The hack starts with simple port scan 
+<code class="language-plaintext highlighter-rouge">Nmap- -sC -sV &lt;machine IP&gt; -oN Default_Scan.txt</code></p>
+
+<p><img src="/assets/images/gamingserver/nmap.png" height="100%" width="100%" /></p>
+
+<p>The only quick vector for information is port 80 (HTTP) and port 22 (SSH) for attack
+A quick look at the web page hosted at 80 <code class="language-plaintext highlighter-rouge">http://&lt;machine_ip&gt;</code> give us a gaming portal with no much information on the front end</p>
+
+<p><img src="/assets/images/gamingserver/homepage.png" height="100%" width="100%" /></p>
+
+<p>but a usually important <code class="language-plaintext highlighter-rouge">view-source:&lt;machine_ip&gt;</code> reveals what to seems to be a username which we store in a text file for later use</p>
+
+<p>&lt;img src=”/assets/images/gamingserver/source.png height=”100%” width=”100%”&gt;</p>
+
+<p><strong>Web enumeration</strong> continued with the “holy Dirbuster” or “ heavenly gobuster” as you please, reveals multiple directories along with</p>
+
+<ul>
+  <li>Dic.lst [seems to be a simple wordlist , should to be downloaded]</li>
+  <li>Secretkey [which seems to be private key, should be downloaded]</li>
+  <li>Manifesto.txt [very useless manifesto that’s only there to teach you poetry ]</li>
+</ul>
+
+<p>&lt;img src=”/assets/images/gamingserver/dirbuster.png height=”100%” width=”100%”&gt;</p>
+
+<p>We have a USERNAME and what seems to be an SSH key, nothing stops us from logging into the server using SSH, since the SSH protocol allows the use of SSH keys to authenticate,
+so long we set the permissions of the private key file to 600 by doing <code class="language-plaintext highlighter-rouge">console chmod 600 id_rsa</code>
+First we set the permission and secondly we log in</p>
+
+<p><code class="language-plaintext highlighter-rouge">“ssh -i secret_key john@&lt;machine_ip&gt;“ should kick us in</code></p>
+
+<p><img src="/assets/images/gamingserver/ssh.png" height="100%" width="100%" /></p>
+
+<p>BUT OOPS , the “secretkey” need a password
+The only feasible way forward is to crack the password using a password cracker like “JohnTheRipper” ,
+but innocent john has no idea of that the KEY is and needs you to convert the file to what it can understand
+so therefore we firstly need to convert the SSHKEY to what JohntheRipper understands using an inbuilt John plugin called SSH2JOHN
+then we use John to crack the the file using the wordlist we recovered from the webserver</p>
+
+<p><img src="/assets/images/gamingserver/forjohn.png" height="100%" width="100%" /></p>
+
+<p>Now we have a Username, sshkey, and the password to the sshkey</p>
+
+<p><img src="/assets/images/gamingserver/login.png" height="100%" width="100%" /></p>
+
+<p><img src="/assets/images/gamingserver/usertxt.png" height="100%" width="100%" /></p>
+
+<h3 id="privilege-escalation">PRIVILEGE ESCALATION</h3>
+<p>We use a method called <strong>Lxd Privilege Escalation</strong>
+Privilege escalation through lxd requires the access of local account,</p>
+
+<p>Good thing for us since we have SSH access already</p>
+
+<p>Note: the most important condition is that the user should be a member of lxd group.</p>
+
+<p>If you have completed the introductory researching room on TryHackMe
+Do your research on <strong>LXD PRIVILEGE ESCALATION</strong> and root the box</p>
+
+<p>and remember</p>
+
+<blockquote>
+  <h3 id="the-difference-between-a-noob-and-a-hacker-is-that-a-hacker-has-failed-more-than-a-noob-has-ever-tried">The difference between a noob and a hacker is that a hacker has failed more than a noob has ever tried</h3>
+</blockquote>
+:ET

