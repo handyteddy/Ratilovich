@@ -3,17 +3,146 @@ layout: page
 title: "/brainbox"
 permalink: /brainbox/
 ---
----
-layout: page
-title: "Brainbox"
-permalink: /brainbox/
----
 
 # Brainbox – VAPT Checklist & Enumeration Flows
 
 This page is my running VAPT brain dump: fast, repeatable flows for different target types.
 
 ---
+
+---
+layout: page
+title: "Brainbox"
+permalink: /brainbox/
+---
+
+<style>
+.badge-red { background:#ffdddd; padding:2px 6px; border-radius:4px; }
+.badge-yellow { background:#fff4cc; padding:2px 6px; border-radius:4px; }
+.badge-green { background:#ddffdd; padding:2px 6px; border-radius:4px; }
+.badge-blue { background:#ddeaff; padding:2px 6px; border-radius:4px; }
+</style>
+
+# Brainbox – VAPT Checklist & Enumeration Flows
+
+Below are collapsible sections for quick navigation.
+
+---
+
+## Web Applications
+
+<details>
+<summary><strong>Web – Recon & Mapping</strong></summary>
+
+- Subdomain enum <span class="badge-blue">Important</span>  
+  `subfinder`, `amass`, `crt.sh`
+- Content discovery  
+  `ffuf`, `feroxbuster`
+- JS file analysis <span class="badge-yellow">High‑value</span>
+
+</details>
+
+<details>
+<summary><strong>Web – Auth & Session</strong></summary>
+
+- Check login flows  
+- Session cookie flags <span class="badge-red">Critical</span>  
+- IDOR checks (horizontal/vertical)
+
+</details>
+
+<details>
+<summary><strong>Web – Injection & Logic</strong></summary>
+
+- XSS, SQLi, SSTI  
+- Race conditions / TOCTOU <span class="badge-red">Critical</span>  
+- Business logic bypasses
+
+</details>
+
+---
+
+## Mobile Applications
+
+<details>
+<summary><strong>Mobile – Static Analysis</strong></summary>
+
+- Decompile APK/IPA  
+- Hardcoded secrets <span class="badge-red">Critical</span>  
+- Exported activities / deep links
+
+</details>
+
+<details>
+<summary><strong>Mobile – Dynamic Analysis</strong></summary>
+
+- Burp proxy + cert pinning bypass  
+- Frida hooks <span class="badge-blue">Useful</span>  
+- Insecure storage checks
+
+</details>
+
+---
+
+## Active Directory
+
+### Without Creds
+
+<details>
+<summary><strong>AD – Without Creds</strong></summary>
+
+- Kerberos user enum  
+- AS‑REP roasting <span class="badge-red">Critical</span>  
+- SMB share discovery  
+- Password spraying (safe mode)
+
+</details>
+
+### With Creds
+
+<details>
+<summary><strong>AD – With Creds</strong></summary>
+
+- BloodHound / SharpHound  
+- Kerberoasting <span class="badge-red">Critical</span>  
+- ACL abuse (GenericAll, WriteDACL)  
+- Lateral movement (SMB, WMI, PSRemoting)
+
+</details>
+
+---
+
+## ICS / OT
+
+<details>
+<summary><strong>ICS – Safe Enumeration</strong></summary>
+
+- Passive only <span class="badge-yellow">Safety First</span>  
+- Identify PLCs, HMIs  
+- Remote access paths (VPN, TeamViewer)
+
+</details>
+
+---
+
+## Thick Client
+
+<details>
+<summary><strong>Thick Client – Local & Network</strong></summary>
+
+- Binary inspection  
+- Hardcoded creds <span class="badge-red">Critical</span>  
+- DLL hijacking  
+- Traffic interception
+
+</details>
+
+
+============================================================
+
+
+
+
 
 ## Web applications
 
@@ -206,7 +335,7 @@ This page is my running VAPT brain dump: fast, repeatable flows for different ta
 This page is a living document. I update it as I refine my flows, tools, and priorities.
 
 
-
+============================================================
 
 
 # INFASTRUCTURE
