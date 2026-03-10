@@ -11,7 +11,7 @@ Forward-thinking offensive security professional
 knowledgeable at enumerating and exploiting digital
 protections, erudite on vulnerability assessment, penetration testing,red teaming, malware development, social engineering, lockpicking, physical security with repertoire of countermeasures.
 
-- Currently Working: ['Consulting', 'Millitary Inteligence']
+- Currently Working: ['Consulting']
 - Currently Learning: ['Malware Development']
 - Owns: ['RedTeam.ng', 'Stella Operations']
 
